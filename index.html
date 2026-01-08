@@ -2339,7 +2339,6 @@
           errorMsg.style.display = 'none';
 
           const formData = new FormData(form);
-
 const payload = Object.fromEntries(formData.entries());
 
 const res = await fetch('/api/contact', {
@@ -2347,6 +2346,7 @@ const res = await fetch('/api/contact', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(payload)
 });
+
 
 
             // بعض السيرفرات ترجع نص بدل JSON عند خطأ PHP
@@ -2508,3 +2508,4 @@ const res = await fetch('/api/contact', {
   </script>
 </body>
 </html>
+
