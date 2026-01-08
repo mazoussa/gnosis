@@ -1,7 +1,8 @@
 {
-  "name": "gnosisbase",
+  "name": "gnosis-assets",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "nodemailer": "^6.9.14"
   }
