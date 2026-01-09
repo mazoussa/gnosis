@@ -26,8 +26,10 @@
   <meta name="twitter:description" content="Exclusive .com + .ai domain assets for the next generation of AI companies." />
   <meta name="twitter:image" content="https://gnosisbase.com/og-image.jpg" />
 
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -431,7 +433,6 @@
       overflow:hidden;
     }
 
-    /* hero-box wider قليلا */
     .hero-box{
       width: min(1180px, 100%);
       margin: 0 auto;
@@ -456,26 +457,6 @@
     }
     [data-theme="light"] .hero-box:hover{
       box-shadow: 0 40px 80px -15px rgba(106,0,204,.22), inset 0 0 60px -5px var(--accent-glow);
-    }
-
-    /* حل مشكلة الفقرات في الهيرو */
-    .hero-box p {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      text-align: center;
-      margin: 0 auto;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-box p:last-child {
-      margin-bottom: 0;
-    }
-
-    .hero h1 br {
-      display: block;
-      content: '';
-      margin-bottom: 0.5rem;
     }
 
     .pill{
@@ -1175,23 +1156,6 @@
       flex-direction:column;
       gap: 12px;
       align-items:center;
-      width: 100%;
-    }
-
-    /* حل مشكلة بطاقة Privacy Policy */
-    .form-extras .privacy-note {
-      display: flex;
-      justify-content: center !important;
-      align-items: center;
-      margin: 0 auto;
-      text-align: center;
-      max-width: 100% !important;
-      width: 100% !important;
-      padding: 12px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-top: 8px;
     }
 
     .check{
@@ -1208,10 +1172,6 @@
       width: min(680px, 100%);
       cursor:pointer;
       transition: background .2s ease, border-color .2s ease, transform .2s ease;
-      margin-left: auto !important;
-      margin-right: auto !important;
-      justify-content: center !important;
-      text-align: center;
     }
     .check:hover{ background: var(--surface-2); border-color: rgba(0,240,240,.22); transform: translateY(-1px); }
     .check input{ width: 18px; height: 18px; accent-color: rgba(0,240,240,.85); }
@@ -1259,32 +1219,6 @@
       box-shadow: 0 30px 90px rgba(12,16,34,.12);
     }
     @keyframes fadeInBox{ from{ opacity:0; transform: translateY(10px);} to{ opacity:1; transform: translateY(0);} }
-
-    /* زر إغلاق نافذة النجاح */
-    .close-success {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 26px;
-      cursor: pointer;
-      line-height: 1;
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-
-    .close-success:hover {
-      background: rgba(255, 50, 50, 0.1);
-      color: #ff4d4d;
-      transform: scale(1.1);
-    }
 
     .success-ring{
       width: 76px; height: 76px;
@@ -1370,7 +1304,7 @@
       border-radius: 999px;
       background: linear-gradient(90deg, rgba(242,208,115,.06), rgba(185,138,45,.03));
       border: 1px solid rgba(242,208,115,.28);
-      color: #f2d073;
+      color: #b98c10;
       font-size: 12px;
       font-weight: 900;
       letter-spacing: 1.5px;
@@ -1503,6 +1437,57 @@
       .brand-name{ font-size: 18px; }
       .brand-logo{ height: 46px; }
     }
+
+    /* =========================================
+       Fix 1: Stack pill + typewriter vertically
+       ========================================= */
+    .hero-box .pill,
+    .hero-box .retro-typewriter{
+      display: block;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-box .pill{ margin-bottom: 14px; }
+    .hero-box .retro-typewriter{ margin-bottom: 18px; }
+
+    /* =========================================
+       Fix 2: Center dialog reliably
+       ========================================= */
+    dialog{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
+
+    /* =========================================
+       Fix 3: Close button on confirmation
+       ========================================= */
+    .confirm-close{
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+    }
+    .confirm-close:hover{
+      transform: translateY(-1px);
+      background: var(--surface-2);
+      border-color: rgba(0,240,240,.25);
+      color: var(--text);
+    }
   </style>
 </head>
 
@@ -1607,10 +1592,6 @@
 
             <p>
               The definitive <span class="strong">.com</span> + <span class="strong">.ai</span> identity infrastructure for category leaders.
-            </p>
-
-            <p>
-              Secure your digital legacy with premium domain bundles designed for the next generation of AI companies.
             </p>
 
             <div class="trust-row" aria-label="Trust signals">
@@ -1898,7 +1879,10 @@
             </form>
 
             <div class="form-confirmation" id="formConfirmation" role="status" aria-live="polite">
-              <button class="close-success" id="closeSuccessBtn" aria-label="Close success message">&times;</button>
+              <button type="button" class="confirm-close" id="closeConfirmation" aria-label="Close">
+                &times;
+              </button>
+
               <div class="success-ring"><svg class="ico s32" aria-hidden="true"><use href="#i-check-circle"></use></svg></div>
               <h3>Inquiry Received</h3>
               <p>Your request has been recorded. A representative will review your inquiry and follow up shortly.</p>
@@ -2049,15 +2033,12 @@
         nav.classList.contains("show") ? close() : open();
       });
 
-      // close on link click
       nav.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
 
-      // close on escape
       document.addEventListener("keydown", (e) => {
         if(e.key === "Escape") close();
       });
 
-      // close on resize up
       window.addEventListener("resize", () => {
         if(window.innerWidth > 860) close();
       }, { passive:true });
@@ -2217,24 +2198,13 @@
       const errorMsg = document.getElementById('errorMsg');
       const assetSelect = document.getElementById('asset');
       const emailInput = document.getElementById('email');
-      const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+      const closeConfirmationBtn = document.getElementById('closeConfirmation');
 
       // _replyto
       if (emailInput) {
         const replyToField = document.getElementById('_replyto');
         emailInput.addEventListener('input', () => {
           if (replyToField) replyToField.value = emailInput.value;
-        });
-      }
-
-      // زر إغلاق نافذة النجاح
-      if (closeSuccessBtn) {
-        closeSuccessBtn.addEventListener('click', () => {
-          if (confirmation) confirmation.style.display = 'none';
-          if (form) {
-            form.style.display = 'block';
-            form.reset();
-          }
         });
       }
 
@@ -2306,6 +2276,23 @@
           }
         });
       }
+
+      // Close confirmation and go to home
+      function backToHome(){
+        confirmation.style.display = 'none';
+        form.style.display = 'block';
+        if (ndaNote) ndaNote.style.display = 'none';
+
+        submitBtn.classList.remove('loading');
+        const btnTextEl = submitBtn.querySelector('.btn-text');
+        if (btnTextEl) btnTextEl.textContent = 'Submit Inquiry';
+
+        const home = document.getElementById('home');
+        if (home) home.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      closeConfirmationBtn?.addEventListener('click', backToHome);
 
       // Cursor glow
       const glow = document.querySelector('.cursor-glow');
