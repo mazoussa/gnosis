@@ -475,25 +475,44 @@
     }
 
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      padding: 10px 20px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 3.2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.92);
-      background: rgba(255,255,255,.03);
-      border: 1px solid var(--border-2);
-      box-shadow: var(--shadow-1);
-      margin-bottom: clamp(18px, 3vw, 36px);
+      display:block;
+      margin: 0 auto clamp(18px, 3vw, 36px);
+      padding: 18px 0;
+      width: min(900px, 100%);
+
+      font-family: var(--serif);
+      font-size: clamp(20px, 1.15vw, 22px);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 1.2px;
+      text-transform: none;
+
+      color: rgba(235,238,245,.92);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+
+      position:relative;
+      text-align:center;
     }
     [data-theme="light"] .pill{ color: rgba(12,16,34,.88); }
-    .pill .dotL,.pill .dotR{ width:6px; height:6px; border-radius:999px; }
-    .pill .dotL{ background: var(--cyan); box-shadow: 0 0 10px rgba(0,240,240,.85); }
-    .pill .dotR{ background: var(--purple); box-shadow: 0 0 10px rgba(128,32,240,.75); }
+    .pill .dotL,.pill .dotR{ display:none; }
+    .pill::before,
+    .pill::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+    }
+    .pill::before{ top:0; }
+    .pill::after{ bottom:0; }
+    [data-theme="light"] .pill::before,
+    [data-theme="light"] .pill::after{
+      background: linear-gradient(90deg, transparent, rgba(12,16,34,.35), transparent);
+    }
 
     .retro-typewriter{
       display:inline-block;
@@ -569,6 +588,7 @@
     .trust{ display:flex; gap:10px; align-items:center; }
     .trust .ico{ color: rgba(0,240,240,.95); filter: var(--icon-glow); }
     .trust:nth-child(2) .ico{ color: rgba(128,32,240,.95); filter: drop-shadow(0 0 8px rgba(128,32,240,0.30)); }
+    
 
     /* Shared section titles */
     .kicker{
@@ -1472,7 +1492,7 @@
     .hero-box .pill,
     .hero-box .retro-typewriter{
       display: block;
-      width: fit-content;
+      width: min(900px, 100%);
       margin-left: auto;
       margin-right: auto;
     }
@@ -1593,35 +1613,32 @@
 
     <main id="main-content">
       <section class="hero" id="home" aria-label="Hero">
-        <div class="container">
-          <div class="hero-box">
-            <div class="pill">
-              <span class="dotL" aria-hidden="true"></span>
-              AVAILABLE FOR ACQUISITION
-              <span class="dotR" aria-hidden="true"></span>
-            </div>
+  <div class="container">
+    <div class="hero-box">
+      <div class="pill">
+        <span class="dotL" aria-hidden="true"></span>
+        / ˈnoʊ sɪs / : knowledge, insight, authority.
+        <span class="dotR" aria-hidden="true"></span>
+      </div>
 
-            <div class="retro-typewriter">
-              <span class="typing-text">/ ˈnoʊ sɪs / : knowledge, insight, authority.</span>
-            </div>
+      <h1>
+        <span class="hero-topline">The Apex of</span><br/>
+        <span class="grad-text">AI</span> <span class="grad-text">Branding</span>
+      </h1>
 
-            <h1>
-              <span class="hero-topline">The Apex of</span><br/>
-              <span class="grad-text">AI</span> <span class="grad-text">Branding</span>
-            </h1>
+      <p>
+        The definitive <span class="strong">.com</span> + <span class="strong">.ai</span> identity infrastructure for category leaders.
+      </p>
 
-            <p>
-              The definitive <span class="strong">.com</span> + <span class="strong">.ai</span> identity infrastructure for category leaders.
-            </p>
+      <div class="trust-row" aria-label="Trust signals">
+        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
+        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-shield"></use></svg> Secure Transfer Workflows</div>
+        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-bolt"></use></svg> Registrar Transfer</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="trust-row" aria-label="Trust signals">
-              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
-              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-shield"></use></svg> Secure Transfer Workflows</div>
-              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-bolt"></use></svg> Registrar Transfer</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section class="portfolio" id="collection" aria-label="Collection">
         <div class="container">
@@ -2007,7 +2024,6 @@
       });
     })();
 
-    // [Rest of JavaScript: Header, Menu, Particles, Forms...]
     document.getElementById("year").textContent = new Date().getFullYear();
 
     (function(){
