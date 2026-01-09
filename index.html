@@ -22,7 +22,7 @@
 
   <title>Gnosis Assets | Premium AI Domain Bundles & Identity Infrastructure</title>
   <meta name="title" content="Gnosis Assets | Premium AI Domain Bundles & Identity Infrastructure" />
-  <meta name="description" content="Gnosis Assets: Exclusive .com + .ai domain bundles for AI startups. Secure your digital identity with institutional-grade assets and verified ownership transfer." />
+  <meta name="description" content="Premium .com + .ai domain bundles for the next generation of AI startups. Secure your institutional-grade identity infrastructure today." />
   <meta name="author" content="Gnosis Assets" />
   <meta name="google-site-verification" content="3J55IjwMZdTSc5NWheXIGv3ZSy3NgibrF7_mWYCXQmY" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -51,16 +51,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Gnosis Assets",
-    "url": "https://gnosisbase.com",
-    "logo": "https://gnosisbase.com/logo.png",
-    "sameAs": [],
-    "description": "Specialized marketplace for high-end AI domain bundles and digital identity assets."
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://gnosisbase.com/",
+  "name": "Gnosis Assets",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://gnosisbase.com/#collection",
+    "query-input": "required name=search_term_string"
   }
-  </script>
+}
+</script>
 
   <style>
     :root{
@@ -441,78 +443,129 @@
     .delay-3{ transition-delay:.30s; }
 
     /* Hero */
-    .hero{
-      padding: clamp(44px, 6vw, 78px) 0 clamp(38px, 5vw, 64px);
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-    }
+    /* Hero */
+.hero{
+  padding: clamp(44px, 6vw, 78px) 0 clamp(38px, 5vw, 64px);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
 
-    .hero-box{
-      width: min(1180px, 100%);
-      margin: 0 auto;
-      padding: clamp(26px, 4vw, 42px) clamp(18px, 4vw, 44px);
-      background: var(--glass-bg);
-      border-radius: clamp(20px, 3vw, 32px);
-      border: 1px solid var(--cyan);
-      box-shadow: 0 30px 70px -15px rgba(0,240,240,.15), inset 0 0 50px -5px var(--accent-glow);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transition: transform .35s ease, box-shadow .35s ease;
-      position:relative;
-      overflow:hidden;
-    }
-    [data-theme="light"] .hero-box{
-      border-color: var(--purple);
-      box-shadow: 0 30px 70px -15px rgba(106,0,204,.15), inset 0 0 50px -5px var(--accent-glow);
-    }
-    .hero-box:hover{
-      transform: translateY(-5px);
-      box-shadow: 0 40px 80px -15px rgba(0,240,240,.22), inset 0 0 60px -5px var(--accent-glow);
-    }
-    [data-theme="light"] .hero-box:hover{
-      box-shadow: 0 40px 80px -15px rgba(106,0,204,.22), inset 0 0 60px -5px var(--accent-glow);
-    }
+.hero-box{
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 42px) clamp(18px, 4vw, 44px);
+  background: var(--glass-bg);
+  border-radius: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--cyan);
+  box-shadow: 0 30px 70px -15px rgba(0,240,240,.15), inset 0 0 50px -5px var(--accent-glow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform .35s ease, box-shadow .35s ease;
+  position:relative;
+  overflow:hidden;
+}
 
-    .pill{
-      display:block;
-      margin: 0 auto clamp(18px, 3vw, 36px);
-      padding: 18px 0;
-      width: min(900px, 100%);
+[data-theme="light"] .hero-box{
+  border-color: var(--purple);
+  box-shadow: 0 30px 70px -15px rgba(106,0,204,.15), inset 0 0 50px -5px var(--accent-glow);
+}
 
-      font-family: var(--serif);
-      font-size: clamp(20px, 1.15vw, 22px);
-      font-weight: 500;
-      font-style: italic;
-      letter-spacing: 1.2px;
-      text-transform: none;
+.hero-box:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 40px 80px -15px rgba(0,240,240,.22), inset 0 0 60px -5px var(--accent-glow);
+}
 
-      color: rgba(235,238,245,.92);
-      background: transparent;
-      border: none;
-      box-shadow: none;
+[data-theme="light"] .hero-box:hover{
+  box-shadow: 0 40px 80px -15px rgba(106,0,204,.22), inset 0 0 60px -5px var(--accent-glow);
+}
 
-      position:relative;
-      text-align:center;
-    }
-    [data-theme="light"] .pill{ color: rgba(12,16,34,.88); }
-    .pill .dotL,.pill .dotR{ display:none; }
-    .pill::before,
-    .pill::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      transform: translateX(-50%);
-      width: 70%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
-    }
-    .pill::before{ top:0; }
-    .pill::after{ bottom:0; }
-    [data-theme="light"] .pill::before,
-    [data-theme="light"] .pill::after{
-      background: linear-gradient(90deg, transparent, rgba(12,16,34,.35), transparent);
-    }
+/* Pill */
+.pill{
+  display:block;
+  margin: 0 auto clamp(18px, 3vw, 36px);
+  padding: 18px 0;
+  width: min(900px, 100%);
+
+  font-family: var(--serif);
+  font-style: italic;
+  text-transform: none;
+
+  color: rgba(235,238,245,.92);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  position:relative;
+  text-align:center;
+}
+
+[data-theme="light"] .pill{
+  color: rgba(12,16,34,.88);
+}
+
+/* Golden lines */
+.pill::before,
+.pill::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(242,208,115,.65),
+    transparent
+  );
+}
+
+.pill::before{ top:0; }
+.pill::after{ bottom:0; }
+
+[data-theme="light"] .pill::before,
+[data-theme="light"] .pill::after{
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(185,138,45,.55),
+    transparent
+  );
+}
+
+/* Text parts */
+.pill-top{
+  display:inline;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 600;
+  letter-spacing: .8px;
+}
+
+.pill-bottom{
+  display:inline;
+  font-size: clamp(15px, 1.2vw, 16.5px);
+  font-weight: 500;
+  letter-spacing: .3px;
+  opacity:.85;
+}
+
+/* Mobile layout */
+@media (max-width: 680px){
+  .pill-top,
+  .pill-bottom{
+    display:block;
+  }
+
+  .pill-top{
+    font-size: clamp(18px, 4.8vw, 22px);
+  }
+
+  .pill-bottom{
+    font-size: clamp(11px, 3vw, 13px);
+  }
+}
+
 
     .retro-typewriter{
       display:inline-block;
@@ -1616,14 +1669,14 @@
   <div class="container">
     <div class="hero-box">
       <div class="pill">
-        <span class="dotL" aria-hidden="true"></span>
-        / ˈnoʊ sɪs / : knowledge, insight, authority.
-        <span class="dotR" aria-hidden="true"></span>
-      </div>
+  <span class="pill-top">/ ˈnoʊ sɪs /</span>
+  <span class="pill-bottom">knowledge, insight, authority.</span>
+</div>
+
 
       <h1>
-        <span class="hero-topline">The Apex of</span><br/>
-        <span class="grad-text">AI</span> <span class="grad-text">Branding</span>
+      <span class="hero-topline">The Apex of</span><br/>
+      <span class="grad-text">Gnosis</span> <span class="grad-text">AI Branding</span>
       </h1>
 
       <p>
