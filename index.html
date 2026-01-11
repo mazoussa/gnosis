@@ -1,68 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <script>
-    (function() {
-      try {
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-        // تحديث لون شريط المتصفح فوراً
-        const meta = document.createElement('meta');
-        meta.name = "theme-color";
-        meta.content = theme === 'dark' ? '#060712' : '#f7f8ff';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-      } catch (e) {}
+    // يحدد الثيم قبل ظهور الصفحة لتفادي الوميض
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      // تعطيل الانتقالات أثناء التحميل لتفادي الرمش
+      document.documentElement.style.setProperty('transition', 'none');
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.documentElement.style.removeProperty('transition');
+        }, 100);
+      });
     })();
   </script>
 
   <title>Gnosis Assets | Premium AI Domain Bundles & Identity Infrastructure</title>
-  <meta name="title" content="Gnosis Assets | Premium AI Domain Bundles & Identity Infrastructure" />
+
   <meta name="description" content="Premium .com + .ai domain bundles for the next generation of AI startups. Secure your institutional-grade identity infrastructure today." />
   <meta name="author" content="Gnosis Assets" />
-  <meta name="google-site-verification" content="3J55IjwMZdTSc5NWheXIGv3ZSy3NgibrF7_mWYCXQmY" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://gnosisbase.com/" />
+  <meta name="theme-color" content="#060712" />
 
+  <link rel="canonical" href="https://gnosisbase.com/" />
+  <meta name="google-site-verification" content="3J55IjwMZdTSc5NWheXIGv3ZSy3NgibrF7_mWYCXQmY" />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gnosisbase.com/" />
   <meta property="og:title" content="Gnosis Assets | Premium AI Domain Portfolio" />
   <meta property="og:description" content="Acquire exclusive .com + .ai bundles for AI startups. Verified ownership and secure transfer workflows." />
   <meta property="og:image" content="https://gnosisbase.com/og-image.jpg" />
+  <meta property="og:image:alt" content="Gnosis Assets – Premium AI domain bundles" />
   <meta property="og:site_name" content="Gnosis Assets" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://gnosisbase.com/" />
   <meta name="twitter:title" content="Gnosis Assets | Premium AI Domain Portfolio" />
   <meta name="twitter:description" content="Exclusive .com + .ai domain assets for the next generation of AI companies." />
   <meta name="twitter:image" content="https://gnosisbase.com/og-image.jpg" />
+  <meta name="twitter:image:alt" content="Gnosis Assets – Premium AI domain bundles" />
 
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
+  <!-- Structured Data -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "url": "https://gnosisbase.com/",
-  "name": "Gnosis Assets",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://gnosisbase.com/#collection",
-    "query-input": "required name=search_term_string"
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Gnosis Assets",
+    "url": "https://gnosisbase.com/",
+    "logo": "https://gnosisbase.com/logo.png",
+    "sameAs": []
   }
-}
-</script>
+  </script>
 
   <style>
     :root{
@@ -180,18 +185,6 @@
       transition: opacity .5s ease;
     }
 
-    .cursor-glow{
-      position:fixed; inset:0; z-index:5;
-      pointer-events:none;
-      opacity:0;
-      transition: opacity .25s ease;
-      background:
-        radial-gradient(220px 220px at var(--mx,50%) var(--my,50%),rgba(0,240,240,.08),transparent 65%),
-        radial-gradient(300px 300px at var(--mx,50%) var(--my,50%),rgba(128,32,240,.06),transparent 70%);
-    }
-    @media (hover:hover) and (prefers-reduced-motion:no-preference){
-      body:hover .cursor-glow{ opacity:1; }
-    }
     @media (hover:none){ .cursor-glow{ display:none; } }
 
     .skip-link{
@@ -431,141 +424,163 @@
     }
 
     /* Reveal */
-    .reveal{
-      opacity:0;
+    .reveal {
+      opacity: 0;
       transform: translateY(24px);
       transition: all .8s cubic-bezier(.5,0,0,1);
-      will-change: opacity, transform;
     }
+
+    /* Strategic Value cards reveal */
+    #value .big-card.reveal{
+      transform: translateX(-28px);
+    }
+    #value .big-card.reveal:nth-child(even){
+      transform: translateX(28px);
+    }
+    #value .big-card.reveal.is-visible{
+      transform: translateX(0);
+    }
+
+    /* Hero shows instantly */
+    .hero .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    /* Portfolio cards reveal */
+    #collection .card.reveal{
+      transform: translateX(-18px);
+    }
+    #collection .card.reveal:nth-child(even){
+      transform: translateX(18px);
+    }
+    #collection .card.reveal.is-visible{
+      transform: translateX(0);
+    }
+
     .reveal.is-visible{ opacity:1; transform: translateY(0); }
-    .delay-1{ transition-delay:.10s; }
-    .delay-2{ transition-delay:.20s; }
-    .delay-3{ transition-delay:.30s; }
+    .delay-1{ transition-delay:.16s; }
+    .delay-2{ transition-delay:.32s; }
+    .delay-3{ transition-delay:.48s; }
 
     /* Hero */
-    /* Hero */
-.hero{
-  padding: clamp(44px, 6vw, 78px) 0 clamp(38px, 5vw, 64px);
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
+    .hero{
+      padding: clamp(44px, 6vw, 78px) 0 clamp(38px, 5vw, 64px);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
 
-.hero-box{
-  width: min(1180px, 100%);
-  margin: 0 auto;
-  padding: clamp(26px, 4vw, 42px) clamp(18px, 4vw, 44px);
-  background: var(--glass-bg);
-  border-radius: clamp(20px, 3vw, 32px);
-  border: 1px solid var(--cyan);
-  box-shadow: 0 30px 70px -15px rgba(0,240,240,.15), inset 0 0 50px -5px var(--accent-glow);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transition: transform .35s ease, box-shadow .35s ease;
-  position:relative;
-  overflow:hidden;
-}
+    /* Secure Asset Transfer reveal faster */
+    #security .assurance-section.reveal{
+      transition-duration: .45s;
+      transition-delay: 0s !important;
+      transform: translateY(14px);
+    }
+    #security .assurance-section.reveal.is-visible{
+      transform: translateY(0);
+    }
 
-[data-theme="light"] .hero-box{
-  border-color: var(--purple);
-  box-shadow: 0 30px 70px -15px rgba(106,0,204,.15), inset 0 0 50px -5px var(--accent-glow);
-}
+    .hero-box{
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: clamp(26px, 4vw, 42px) clamp(18px, 4vw, 44px);
+      background: var(--glass-bg);
+      border-radius: clamp(20px, 3vw, 32px);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 30px 70px -15px rgba(0,240,240,.15), inset 0 0 50px -5px var(--accent-glow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform .35s ease, box-shadow .35s ease;
+      position:relative;
+      overflow:hidden;
+    }
 
-.hero-box:hover{
-  transform: translateY(-5px);
-  box-shadow: 0 40px 80px -15px rgba(0,240,240,.22), inset 0 0 60px -5px var(--accent-glow);
-}
+    [data-theme="light"] .hero-box{
+      border-color: var(--purple);
+      box-shadow: 0 30px 70px -15px rgba(106,0,204,.15), inset 0 0 50px -5px var(--accent-glow);
+    }
 
-[data-theme="light"] .hero-box:hover{
-  box-shadow: 0 40px 80px -15px rgba(106,0,204,.22), inset 0 0 60px -5px var(--accent-glow);
-}
+    .hero-box:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 40px 80px -15px rgba(0,240,240,.22), inset 0 0 60px -5px var(--accent-glow);
+    }
 
-/* Pill */
-.pill{
-  display:block;
-  margin: 0 auto clamp(18px, 3vw, 36px);
-  padding: 18px 0;
-  width: min(900px, 100%);
+    [data-theme="light"] .hero-box:hover{
+      box-shadow: 0 40px 80px -15px rgba(106,0,204,.22), inset 0 0 60px -5px var(--accent-glow);
+    }
 
-  font-family: var(--serif);
-  font-style: italic;
-  text-transform: none;
+    /* Pill */
+    .pill{
+      display:block;
+      margin: 0 auto clamp(18px, 3vw, 36px);
+      padding: 18px 0;
+      width: min(900px, 100%);
+      font-family: var(--serif);
+      font-style: italic;
+      text-transform: none;
+      color: rgba(235,238,245,.92);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      position:relative;
+      text-align:center;
+    }
 
-  color: rgba(235,238,245,.92);
-  background: transparent;
-  border: none;
-  box-shadow: none;
+    [data-theme="light"] .pill{
+      color: rgba(12,16,34,.88);
+    }
 
-  position:relative;
-  text-align:center;
-}
+    /* Golden lines */
+    .pill::before,
+    .pill::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(242,208,115,.65), transparent);
+    }
 
-[data-theme="light"] .pill{
-  color: rgba(12,16,34,.88);
-}
+    .pill::before{ top:0; }
+    .pill::after{ bottom:0; }
 
-/* Golden lines */
-.pill::before,
-.pill::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(242,208,115,.65),
-    transparent
-  );
-}
+    [data-theme="light"] .pill::before,
+    [data-theme="light"] .pill::after{
+      background: linear-gradient(90deg, transparent, rgba(185,138,45,.55), transparent);
+    }
 
-.pill::before{ top:0; }
-.pill::after{ bottom:0; }
+    .pill-top{
+      display:inline;
+      font-size: clamp(18px, 1.4vw, 22px);
+      font-weight: 600;
+      letter-spacing: .8px;
+    }
 
-[data-theme="light"] .pill::before,
-[data-theme="light"] .pill::after{
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(185,138,45,.55),
-    transparent
-  );
-}
+    .pill-bottom{
+      display:inline;
+      font-size: clamp(15px, 1.2vw, 16.5px);
+      font-weight: 500;
+      letter-spacing: .3px;
+      opacity:.85;
+    }
 
-/* Text parts */
-.pill-top{
-  display:inline;
-  font-size: clamp(18px, 1.4vw, 22px);
-  font-weight: 600;
-  letter-spacing: .8px;
-}
+    @media (max-width: 680px){
+      .pill-top,
+      .pill-bottom{
+        display:block;
+      }
 
-.pill-bottom{
-  display:inline;
-  font-size: clamp(15px, 1.2vw, 16.5px);
-  font-weight: 500;
-  letter-spacing: .3px;
-  opacity:.85;
-}
+      .pill-top{
+        font-size: clamp(18px, 4.8vw, 22px);
+      }
 
-/* Mobile layout */
-@media (max-width: 680px){
-  .pill-top,
-  .pill-bottom{
-    display:block;
-  }
-
-  .pill-top{
-    font-size: clamp(18px, 4.8vw, 22px);
-  }
-
-  .pill-bottom{
-    font-size: clamp(11px, 3vw, 13px);
-  }
-}
-
+      .pill-bottom{
+        font-size: clamp(11px, 3vw, 13px);
+      }
+    }
 
     .retro-typewriter{
       display:inline-block;
@@ -641,7 +656,6 @@
     .trust{ display:flex; gap:10px; align-items:center; }
     .trust .ico{ color: rgba(0,240,240,.95); filter: var(--icon-glow); }
     .trust:nth-child(2) .ico{ color: rgba(128,32,240,.95); filter: drop-shadow(0 0 8px rgba(128,32,240,0.30)); }
-    
 
     /* Shared section titles */
     .kicker{
@@ -1054,54 +1068,144 @@
       color: rgba(0,0,0,.70);
     }
 
-    .acq2-partner{
-      margin: 18px auto 0;
-      width: min(980px, 100%);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: var(--shadow-1);
+    /* Transfer Assurance */
+    .assurance-section{
+      margin: 32px auto 0;
+      width: min(1000px, 100%);
+    }
+
+    .assurance-rail{
+      border-radius: 26px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(128, 32, 240, 0.22), rgba(34, 197, 94, 0.16));
+      transition: transform .45s cubic-bezier(.4,0,.2,1),
+                  box-shadow .45s cubic-bezier(.4,0,.2,1),
+                  background .45s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 18px 60px -22px rgba(0,0,0,.80);
+    }
+
+    .assurance-rail:hover{
+      transform: translateY(-8px);
+      background: linear-gradient(135deg, rgba(167, 139, 250, 1), rgba(34, 197, 94, 1));
+      box-shadow: 0 40px 80px -20px rgba(124, 58, 237, 0.30);
+    }
+
+    .assurance-inner{
+      background: rgba(10, 6, 24, 0.92);
+      border-radius: 24px;
+      padding: 35px 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .assurance-left{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      text-align:left;
+      gap: 25px;
+      min-width: 0;
     }
-    .acq2-partner-left{ display:flex; align-items:center; gap: 12px; }
-    .acq2-partner-badge{
-      width: 52px; height: 52px;
+
+    .assurance-icon-box{
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
       border-radius: 18px;
-      display:grid; place-items:center;
-      background: rgba(0,240,240,.10);
-      border: 1px solid rgba(0,240,240,.22);
-      color: rgba(0,240,240,.95);
-      flex-shrink:0;
-    }
-    [data-theme="light"] .acq2-partner-badge{
-      background: rgba(128,32,240,.08);
-      border-color: rgba(128,32,240,.18);
-      color: rgba(128,32,240,.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(167, 139, 250, 0.10);
+      border: 1px solid rgba(167, 139, 250, 0.30);
+      color: rgba(167, 139, 250, 1);
+      box-shadow: 0 0 20px rgba(167, 139, 250, 0.20);
+      animation: shieldPulse 2.5s infinite ease-in-out;
     }
 
-    .acq2-partner-title{ font-family: var(--serif); font-size: 18px; margin-bottom: 6px; }
-    .acq2-partner-sub{ color: var(--muted); font-size: 14px; line-height: 1.65; font-weight: 300; max-width: 64ch; }
+    @keyframes shieldPulse{
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(167, 139, 250, 0.20); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(167, 139, 250, 0.40); }
+    }
 
-    .btn-godaddy{
-      background-color: #28a745;
-      color:#fff;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 900;
-      font-size: 13px;
-      border: 1px solid #1e7e34;
-      display:inline-flex;
-      align-items:center;
-      transition: transform .2s ease, background-color .2s ease;
-      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+    .assurance-text{
+      min-width: 0;
+    }
+
+    .assurance-text h4{
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+      font-family: var(--sans);
+    }
+
+    .assurance-text p{
+      color: rgba(166, 176, 195, 1);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 300;
+    }
+
+    .btn-escrow-premium{
+      background: linear-gradient(135deg, #22c55e, #0c8b3a);
+      color: #fff !important;
+      padding: 16px 35px;
+      border-radius: 16px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+      box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.40);
+      border: 1px solid rgba(255,255,255,.20);
+      text-decoration: none;
       white-space: nowrap;
+      font-family: var(--sans);
     }
-    .btn-godaddy:hover{ background-color:#218838; transform: translateY(-1px); }
+
+    .btn-escrow-premium:hover{
+      transform: scale(1.05);
+      filter: brightness(1.02);
+      box-shadow: 0 20px 40px -10px rgba(34, 197, 94, 0.60);
+    }
+
+    [data-theme="light"] .assurance-inner{
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(12,16,34,.10);
+    }
+    [data-theme="light"] .assurance-text h4{
+      color: rgba(12,16,34,.92);
+    }
+    [data-theme="light"] .assurance-text p{
+      color: rgba(12,16,34,.70);
+    }
+    [data-theme="light"] .assurance-rail{
+      box-shadow: 0 18px 60px -22px rgba(12,16,34,.18);
+    }
+
+    @media (max-width: 768px){
+      .assurance-inner{
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        align-items: stretch;
+      }
+      .assurance-left{
+        flex-direction: column;
+        text-align: center;
+      }
+      .btn-escrow-premium{
+        width: 100%;
+        justify-content: center;
+      }
+    }
 
     /* Inquiry */
     .inquiry{
@@ -1520,24 +1624,23 @@
     @media (max-width: 680px){
       :root{ --header-height: 70px; --gutter: 16px; }
       .grid-form{ grid-template-columns: 1fr; }
-      .acq2-partner{ flex-direction: column; align-items:flex-start; }
       .trust-row{ gap: 12px 20px; }
       .brand-name{ font-size: 18px; }
       .brand-logo{ height: 46px; }
-      
-      /* === Fix: Mobile overflow solutions === */
-      .typing-text { 
-        white-space: normal; 
-        width: 100% !important; 
-        border-right: none; 
-        animation: none; 
+
+      /* Fix mobile overflow */
+      .typing-text {
+        white-space: normal;
+        width: 100% !important;
+        border-right: none;
+        animation: none;
       }
       .bundle-pill {
-        white-space: normal; 
+        white-space: normal;
         text-align: center;
       }
       .card-top {
-        flex-direction: column; 
+        flex-direction: column;
         align-items: flex-start;
       }
     }
@@ -1614,7 +1717,6 @@
   </svg>
 
   <a class="skip-link" href="#collection">Skip to content</a>
-  <div class="cursor-glow" aria-hidden="true"></div>
   <div class="bg-gradient" aria-hidden="true"></div>
   <canvas id="bg" aria-hidden="true"></canvas>
 
@@ -1666,32 +1768,30 @@
 
     <main id="main-content">
       <section class="hero" id="home" aria-label="Hero">
-  <div class="container">
-    <div class="hero-box">
-      <div class="pill">
-  <span class="pill-top">/ ˈnoʊ sɪs /</span>
-  <span class="pill-bottom">knowledge, insight, authority.</span>
-</div>
+        <div class="container">
+          <div class="hero-box">
+            <div class="pill">
+              <span class="pill-top">/ ˈnoʊ sɪs /</span>
+              <span class="pill-bottom">knowledge, insight, authority.</span>
+            </div>
 
+            <h1>
+              <span class="hero-topline">The Apex of</span><br/>
+              <span class="grad-text">Gnosis</span> <span class="grad-text">AI Branding</span>
+            </h1>
 
-      <h1>
-      <span class="hero-topline">The Apex of</span><br/>
-      <span class="grad-text">Gnosis</span> <span class="grad-text">AI Branding</span>
-      </h1>
+            <p>
+              The definitive <span class="strong">.com</span> + <span class="strong">.ai</span> identity infrastructure for category leaders.
+            </p>
 
-      <p>
-        The definitive <span class="strong">.com</span> + <span class="strong">.ai</span> identity infrastructure for category leaders.
-      </p>
-
-      <div class="trust-row" aria-label="Trust signals">
-        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
-        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-shield"></use></svg> Secure Transfer Workflows</div>
-        <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-bolt"></use></svg> Registrar Transfer</div>
-      </div>
-    </div>
-  </div>
-</section>
-
+            <div class="trust-row" aria-label="Trust signals">
+              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
+              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-shield"></use></svg> Secure Transfer Workflows</div>
+              <div class="trust"><svg class="ico s18" aria-hidden="true"><use href="#i-bolt"></use></svg> Registrar Transfer</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="portfolio" id="collection" aria-label="Collection">
         <div class="container">
@@ -1862,29 +1962,36 @@
             </div>
           </div>
 
-          <div class="acq2-partner">
-            <div class="acq2-partner-left">
-              <div class="acq2-partner-badge"><svg class="ico s20" aria-hidden="true"><use href="#i-shield"></use></svg></div>
-              <div>
-                <div class="acq2-partner-title">Transfer Assurance</div>
-                <div class="acq2-partner-sub">Transfers can be completed via escrow or registrar services depending on the transaction structure.</div>
+          <section class="assurance-section reveal" aria-label="Transfer Assurance">
+            <div class="assurance-rail">
+              <div class="assurance-inner">
+                <div class="assurance-left">
+                  <div class="assurance-icon-box" aria-hidden="true">
+                    <svg class="ico s24"><use href="#i-shield"></use></svg>
+                  </div>
+
+                  <div class="assurance-text">
+                    <h4>Secure Asset Transfer</h4>
+                    <p>
+                      We utilize <strong>Escrow.com</strong> to guarantee a risk-free transaction.
+                      The funds are only released after the domain is safely in your control.
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="https://www.escrow.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-escrow-premium"
+                  aria-label="Acquire via Escrow"
+                >
+                  <svg class="ico s18" aria-hidden="true"><use href="#i-lock"></use></svg>
+                  <span>Acquire via Escrow</span>
+                </a>
               </div>
             </div>
-
-            <a
-              href="https://www.godaddy.com/domainsearch/find?domainToCheck=gnosisbase.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-godaddy"
-              aria-label="Secure Acquisition"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              Secure Acquisition
-            </a>
-          </div>
+          </section>
         </div>
       </section>
 
@@ -1942,8 +2049,8 @@
                 </label>
               </div>
 
-              <input type="hidden" name="_subject" value="New Inquiry from Gnosis Assets">
-              <input type="hidden" name="_replyto" id="_replyto">
+              <input type="hidden" name="_subject" value="New Inquiry from Gnosis Assets" />
+              <input type="hidden" name="_replyto" id="_replyto" />
 
               <button class="submit" type="submit" id="submitBtn" aria-describedby="errorMsg">
                 <span class="btn-label">
@@ -1982,7 +2089,6 @@
           </div>
         </div>
       </section>
-
     </main>
 
     <footer class="site-footer">
@@ -2061,7 +2167,7 @@
   </dialog>
 
   <script>
-    // 2. تحديث كود التبديل (بدون كود التهيئة لأنه أصبح في الأعلى)
+    // Theme toggle
     (function(){
       const html = document.documentElement;
       const btn = document.getElementById("themeToggle");
@@ -2077,8 +2183,10 @@
       });
     })();
 
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // Header glass on scroll
     (function(){
       const header = document.getElementById("siteHeader");
       if(!header) return;
@@ -2087,10 +2195,12 @@
       onScroll();
     })();
 
+    // Mobile nav toggle
     (function(){
       const btn = document.getElementById("menuBtn");
       const nav = document.getElementById("mobileNav");
       if(!btn || !nav) return;
+
       function close(){
         nav.classList.remove("show");
         btn.setAttribute("aria-expanded", "false");
@@ -2107,27 +2217,32 @@
       nav.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
     })();
 
+    // Background particles
     (function () {
-      const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia && window.matchMedia("prefers-reduced-motion: reduce").matches;
       const canvas = document.getElementById("bg");
       if (!canvas || prefersReduced) return;
       const ctx = canvas.getContext("2d");
       const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      let w = 0, h = 0, particles = [], mouse = { x: null, y: null, radius: 150 };
+      let w = 0, h = 0, particles = [];
       const colors = ["#7c3aed", "#a855f7", "#d8b4fe"];
+
       function resize() {
         w = window.innerWidth; h = window.innerHeight;
         canvas.width = Math.floor(w * DPR); canvas.height = Math.floor(h * DPR);
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         init();
       }
+
       class Particle {
         constructor() {
-          this.x = Math.random() * w; this.y = Math.random() * h;
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
           this.isSpecial = Math.random() < 0.10;
           this.size = this.isSpecial ? Math.random() * 2 + 1.5 : Math.random() * 1.5 + 0.5;
           this.color = colors[Math.floor(Math.random() * colors.length)];
-          this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+          this.vx = (Math.random() - 0.5) * 0.3;
+          this.vy = (Math.random() - 0.5) * 0.3;
         }
         step() {
           this.x += this.vx; this.y += this.vy;
@@ -2135,51 +2250,164 @@
           if (this.y < 0 || this.y > h) this.vy *= -1;
         }
         draw(isDark) {
-          ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
           ctx.fillStyle = this.isSpecial ? (isDark ? "#fff" : "#000") : this.color;
           ctx.fill();
         }
       }
-      function init() { particles = Array.from({ length: Math.floor((w*h)/9000) }, () => new Particle()); }
+
+      function init() {
+        particles = Array.from({ length: Math.floor((w*h)/9000) }, () => new Particle());
+      }
+
       function animate() {
         ctx.clearRect(0, 0, w, h);
         const isDark = document.documentElement.getAttribute("data-theme") === "dark";
         for (const p of particles) { p.step(); p.draw(isDark); }
         requestAnimationFrame(animate);
       }
+
       window.addEventListener("resize", resize);
-      resize(); animate();
+      resize();
+      animate();
     })();
 
+    // Main interactions: form, reveal, modal, inquire buttons
     (function () {
       const form = document.querySelector('.js-inquiry-form');
       const confirmation = document.getElementById('formConfirmation');
       const submitBtn = document.getElementById('submitBtn');
-      if (form) {
+      const errorMsg = document.getElementById('errorMsg');
+      const emailInput = document.getElementById('email');
+      const replyTo = document.getElementById('_replyto');
+
+      // Inquire buttons set asset and scroll
+      document.querySelectorAll('.btn-inquire').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const asset = btn.getAttribute('data-asset');
+          const select = document.getElementById('asset');
+          if (select && asset) {
+            select.value = asset;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // Form submit with better error handling
+      if (form && submitBtn) {
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
+          if (errorMsg) errorMsg.style.display = 'none';
+
+          if (replyTo && emailInput) replyTo.value = emailInput.value || '';
+
           submitBtn.classList.add('loading');
+
           try {
-            const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-            if (res.ok) { form.style.display = 'none'; confirmation.style.display = 'block'; }
-          } catch (err) { submitBtn.classList.remove('loading'); }
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { 'Accept': 'application/json' }
+            });
+
+            if (res.ok) {
+              form.style.display = 'none';
+              if (confirmation) confirmation.style.display = 'block';
+
+              const nda = document.getElementById('nda');
+              const ndaNote = document.getElementById('ndaNote');
+              if (nda && nda.checked && ndaNote) ndaNote.style.display = 'flex';
+            } else {
+              if (errorMsg) errorMsg.style.display = 'block';
+            }
+          } catch (err) {
+            if (errorMsg) errorMsg.style.display = 'block';
+          } finally {
+            submitBtn.classList.remove('loading');
+          }
         });
       }
-      const targets = ['.hero .pill','.hero h1','.hero p','#collection .card','#value .big-card','#security .acq-card'];
+
+      // Reveal animations
+      const targets = [
+        '.hero .pill',
+        '.hero h1',
+        '.hero p',
+        '#collection .card',
+        '#value .big-card',
+        '#security .acq-card',
+        '#security .assurance-section'
+      ];
+
       const elements = [];
       targets.forEach(sel => document.querySelectorAll(sel).forEach(el => elements.push(el)));
-      elements.forEach((el, idx) => { el.classList.add('reveal'); if(idx%4!==0) el.classList.add('delay-'+(idx%4)); });
+      elements.forEach((el, idx) => {
+        el.classList.add('reveal');
+        if (idx % 4 !== 0) el.classList.add('delay-' + (idx % 4));
+      });
+
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
-      }, { threshold: 0.1 });
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.22 });
       elements.forEach(el => io.observe(el));
-      
+
+      // Privacy modal open and close
       const privacyModal = document.getElementById('privacyModal');
       const closeModalBtn = document.querySelector('.close-modal-btn');
+
       document.querySelectorAll('[data-open-privacy-modal="true"]').forEach(el => {
-        el.addEventListener('click', (e) => { e.preventDefault(); privacyModal.showModal(); });
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          privacyModal?.showModal();
+        });
       });
-      closeModalBtn?.addEventListener('click', () => privacyModal.close());
+
+      closeModalBtn?.addEventListener('click', () => privacyModal?.close());
+
+      if (privacyModal) {
+        privacyModal.addEventListener('click', (e) => {
+          const rect = privacyModal.getBoundingClientRect();
+          const inDialog =
+            e.clientX >= rect.left && e.clientX <= rect.right &&
+            e.clientY >= rect.top && e.clientY <= rect.bottom;
+          if (!inDialog) privacyModal.close();
+        });
+      }
+
+      // Close confirmation
+      const closeConfirmation = document.getElementById('closeConfirmation');
+      closeConfirmation?.addEventListener('click', () => {
+        if (confirmation) confirmation.style.display = 'none';
+        if (form) form.style.display = 'block';
+      });
+
+      // Button pointerdown effect
+      document.querySelectorAll('.btn-escrow-premium').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          const r = btn.getBoundingClientRect();
+          btn.style.setProperty('--rx', ((e.clientX - r.left) / r.width) * 100 + '%');
+          btn.style.setProperty('--ry', ((e.clientY - r.top) / r.height) * 100 + '%');
+        });
+      });
+    })();
+
+    // Scroll to top visibility
+    (function(){
+      const scrollTop = document.getElementById('scrollTop');
+      if (!scrollTop) return;
+
+      const onScroll = () => {
+        scrollTop.classList.toggle('show', window.scrollY > 400);
+      };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
     })();
   </script>
 </body>
