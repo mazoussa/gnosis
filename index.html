@@ -526,6 +526,22 @@
         #collection .card.reveal:nth-child(even) { transform: translateX(18px); }
         #collection .card.reveal.is-visible { transform: translateX(0); }
 
+                /* Dominance reveal: enter from left/right */
+        #dominance .dom-row-top > .reveal { transform: translateX(-46px); }
+        #dominance .dom-row-top > .reveal:nth-child(2) { transform: translateX(46px); }
+
+        #dominance .dom-row-bottom > .reveal { transform: translateX(-46px); }
+        #dominance .dom-row-bottom > .reveal:nth-child(2) { transform: translateX(46px); }
+
+        /* Right-column cards inside dominance: stagger from both sides */
+        #dominance .dom-cards > .reveal { transform: translateX(32px); }
+        #dominance .dom-cards > .reveal:nth-child(even) { transform: translateX(-32px); }
+
+        /* When visible */
+        #dominance .dom-row-top > .reveal.is-visible,
+        #dominance .dom-row-bottom > .reveal.is-visible,
+        #dominance .dom-cards > .reveal.is-visible { transform: translateX(0); }
+
         /* Strategic Value cards reveal */
         #value .big-card.reveal { transform: translateX(-28px); }
         #value .big-card.reveal:nth-child(even) { transform: translateX(28px); }
@@ -853,13 +869,13 @@
 
         .card h3 {
             font-family: var(--serif);
-            font-size: clamp(1.55rem, 2.2vw, 2.1rem);
+            font-size: clamp(1.9rem, 2.9vw, 2.7rem);
             letter-spacing: -1px;
             line-height: 1.05;
         }
         
         .tlds {
-            font-size: 12px;
+            font-size: 18px;
             color: rgba(243,244,248,.65);
             margin-top: 6px;
             font-weight: 900;
@@ -1695,13 +1711,16 @@
         }
 
         .mandate-footnote {
-            margin-top: 12px;
+            margin-top: 20px;
             font-size: 12px;
-            color: rgba(243,244,248,.62);
+            font-style: normal;
+            letter-spacing: .04em;
+            color: rgba(242,208,115,.78);
             font-weight: 800;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        
+   
+
         .mandate-footnote a { text-decoration: underline; }
 
         /* Form Card */
@@ -2532,9 +2551,15 @@
   font-weight: 900;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(242,208,115,.9); /* الذهبي المؤسسي */
+  color: rgba(242,208,115,.9); 
   margin-bottom: 6px;
 }
+
+.institutional-only{
+  opacity: .75;
+  letter-spacing: .14em;
+}
+
 
 .mandate-seal-sub{
   font-size: 13px;
@@ -2672,6 +2697,42 @@
 .read-report:hover span {
   transform: translateX(4px);
 }
+.closing-signal{
+  text-align:center;
+  font-size: 8px;
+  letter-spacing:.14em;
+  text-transform: uppercase;
+  opacity:.45;
+  margin: 34px auto 18px;
+}
+.hero-caption{
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: .02em;
+  opacity: .62;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.hero-axiom{
+  margin: 18px auto 0;
+  max-width: 580px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.0rem, 1.3vw, 1.35rem);
+  letter-spacing: .04em;
+  line-height: 1.55;
+  opacity: .92;
+  color: var(--text);
+  padding: 14px 18px;
+  border: none;
+  border-radius: 0;
+  background: rgba(255,255,255,.03);
+  box-shadow: none;
+}
+
 
         </style>
 </head>
@@ -2758,8 +2819,16 @@
                             <span class="grad-text">Gnosis</span> <span class="grad-text">AI Branding</span>
                         </h1>
                         
-                        <p>Rare domain pairings, delivered as a <span class="strong">single strategic asset</span>.<br/>Direct acquisition. Verifiable transfer. Total discretion.</p>
-                        
+                        <p>
+  Rare <span class="strong">.com + .ai domain pairings</span>, delivered as a
+  <span class="strong">single strategic identity asset</span>.<br/>
+  Direct acquisition. Verifiable transfer. Total discretion.
+</p>
+<div class="hero-axiom">
+  Who owns the name owns market trust.
+</div>
+
+
                         <div aria-label="Trust signals" class="trust-row">
                             <div class="trust"><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
                             <div class="trust"><svg aria-hidden="true" class="ico s18"><use href="#i-shield"></use></svg> Secure Transfer Workflows</div>
@@ -2857,87 +2926,83 @@
                     <div class="cards portfolio-view">
                         <!-- Card 1 -->
                         <article class="card reveal">
-                            <div class="card-top">
-                                <div class="title-row">
-                                    <div class="square-ico"><svg class="ico s20"><use href="#i-database"></use></svg></div>
-                                    <div><h3>Gnosis<span class="grad-text">Base</span> <span class="tlds">.com + .ai</span></h3></div>
-                                </div>
-                                <div class="bundle-pill">Double-Asset</div>
-                            </div>
-                            <div class="quote">"Enterprise Knowledge Infrastructure."</div>
-                            <div class="desc">The definitive foundation for data platforms and cognitive AI systems.</div>
-                            <div class="insight-link">
-                                <span class="insight-label">Strategic Insight</span>
-                                <a class="insight-anchor" href="article-1.html">The Strategic Premium →</a>
-                            </div>
-                            <div class="card-bottom">
-                                <div class="interest">Data Platforms</div>
-                                <a class="btn-portfolio" href="#inquiry">View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg></a>
-                            </div>
-                        </article>
+    <div class="card-top">
+        <div class="title-row">
+            <div class="square-ico"><svg class="ico s20"><use href="#i-database"></use></svg></div>
+            <div><h3>Gnosis<span class="grad-text">Base</span> <span class="tlds">.com + .ai</span></h3></div>
+        </div>
+        <div class="bundle-pill">Double-Asset</div>
+    </div>
+    <div class="quote">"Enterprise Knowledge Infrastructure."</div>
+    <div class="desc">The definitive foundation for data platforms and cognitive AI systems.</div>
+    <div class="card-bottom">
+        <div class="interest">Data Platforms</div>
+        <a class="btn-portfolio" href="#inquiry">
+            View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg>
+        </a>
+    </div>
+</article>
+
                         
                         <!-- Card 2 -->
                         <article class="card reveal delay-1">
-                            <div class="card-top">
-                                <div class="title-row">
-                                    <div class="square-ico purple"><svg class="ico s20"><use href="#i-wave"></use></svg></div>
-                                    <div><h3>Gnosis<span class="grad-text">Flow</span> <span class="tlds">.com + .ai</span></h3></div>
-                                </div>
-                                <div class="bundle-pill">Double-Asset</div>
-                            </div>
-                            <div class="quote">"AI Process Intelligence."</div>
-                            <div class="desc">Seamless infrastructure for automated workflows and intelligent pipelines.</div>
-                            <div class="insight-link">
-                                <span class="insight-label">Strategic Insight</span>
-                                <a class="insight-anchor" href="article-1.html">The Strategic Premium →</a>
-                            </div>
-                            <div class="card-bottom">
-                                <div class="interest">Automation</div>
-                                <a class="btn-portfolio" href="#inquiry">View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg></a>
-                            </div>
-                        </article>
+    <div class="card-top">
+        <div class="title-row">
+            <div class="square-ico purple"><svg class="ico s20"><use href="#i-wave"></use></svg></div>
+            <div><h3>Gnosis<span class="grad-text">Flow</span> <span class="tlds">.com + .ai</span></h3></div>
+        </div>
+        <div class="bundle-pill">Double-Asset</div>
+    </div>
+    <div class="quote">"AI Process Intelligence."</div>
+    <div class="desc">Seamless infrastructure for automated workflows and intelligent pipelines.</div>
+    <div class="card-bottom">
+        <div class="interest">Automation</div>
+        <a class="btn-portfolio" href="#inquiry">
+            View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg>
+        </a>
+    </div>
+</article>
+
                         
                         <!-- Card 3 -->
                         <article class="card reveal delay-2">
-                            <div class="card-top">
-                                <div class="title-row">
-                                    <div class="square-ico"><svg class="ico s20"><use href="#i-robot"></use></svg></div>
-                                    <div><h3>Gnosis<span class="grad-text">Agent</span> <span class="tlds">.com + .ai</span></h3></div>
-                                </div>
-                                <div class="bundle-pill">Double-Asset</div>
-                            </div>
-                            <div class="quote">"Autonomous Systems Standard."</div>
-                            <div class="desc">The primary identity for AI agents, autonomous tooling, and robotics.</div>
-                            <div class="insight-link">
-                                <span class="insight-label">Strategic Insight</span>
-                                <a class="insight-anchor" href="article-1.html">The Strategic Premium →</a>
-                            </div>
-                            <div class="card-bottom">
-                                <div class="interest">Agentic AI</div>
-                                <a class="btn-portfolio" href="#inquiry">View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg></a>
-                            </div>
-                        </article>
+    <div class="card-top">
+        <div class="title-row">
+            <div class="square-ico"><svg class="ico s20"><use href="#i-robot"></use></svg></div>
+            <div><h3>Gnosis<span class="grad-text">Agent</span> <span class="tlds">.com + .ai</span></h3></div>
+        </div>
+        <div class="bundle-pill">Double-Asset</div>
+    </div>
+    <div class="quote">"Autonomous Systems Standard."</div>
+    <div class="desc">The primary identity for AI agents, autonomous tooling, and robotics.</div>
+    <div class="card-bottom">
+        <div class="interest">Agentic AI</div>
+        <a class="btn-portfolio" href="#inquiry">
+            View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg>
+        </a>
+    </div>
+</article>
+
                         
                         <!-- Card 4 -->
                         <article class="card reveal delay-3">
-                            <div class="card-top">
-                                <div class="title-row">
-                                    <div class="square-ico purple"><svg class="ico s20"><use href="#i-shield-half"></use></svg></div>
-                                    <div><h3>Gnosis<span class="grad-text">Aegis</span> <span class="tlds">.com + .ai</span></h3></div>
-                                </div>
-                                <div class="bundle-pill">Double-Asset</div>
-                            </div>
-                            <div class="quote">"Intelligent Digital Defense."</div>
-                            <div class="desc">Elite branding for AI-powered security and proactive threat detection.</div>
-                            <div class="insight-link">
-                                <span class="insight-label">Strategic Insight</span>
-                                <a class="insight-anchor" href="article-1.html">The Strategic Premium →</a>
-                            </div>
-                            <div class="card-bottom">
-                                <div class="interest">AI Security</div>
-                                <a class="btn-portfolio" href="#inquiry">View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg></a>
-                            </div>
-                        </article>
+    <div class="card-top">
+        <div class="title-row">
+            <div class="square-ico purple"><svg class="ico s20"><use href="#i-shield-half"></use></svg></div>
+            <div><h3>Gnosis<span class="grad-text">Aegis</span> <span class="tlds">.com + .ai</span></h3></div>
+        </div>
+        <div class="bundle-pill">Double-Asset</div>
+    </div>
+    <div class="quote">"Intelligent Digital Defense."</div>
+    <div class="desc">Elite branding for AI-powered security and proactive threat detection.</div>
+    <div class="card-bottom">
+        <div class="interest">AI Security</div>
+        <a class="btn-portfolio" href="#inquiry">
+            View Portfolio Terms <svg class="ico s16"><use href="#i-chevron-down"></use></svg>
+        </a>
+    </div>
+</article>
+
                     </div>
                 </div>
             </section>
@@ -2947,8 +3012,9 @@
                 <div class="si-container">
                     <div class="si-kicker">STRATEGIC INTELLIGENCE</div>
                     <h2 class="si-h2">Market <span class="si-grad">Intelligence</span></h2>
-                                        <p class="si-sub">Editorial reports on AI branding, digital assets, and the valuation mechanics of institutional identity.</p>
-                    
+                                        <p class="si-sub">Editorial insight into the mechanics of identity, valuation, and trust in AI-native markets.</p>
+
+
                     <div aria-label="Insights slider" class="si-grid" role="region">
                         <article class="si-card">
                             <div class="si-date">JAN 12, 2026 • STRATEGY</div>
@@ -3094,7 +3160,7 @@
 </div>
 
                                     <div class="mandate-footnote">
-                                        By submitting, you are expressing interest in the <strong>complete bundle</strong> and requesting a private conversation.
+                                        By submitting this request, you acknowledge a unified institutional acquisition and initiate a confidential review of the complete identity bundle as a single strategic asset.
                                     </div>
                                 </div>
                                 
@@ -3138,7 +3204,7 @@
                                             
                                             <button aria-describedby="errorMsg" class="submit" id="submitBtn" type="submit">
                                                 <span class="btn-label">
-                                                    <span class="btn-text">Submit Mandate Request</span>
+                                                    <span class="btn-text">Submit Mandate Review</span>
                                                     <span class="plane"><svg aria-hidden="true" class="ico s18"><use href="#i-plane"></use></svg></span>
                                                     <span aria-hidden="true" class="spinner"></span>
                                                 </span>
@@ -3186,7 +3252,10 @@
                 </div>
             </section>
         </main>
-        
+        <p style="text-align:center; font-size:0.9rem; letter-spacing:0.04em; opacity:0.75; margin:40px auto;">
+  Identity decisions compound. Early clarity costs less than late correction.
+</p>
+
         <!-- Footer -->
         <footer class="site-footer">
             <div class="container">
@@ -3456,7 +3525,9 @@
                 '.hero h1',
                 '.hero p',
                 '#collection .card',
-                '#dominance ',
+                '#dominance .dom-row-top > *',
+                '#dominance .dom-row-bottom > *',
+                '#dominance .dom-cards > *',
                 '#security .acq-card',
                 '#security .assurance-section'
             ];
