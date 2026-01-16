@@ -205,13 +205,13 @@ header .container { height: 100%; }
 }
 
 .brand-logo {
-    height: 50px;
+    height: 70px;
     width: auto;
     filter: var(--icon-glow);
     transition: transform .25s ease, height .35s ease;
 }
 
-header.is-glass .brand-logo { height: 38px; }
+header.is-glass .brand-logo { height: 50px; }
 .brand:hover .brand-logo { transform: scale(1.04); }
 
 .brand-copy { 
@@ -228,19 +228,53 @@ header.is-glass .brand-logo { height: 38px; }
     color: #fff;
     transition: font-size .35s ease;
 }
-
+header.is-glass .brand-name {
+    font-size: 18px;
+}
 .brand-tagline {
-    margin-top: 2px;
-    font-weight: 500;
-    font-size: 10px;
-    letter-spacing: 2px;
+    margin-top: 3px;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 2.1px;
     text-transform: uppercase;
-    color: rgba(240,240,255,.6);
+    color: rgba(240,240,255,.65);
     white-space: nowrap;
     max-height: 20px;
     overflow: hidden;
     transition: all .35s ease;
 }
+@media (max-width: 768px) {
+
+  .brand-logo {
+      height: 56px;
+  }
+
+  header.is-glass .brand-logo {
+      height: 40px;
+  }
+
+  .brand-name {
+      font-size: 20px;
+  }
+
+  header.is-glass .brand-name {
+      font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+
+  .brand-tagline {
+      letter-spacing: 1px;
+      font-size: 9px;
+      max-width: 100%;
+      text-align: center;
+  }
+
+  .brand-copy {
+      align-items: center;
+  }
+}
+
 
 header.is-glass .brand-tagline {
     opacity: 0;
@@ -498,14 +532,15 @@ main { position: relative; z-index: 2; }
 
 .pill-top {
     display: inline;
-    font-size: clamp(18px, 1.4vw, 22px);
+    font-size: clamp(20px, 1.6vw, 24px);
     font-weight: 600;
     letter-spacing: .8px;
 }
 
+
 .pill-bottom {
     display: inline;
-    font-size: clamp(15px, 1.2vw, 16.5px);
+    font-size: clamp(18px, 1.4vw, 22px);
     font-weight: 500;
     letter-spacing: .3px;
     opacity: .85;
@@ -565,12 +600,12 @@ main { position: relative; z-index: 2; }
 
 .hero p .strong { color: var(--text); font-weight: 800; }
 .hero h1 .hero-topline{
-  font-size: 1em;
+  font-size: 0.8em;
   opacity: .92;
 }
 
 .hero h1 .grad-text{
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .trust-row {
@@ -962,9 +997,16 @@ main { position: relative; z-index: 2; }
 }
 
 @media (max-width: 920px){
-    .dom-row{ grid-template-columns: 1fr; }
+    .dom-row{ 
+        grid-template-columns: 1fr; 
+        gap: 16px;
+    }
     .dom-media{ min-height: 260px; }
     .dom-copy{ max-width: 100%; }
+
+    /* Keep visual symmetry when stacked: content block first, media block second */
+    .dom-row-bottom .dom-cards{ order: 1; }
+    .dom-row-bottom .dom-media{ order: 2; }
 }
 @media (max-width: 520px){
   .hero h1 .hero-topline{
@@ -1009,7 +1051,7 @@ main { position: relative; z-index: 2; }
 }
 
 .si-grad {
-    background: linear-gradient(90deg, #fff 20%, #8020f0 100%);
+    background: linear-gradient(90deg, #00f0f0 0%, #f2d073 45%, #8020f0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -3144,10 +3186,86 @@ dialog::backdrop {
   -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 520px){
-  .success-card{
-    padding: 28px 18px 18px;
-    border-radius: 22px;
+@media (max-width: 768px) {
+
+  .success-card {
+      width: min(92vw, 420px);
+      padding: 22px 18px;
+      border-radius: 18px;
+  }
+
+  .form-confirmation h3 {
+      font-size: 1.25rem;
+  }
+
+  .form-confirmation p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+  }
+
+  .success-ring {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 12px;
+  }
+}
+
+
+
+@keyframes mandatePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255,77,77,0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(255,77,77,0);
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .form-extras {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+  }
+
+  .form-extras .check {
+      width: 100% !important;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+  }
+
+  .form-extras .check span {
+      white-space: normal;
+      word-break: normal;
+      font-size: 0.4rem;
+      line-height: 1.35;
+  }
+}
+@media (max-width: 768px){
+  .form-extras .privacy-note{ grid-column: 1 / -1; width: 100% !important; }
+}
+@media (min-width: 981px){
+
+  .form-extras{
+    display: flex;
+    flex-direction: row;
+    gap: 26px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-extras .check{
+    width: auto !important;    
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .form-extras .check span{
+    white-space: nowrap;
   }
 }
 
@@ -3212,7 +3330,7 @@ dialog::backdrop {
 </p>
                 <div class="hero-axiom">Portfolio Buyout Only • Strategic Acquisition</div>
                 <div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-                    <a href="#inquiry" class="btn-primary" style="background: var(--text); color: var(--bg); padding: 16px 32px; border-radius: 99px; font-weight: 800; text-decoration: none; transition: transform 0.2s;">
+                    <a href="#inquiry" class="btn-primary" style="background: linear-gradient(135deg, #ff4d4d, #c81e1e); color: #fff; padding: 16px 36px; border-radius: 99px; font-weight: 900; text-decoration: none; box-shadow: 0 0 25px rgba(255,77,77,.55); animation: mandatePulse 2.6s infinite ease-in-out;">
                         Request Acquisition Mandate
                     </a>
                     <a href="#collection" class="btn-secondary" style="border: 1px solid var(--border); color: var(--text); padding: 16px 32px; border-radius: 99px; font-weight: 700; text-decoration: none;">
@@ -3515,11 +3633,11 @@ dialog::backdrop {
                                     <div class="form-extras" style="margin-top:0; margin-bottom:16px; align-items:stretch;">
                                         <label class="check" style="width:100%;">
                                             <input name="Consent" required="" type="checkbox" value="Yes"/>
-                                            <span style="font-weight:700; font-size:13px;">I agree to be contacted regarding this inquiry.</span>
+                                            <span style="font-weight:700; font-size:13px;">Consent to be contacted.</span>
                                         </label>
                                         <label class="check" style="width:100%;">
                                             <input id="nda" name="NDA_Requested" type="checkbox" value="Yes"/>
-                                            <span>I would like an NDA before sharing sensitive details.</span>
+                                            <span>NDA required prior to disclosure.</span>
                                         </label>
                                     </div>
                                     <input name="_subject" type="hidden" value="New Inquiry from Gnosis Assets"/>
@@ -3905,8 +4023,6 @@ dialog::backdrop {
     form.style.display = 'none';
     confirmBox.style.display = 'block';
 
-    if (autoCloseTimer) clearTimeout(autoCloseTimer);
-    autoCloseTimer = setTimeout(closeConfirm, 3000);
   }
 
   closeBtn && closeBtn.addEventListener('click', closeConfirm);
