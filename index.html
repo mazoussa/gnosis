@@ -40,6 +40,23 @@
 }
 </script>
 <style>
+
+/* ================================
+   HEADER (Final Clean Block)
+   - Fixed header (stable, no sticky bugs)
+   - Glass on scroll via .is-glass
+   - Hide on scroll via .is-hidden
+================================ */
+
+/* Shrink brand on glass (Desktop defaults) */
+/* Hide on scroll down (UX: slide up + light opacity) */
+/* Mobile overrides */
+@media (max-width: 768px) {
+  header.is-glass .brand-logo { height: 40px; }
+  header.is-glass .brand-name { font-size: 16px; }
+}
+
+
 :root {
     --serif: 'Playfair Display', serif;
     --sans: 'Outfit', sans-serif;
@@ -94,6 +111,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     transition: background-color .35s ease, color .35s ease;
     position: relative;
+    padding-top: var(--header-height);
+    padding-top: var(--header-height);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -168,15 +187,35 @@ a.link-hover:hover { color: var(--cyan); text-decoration: underline; }
 .ico.s24 { font-size: 24px; }
 .ico.s32 { font-size: 32px; }
 
+
+/* ================================
+   Header
+================================ */
+
 header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 50;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
     height: var(--header-height);
     background: transparent;
     border-bottom: 1px solid transparent;
-    transition: all .35s cubic-bezier(.4,0,.2,1);
+
+    transform: translateY(0);
+    opacity: 1;
+
+    transition:
+        transform 0.32s ease,
+        opacity 0.22s linear,
+        height 0.35s cubic-bezier(.4,0,.2,1),
+        background 0.35s cubic-bezier(.4,0,.2,1),
+        border-color 0.35s cubic-bezier(.4,0,.2,1),
+        backdrop-filter 0.35s cubic-bezier(.4,0,.2,1);
+
     backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
 }
 
 header.is-glass {
@@ -185,7 +224,28 @@ header.is-glass {
     border-bottom: 1px solid var(--border-2);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-}header .container { height: 100%; }
+}
+
+header.is-hidden {
+    transform: translateY(-110%);
+    opacity: 0.15;
+}
+
+header.is-glass .brand-logo { height: 50px; }
+header.is-glass .brand-name { font-size: 18px; }
+header.is-glass .brand-tagline {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-6px);
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    header.is-glass .brand-logo { height: 40px; }
+    header.is-glass .brand-name { font-size: 16px; }
+}
+
+header .container { height: 100%; }
 
 .header-inner {
     height: 100%;
@@ -209,10 +269,6 @@ header.is-glass {
     transition: transform .25s ease, height .35s ease;
 }
 
-header.is-glass .brand-logo {
-    height: 50px; /* الحجم عند التمرير */
-}
-
 .brand:hover .brand-logo {
     transform: scale(1.04);
     transition: transform 0.3s ease;
@@ -234,10 +290,10 @@ header.is-glass .brand-logo {
     transition: font-size .35s ease;
     
     background: linear-gradient(
-        90deg,          /* جعل الاتجاه أفقياً */
-        #00e5ff 0%,     /* سماوي فاتح */
-        #2979ff 45%,    /* أزرق */
-        #8f00ff 100%    /* بنفسجي واضح */
+        90deg,         
+        #00e5ff 0%,   
+        #2979ff 45%,    
+        #8f00ff 100%    
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -253,10 +309,6 @@ header.is-glass .brand-logo {
     font-weight: 400;
     font-size: 16px;
     margin-left: 4px;
-}
-
-header.is-glass .brand-name {
-    font-size: 18px;
 }
 
 .brand-tagline {
@@ -280,17 +332,13 @@ header.is-glass .brand-name {
         height: 56px;
     }
 
-    header.is-glass .brand-logo {
-        height: 40px;
-    }
+    
 
     .brand-name {
         font-size: 20px;
     }
 
-    header.is-glass .brand-name {
-        font-size: 16px;
-    }
+    
 
     .brand-tagline {
         letter-spacing: 1px;
@@ -302,13 +350,6 @@ header.is-glass .brand-name {
         align-items: flex-start;
     }
 }
-header.is-glass .brand-tagline {
-    opacity: 0;
-    max-height: 0;
-    transform: translateY(-6px);
-    margin-top: 0;
-}
-
 .header-right { 
     display: flex; 
     align-items: center; 
@@ -613,6 +654,10 @@ main { position: relative; z-index: 2; }
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+
+.word-cyan {
+    color: var(--cyan);
 }
 
 .hero p {
@@ -1077,7 +1122,7 @@ main { position: relative; z-index: 2; }
 }
 
 .si-grad {
-    background: linear-gradient(90deg, #00f0f0 0%, #f2d073 45%, #8020f0 100%);
+    background: linear-gradient(90deg, #00e5ff 0%, #2979ff  45%, #8f00ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1432,9 +1477,9 @@ main { position: relative; z-index: 2; }
 
 #inquiry .h2 {
     background: linear-gradient(90deg,
-        rgba(242,208,115,.85),
-        rgba(0,240,240,.85),
-        rgba(128,32,240,.85)
+        rgba(242,208,115,.95),
+        rgba(0,240,240,.95),
+        rgba(128,32,240,.95)
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -1946,9 +1991,9 @@ label {
 
 .portfolio-title .accent {
   background: linear-gradient(90deg,
-    rgba(242,208,115,.95),
-    rgba(0,240,240,.95),
-    rgba(128,32,240,.95)
+        #00e5ff 0%,   
+        #2979ff 45%,    
+        #8f00ff 100% 
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -3029,10 +3074,6 @@ dialog::backdrop {
     top: 10px;
   }
 
-  header.is-glass{
-    top: 8px;
-  }
-
   body{
     padding-top: 10px;
   }
@@ -3041,10 +3082,6 @@ dialog::backdrop {
 
   header{
     top: 10px;
-  }
-
-  header.is-glass{
-    top: 8px;
   }
 
   body{
@@ -3486,7 +3523,7 @@ dialog::backdrop {
   border-radius: 999px;
   background: rgba(0,240,240,.10);
   border: 1px solid rgba(0,240,240,.22);
-  color: rgba(0,240,240,.95);
+  color: rgba(242,208,115,.95);
   font-weight: 900;
   letter-spacing: .16em;
 }
@@ -3519,6 +3556,48 @@ dialog::backdrop {
   .portfolio .card:last-child::after{
     background-size: 0 0;
   }
+}
+.portfolio-sub {
+    font-family: var(--sans);
+    color: var(--muted);
+    font-size: clamp(1.0rem, 1.2vw, 1.08rem);
+    line-height: 1.65;
+    font-weight: 300;
+    margin: 14px auto 0;
+    max-width: 700px;
+}
+
+.portfolio-rule {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(242,208,115,0.85);
+    margin-top: 18px;
+    opacity: 0.9;
+}
+
+/* Unified gold frame for the portfolio headline + domain cards */
+.portfolio-frame{
+    margin: 24px auto 18px;
+    padding: clamp(18px, 3vw, 32px);
+    border-radius: 28px;
+    border: 1px solid rgba(242,208,115,.28);
+    background: radial-gradient(circle at top, rgba(30,32,50,.88), rgba(10,12,24,.96));
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+}
+
+.portfolio-frame .portfolio-rail{
+    margin: 0;
+    padding: 0 0 18px;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.portfolio-frame .cards{
+    margin-top: 18px;
 }
 
 </style>
@@ -3600,7 +3679,7 @@ dialog::backdrop {
     <section aria-label="The Anatomy of Dominance" class="dominance grid-overlay" id="dominance">
         <div class="container">
             <div class="kicker">THE ANATOMY OF DOMINANCE</div>
-            <div class="h2">Why <span class="grad-text">Gnosis</span></div>
+            <div class="h2">Why <span class="word-cyan">Gnosis</span></div>
             <div class="sub">Not a product listing. A strategic position. Built to signal authority before the first pitch deck.</div>
             <div class="dom-row dom-row-top reveal">
                 <div class="dom-copy dominance-text">
@@ -3655,6 +3734,7 @@ dialog::backdrop {
             <div class="kicker">THE PORTFOLIO</div>
             <div class="h2">Curated <span class="grad-text">Excellence</span></div>
             <div class="sub">Each asset is delivered as a locked pair: the primary <span class="strong">.com</span> and its <span class="strong">.ai</span> counterpart.<br/>One owner. One transfer. One decision.</div>
+            <div class="portfolio-frame">
             <div class="portfolio-rail">
                 <div class="portfolio-kicker">Portfolio Acquisition Only</div>
                 <div class="portfolio-title">
@@ -3676,7 +3756,7 @@ dialog::backdrop {
                     <div class="card-top">
                         <div class="title-row">
                             <div class="square-ico"><svg class="ico s20"><use href="#i-database"></use></svg></div>
-                            <div><h3>Gnosis<span class="grad-text">Base</span> <span class="tlds">.com + .ai</span></h3></div>
+                            <div><h3>Gnosis<span class="word-cyan">Base</span> <span class="tlds">.com + .ai</span></h3></div>
                         </div>
                     </div>
                     <div class="quote">"Enterprise Knowledge Infrastructure."</div>
@@ -3689,7 +3769,7 @@ dialog::backdrop {
                     <div class="card-top">
                         <div class="title-row">
                             <div class="square-ico purple"><svg class="ico s20"><use href="#i-wave"></use></svg></div>
-                            <div><h3>Gnosis<span class="grad-text">Flow</span> <span class="tlds">.com + .ai</span></h3></div>
+                            <div><h3>Gnosis<span class="word-cyan">Flow</span> <span class="tlds">.com + .ai</span></h3></div>
                         </div>
                     </div>
                     <div class="quote">"AI Process Intelligence."</div>
@@ -3702,7 +3782,7 @@ dialog::backdrop {
                     <div class="card-top">
                         <div class="title-row">
                             <div class="square-ico"><svg class="ico s20"><use href="#i-robot"></use></svg></div>
-                            <div><h3>Gnosis<span class="grad-text">Agent</span> <span class="tlds">.com + .ai</span></h3></div>
+                            <div><h3>Gnosis<span class="word-cyan">Agent</span> <span class="tlds">.com + .ai</span></h3></div>
                         </div>
                     </div>
                     <div class="quote">"Autonomous Systems Standard."</div>
@@ -3715,7 +3795,7 @@ dialog::backdrop {
                     <div class="card-top">
                         <div class="title-row">
                             <div class="square-ico purple"><svg class="ico s20"><use href="#i-shield-half"></use></svg></div>
-                            <div><h3>Gnosis<span class="grad-text">Aegis</span> <span class="tlds">.com + .ai</span></h3></div>
+                            <div><h3>Gnosis<span class="word-cyan">Aegis</span> <span class="tlds">.com + .ai</span></h3></div>
                         </div>
                     </div>
                     <div class="quote">"Intelligent Digital Defense."</div>
@@ -3724,6 +3804,8 @@ dialog::backdrop {
                         <div class="bundle-pill">AI Security</div>
                     </div>
                 </article>
+            </div>
+            </div>
             </div>
             <div class="portfolio-cta">
                 <a class="portfolio-cta-btn" href="#inquiry">
@@ -3770,7 +3852,7 @@ dialog::backdrop {
     <section aria-label="Security" class="acq2 grid-overlay" id="security">
         <div class="container">
             <div class="kicker">SECURE ACQUISITION</div>
-            <div class="h2">Secure <span class="grad-text">Acquisition</span></div>
+            <div class="h2">Secure <span class="word-cyan">Acquisition</span></div>
             <div class="sub">A professional, discreet, and verifiable process — from first contact to final transfer.</div>
             <div class="acq2-steps">
                 <div class="acq-card">
@@ -4208,14 +4290,37 @@ dialog::backdrop {
 
 <script>
 (function(){
+  /* Header: Glass + Hide on scroll down + Show on scroll up */
   const header = document.getElementById("siteHeader");
   if(!header) return;
-  const onScroll = () => header.classList.toggle("is-glass", window.scrollY > 12);
+
+  let lastY = window.scrollY;
+
+  function onScroll(){
+    const y = window.scrollY;
+
+    // Glass effect
+    header.classList.toggle("is-glass", y > 20);
+
+    // Hide on scroll down (after buffer)
+    if (y > lastY && y > 1800) {
+      header.classList.add("is-hidden");
+    }
+
+    // Show immediately on scroll up
+    if (y < lastY) {
+      header.classList.remove("is-hidden");
+    }
+
+    lastY = y;
+  }
+
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 })();
 
 (function(){
+  /* Mobile menu (keep as-is) */
   const btn = document.getElementById("menuBtn");
   const nav = document.getElementById("mobileNav");
   if(!btn || !nav) return;
