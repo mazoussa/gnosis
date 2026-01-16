@@ -185,9 +185,7 @@ header.is-glass {
     border-bottom: 1px solid var(--border-2);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-}
-
-header .container { height: 100%; }
+}header .container { height: 100%; }
 
 .header-inner {
     height: 100%;
@@ -205,77 +203,105 @@ header .container { height: 100%; }
 }
 
 .brand-logo {
-    height: 70px;
+    height: 70px; /* الحجم الأصلي */
     width: auto;
     filter: var(--icon-glow);
     transition: transform .25s ease, height .35s ease;
 }
 
-header.is-glass .brand-logo { height: 50px; }
-.brand:hover .brand-logo { transform: scale(1.04); }
-
-.brand-copy { 
-    display: flex; 
-    flex-direction: column; 
-    line-height: 1; 
+header.is-glass .brand-logo {
+    height: 50px; /* الحجم عند التمرير */
 }
 
+.brand:hover .brand-logo {
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    align-items: flex-start;
+}
+
+/* تنسيق كلمة GNOSIS (التدرج الأزرق) */
 .brand-name {
     font-weight: 800;
     font-size: 22px;
     letter-spacing: .5px;
     text-transform: uppercase;
-    color: #fff;
     transition: font-size .35s ease;
+    
+    background: linear-gradient(
+        90deg,          /* جعل الاتجاه أفقياً */
+        #00e5ff 0%,     /* سماوي فاتح */
+        #2979ff 45%,    /* أزرق */
+        #8f00ff 100%    /* بنفسجي واضح */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
+
+
+.brand-name span {
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 4px;
+}
+
 header.is-glass .brand-name {
     font-size: 18px;
 }
+
 .brand-tagline {
     margin-top: 3px;
     font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 1.8px;
+    font-size: 10px;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
-    color: rgba(240,240,255,.65);
+    color: rgba(240, 240, 255, .65);
     white-space: nowrap;
     max-height: 20px;
     overflow: hidden;
     transition: all .35s ease;
+    display: inline-block;
+    width: 100%;
+    text-align: left;
 }
+
 @media (max-width: 768px) {
+    .brand-logo {
+        height: 56px;
+    }
 
-  .brand-logo {
-      height: 56px;
-  }
+    header.is-glass .brand-logo {
+        height: 40px;
+    }
 
-  header.is-glass .brand-logo {
-      height: 40px;
-  }
+    .brand-name {
+        font-size: 20px;
+    }
 
-  .brand-name {
-      font-size: 20px;
-  }
+    header.is-glass .brand-name {
+        font-size: 16px;
+    }
 
-  header.is-glass .brand-name {
-      font-size: 16px;
-  }
+    .brand-tagline {
+        letter-spacing: 1px;
+        font-size: 9px;
+        text-align: left;
+    }
+
+    .brand-copy {
+        align-items: flex-start;
+    }
 }
-@media (max-width: 768px) {
-
-  .brand-tagline {
-      letter-spacing: 1px;
-      font-size: 9px;
-      max-width: 100%;
-      text-align: center;
-  }
-
-  .brand-copy {
-      align-items: center;
-  }
-}
-
-
 header.is-glass .brand-tagline {
     opacity: 0;
     max-height: 0;
@@ -3268,6 +3294,232 @@ dialog::backdrop {
     white-space: nowrap;
   }
 }
+/* === Modern Portfolio Smart-Grid (scoped to .portfolio only) === */
+
+.portfolio{
+  /* responsive padding + top-light radial */
+  padding: clamp(46px, 5.4vw, 74px) 0 clamp(24px, 4vw, 40px);
+  position: relative;
+  z-index: 2;
+
+  background:
+    radial-gradient(1100px 520px at 50% 0%,
+      rgba(0,240,240,.10) 0%,
+      rgba(128,32,240,.08) 28%,
+      rgba(0,0,0,0) 62%),
+    linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.10));
+
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.portfolio .cards{
+  /* 2-column grid, no gaps */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+
+  /* “single surface” feel */
+  position: relative;
+  margin-top: 18px;
+  border-radius: 24px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.01);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 30px 90px rgba(0,0,0,.55);
+}
+
+/* Core glow */
+
+
+/* Laser dot center */
+.portfolio .cards::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.95);
+  border-radius: 999px;
+  opacity: .8;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow:
+    0 0 10px rgba(0,240,240,.55),
+    0 0 22px rgba(0,240,240,.35);
+}
+
+.portfolio .card{
+  /* “no separate cards” look: transparent background and no physical borders */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  padding: clamp(18px, 2.2vw, 26px);
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  z-index: 2;
+
+  transition:
+    transform .32s cubic-bezier(.2,.9,.2,1),
+    box-shadow .32s cubic-bezier(.2,.9,.2,1),
+    background .32s cubic-bezier(.2,.9,.2,1),
+    filter .32s cubic-bezier(.2,.9,.2,1);
+}
+
+/* Smart fading borders via gradients (right + bottom) */
+.portfolio .card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  /* two layers: right border + bottom border */
+  background-image:
+    linear-gradient(to bottom,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.10) 45%,
+      rgba(255,255,255,0) 100%),
+    linear-gradient(to right,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.10) 50%,
+      rgba(255,255,255,0) 100%);
+
+  background-repeat: no-repeat;
+  background-size: 1px 100%, 100% 1px;
+  background-position: right top, left bottom;
+  opacity: .9;
+}
+
+/* Remove right border on even cards (2nd col) */
+.portfolio .card:nth-child(2n)::after{
+  background-size: 0 0, 100% 1px;  /* kill vertical */
+}
+
+/* Remove bottom border on last row (last 2 cards in a 2-col grid) */
+.portfolio .card:nth-last-child(-n+2)::after{
+  background-size: 1px 100%, 0 0;  /* kill horizontal */
+}
+
+/* Hover lens effect */
+.portfolio .card:hover{
+  z-index: 10;
+  transform: translateY(-4px);
+
+  background:
+    radial-gradient(520px 220px at 18% 12%,
+      rgba(0,240,240,.14) 0%,
+      rgba(0,0,0,0) 60%),
+    radial-gradient(520px 260px at 72% 72%,
+      rgba(128,32,240,.12) 0%,
+      rgba(0,0,0,0) 62%);
+
+  box-shadow:
+    0 40px 110px rgba(0,0,0,.55),
+    0 0 0 1px rgba(0,240,240,.10) inset;
+}
+
+/* Icon container (your existing .square-ico) – upscale + tint on hover */
+.portfolio .square-ico{
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.10);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1),
+              background .28s ease,
+              border-color .28s ease,
+              box-shadow .28s ease,
+              color .28s ease;
+}
+
+
+.portfolio .card:hover .square-ico{
+  transform: scale(1.06);
+  background: rgba(0,240,240,.08);
+  border-color: rgba(0,240,240,.28);
+  box-shadow: 0 0 26px rgba(0,240,240,.18);
+  color: rgba(0,240,240,.95);
+}
+/* Typography tweaks: match your spec */
+.portfolio .card h3{
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  color: rgba(255,255,255,.98);
+}
+
+.portfolio .tlds{
+  color: rgba(0,240,240,.95);
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: 12px;
+}
+
+.portfolio .quote{
+  font-family: var(--serif);
+  font-style: italic;
+  color: rgba(243,244,248,0.90);
+}
+
+.portfolio .desc{
+  color: rgba(243,244,248,0.60);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Bundle pill: keep it bottom aligned */
+.portfolio .card .bundle-pill{
+  align-self: flex-start;
+  margin-top: auto;
+  position: static; /* override your absolute pill if you want “natural” flow */
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(0,240,240,.10);
+  border: 1px solid rgba(0,240,240,.22);
+  color: rgba(0,240,240,.95);
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+/* If you prefer keeping your existing absolute pill, comment the block above,
+   and keep your current .bundle-pill positioning rules. */
+
+/* === Mobile: single column + horizontal borders only === */
+@media (max-width: 768px){
+  .portfolio .cards{
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+  }
+
+  .portfolio .card{
+    padding: 24px 20px;
+  }
+
+  /* only bottom border for all cards, except last */
+  .portfolio .card::after{
+    background-image:
+      linear-gradient(to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.10) 50%,
+        rgba(255,255,255,0) 100%);
+    background-size: 100% 1px;
+    background-position: left bottom;
+  }
+
+  .portfolio .card:last-child::after{
+    background-size: 0 0;
+  }
+}
 
 </style>
 </head>
@@ -3282,7 +3534,7 @@ dialog::backdrop {
             <a aria-label="Gnosis Assets home" class="brand" href="#home">
                 <img alt="Gnosis Assets Logo" class="brand-logo" height="50" src="logo.png" width="100"/>
                 <span class="brand-copy">
-                    <span class="brand-name">GNOSIS ASSETS</span>
+                    <span class="brand-name">GNOSIS <span>ASSETS</span></span>
                     <span class="brand-tagline">IDENTITY INFRASTRUCTURE</span>
                 </span>
             </a>
