@@ -77,17 +77,29 @@ https://gnosisbase.com`;
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
 
-    <!-- Header image (dark) -->
-    <div style="padding:0; background:#0b0f17;">
-      <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-        <img
-          src="https://gnosisbase.com/gnosis-assets-header.png"
-          alt="Gnosis Assets"
-          width="640"
-          style="display:block; width:100%; max-width:640px; border:0;"
-        />
-      </a>
-    </div>
+    <!-- Header (compact logo) -->
+<div style="padding:20px; background:#0b0f17;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td align="left" valign="middle">
+        <div style="font-size:22px; font-weight:700; color:#ffffff;">
+          Inquiry received
+        </div>
+      </td>
+      <td align="right" valign="middle">
+        <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+          <img
+            src="https://gnosisbase.com/logo.png"
+            alt="Gnosis Assets"
+            width="110"
+            style="display:block; border:0;"
+          />
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
 
     <!-- Body -->
     <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
