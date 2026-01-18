@@ -2,17 +2,21 @@ import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
+    return res.status(405).json({
+      success: false,
+      error: "Method not allowed",
+    });
   }
 
   try {
     const data = req.body || {};
 
-    // ----------------------------
-    // Anti-spam: Honeypot + Time trap
-    // ----------------------------
-    const hp = (data.website || "").trim();
-    if (hp) {
+    /* ============================
+       Anti-spam: Honeypot + Timing
+       ============================ */
+    const honeypot = (data.website || "").trim();
+    if (honeypot) {
+      // Fake success to avoid helping bots
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
@@ -20,7 +24,7 @@ export default async function handler(req, res) {
     if (startTs && Date.now() - startTs < 2500) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
-    // ----------------------------
+    /* ============================ */
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -38,12 +42,17 @@ export default async function handler(req, res) {
     const message = data.Message || "(no message)";
 
     if (!email) {
-      return res.status(400).json({ success: false, error: "Missing visitor email" });
+      return res.status(400).json({
+        success: false,
+        error: "Missing visitor email",
+      });
     }
 
-    // 1) Admin email (to you)
+    /* ============================
+       1) Admin notification email
+       ============================ */
     const adminInfo = await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       replyTo: email,
       subject: `New Inquiry: ${bundle} – from gnosisbase.com`,
@@ -55,7 +64,9 @@ Message:
 ${message}`,
     });
 
-    // 2) Auto-reply (English only) — HTML + text fallback
+    /* ============================
+       2) Auto-reply to visitor
+       ============================ */
     const subject = "Confirmation: Inquiry Received – Gnosis Assets";
 
     const text = `Thank you for contacting Gnosis Assets.
@@ -72,52 +83,52 @@ The Gnosis Assets Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
-    // Dark-mode friendly HTML (works well across email clients)
     const html = `
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
 
-    <!-- Header (compact logo) -->
-<div style="padding:20px; background:#0b0f17;">
-  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
-    <tr>
-      <td align="left" valign="middle">
-        <div style="font-size:22px; font-weight:700; color:#ffffff;">
-          Inquiry received
-        </div>
-      </td>
-      <td align="right" valign="middle">
-        <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-          <img
-            src="https://gnosisbase.com/logo.png"
-            alt="Gnosis Assets"
-            width="110"
-            style="display:block; border:0;"
-          />
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
-
+    <!-- Header -->
+    <div style="padding:20px; background:#0b0f17;">
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td align="left" valign="middle">
+            <div style="font-size:22px; font-weight:700; color:#ffffff;">
+              Inquiry received
+            </div>
+          </td>
+          <td align="right" valign="middle">
+            <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+              <img
+                src="https://gnosisbase.com/logo.png"
+                alt="Gnosis Assets"
+                width="110"
+                style="display:block; border:0;"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
 
     <!-- Body -->
     <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
-      <p style="margin:0 0 12px; color:#e5e7eb;">
-        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
+      <p style="margin:0 0 12px;">
+        Hi${name ? ` ${escapeHtml(name)}` : ""},
       </p>
 
-      <p style="margin:0 0 14px; color:#e5e7eb;">
+      <p style="margin:0 0 14px;">
         Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
       </p>
 
-      <!-- Summary box -->
+      <!-- Summary -->
       <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
-        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
-        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">
+          Inquiry summary
+        </div>
+        <div style="font-size:14px; margin:2px 0;">
           <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
         </div>
-        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+        <div style="font-size:14px; margin:2px 0;">
           <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
         </div>
       </div>
@@ -130,7 +141,6 @@ https://gnosisbase.com`;
         We aim to respond to all relevant acquisition requests within <b style="color:#ffffff;">24 business hours</b>.
       </p>
 
-      <!-- CTA -->
       <a href="https://gnosisbase.com"
          style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
                 background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
@@ -147,14 +157,14 @@ https://gnosisbase.com`;
     </div>
   </div>
 </div>
-    `;
+`;
 
     let autoInfo = null;
     let autoError = null;
 
     try {
       autoInfo = await transporter.sendMail({
-        from: process.env.SMTP_USER,
+        from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
         to: email,
         replyTo: process.env.SMTP_USER,
         subject,
@@ -172,9 +182,13 @@ https://gnosisbase.com`;
       autoReplySent: !!autoInfo?.messageId,
       autoError,
     });
+
   } catch (e) {
     console.error("CONTACT_API_ERROR:", e);
-    return res.status(500).json({ success: false, error: e?.message || "Server error" });
+    return res.status(500).json({
+      success: false,
+      error: e?.message || "Server error",
+    });
   }
 }
 
