@@ -9,19 +9,19 @@ export default async function handler(req, res) {
     const data = req.body;
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: 587,
-      secure: false, 
+      host: process.env.SMTP_HOST || "gparm8.siteground.biz", // 
+      port: 465,
+      secure: true, 
       auth: {
-        user: process.env.SMTP_USER, 
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER, // 
+        pass: process.env.SMTP_PASS, // 
       },
     });
 
-    // 1. Send Admin Notification (To You)
+    // 1. Admin Notification (To You)
     await transporter.sendMail({
       from: process.env.SMTP_USER,
-      to: "invest@gnosisbase.com", 
+      to: process.env.SMTP_USER, // 
       replyTo: data.email, 
       subject: `New Inquiry: ${data.Selected_Asset_Bundle || 'General'} - from gnosisbase.com`,
       text: `
@@ -34,11 +34,11 @@ ${data.Message}
       `,
     });
 
-    // 2. Send Auto-Response (To the Investor)
+    // 2. Auto-Response (To the Investor)
     await transporter.sendMail({
-      from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`, 
+      from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`,
       to: data.email, 
-      replyTo: "invest@gnosisbase.com",
+      replyTo: process.env.SMTP_USER,
       subject: "Confirmation: Inquiry Received - Gnosis Assets",
       text: `Thank you for contacting Gnosis Assets.
 
