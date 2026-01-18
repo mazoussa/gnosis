@@ -3654,6 +3654,28 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   color: inherit !important;
   -webkit-text-fill-color: inherit !important;
 }
+@media (max-width: 520px){
+
+  header{
+    height: 56px;
+  }
+
+  header .header-inner{
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .brand{
+    transform: scale(0.92);
+    transform-origin: left center;
+  }
+
+  .menu-toggle{
+    width: 42px;
+    height: 42px;
+  }
+
+}
 
 </style>
 </head>
@@ -4035,7 +4057,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                         </div>
                         <div>
                             <div class="form-card mandate-form">
-                                <form action="https://formspree.io/f/meeoydwd" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate="">
+                                <form action="/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate>
                                     <div class="grid-form">
                                         <div class="field">
                                             <label for="fullName">Full Name</label>
@@ -4043,7 +4065,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                                         </div>
                                         <div class="field">
                                             <label for="email">Email Address</label>
-                                            <input autocomplete="email" id="email" name="Email" placeholder="Enter your email" required="" type="email"/>
+                                            <input autocomplete="email" id="email" name="email" placeholder="Enter your email" required="" type="email"/>
                                         </div>
                                         <div class="field field-full">
                                             <label for="asset">Portfolio Scope</label>
@@ -4495,21 +4517,37 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     submitBtn && submitBtn.classList.add('loading');
 
     try {
-      const res = await fetch(form.action, {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
       });
 
-      if (!res.ok) throw new Error('Request failed');
+            const result = await response.json().catch(() => ({}));
 
-      submitBtn && submitBtn.classList.remove('loading');
+      if (!response.ok || result.success !== true) {
+        throw new Error(result.error || 'Send failed');
+      }
+
+      // إذا الرد التلقائي فشل، نعرض السبب على الموقع بدل ما تضيع
+      if (result.autoReplySent === false) {
+        if (errorMsg) {
+          errorMsg.style.display = 'block';
+          errorMsg.innerText = "The visitor auto-reply FAILED: " + (result.autoError || "Unknown reason");
+        }
+        // نعتبر الإرسال الأساسي ناجح (لأنه وصلك أنت)، لكن نوقف رسالة النجاح
+        return;
+      }
+
       form.reset();
       showConfirm();
-    } catch (err) {
-      submitBtn && submitBtn.classList.remove('loading');
-      if (errorMsg) errorMsg.style.display = 'block';
-    }
+
   });
 })();
 </script>
