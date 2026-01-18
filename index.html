@@ -4462,7 +4462,6 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 })();
 </script>
 
-
 <script>
 // INQUIRY_FORM_AJAX
 (function(){
@@ -4492,10 +4491,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   function showConfirm(){
     const wantsNda = !!(ndaCheckbox && ndaCheckbox.checked);
     if (ndaNote) ndaNote.style.display = wantsNda ? 'flex' : 'none';
-
     form.style.display = 'none';
     confirmBox.style.display = 'block';
-
   }
 
   closeBtn && closeBtn.addEventListener('click', closeConfirm);
@@ -4529,9 +4526,9 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
         body: JSON.stringify(data)
       });
 
-            const result = await response.json().catch(() => ({}));
+      const result = await res.json().catch(() => ({}));
 
-      if (!response.ok || result.success !== true) {
+      if (!res.ok || result.success !== true) {
         throw new Error(result.error || 'Send failed');
       }
 
@@ -4539,15 +4536,24 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       if (result.autoReplySent === false) {
         if (errorMsg) {
           errorMsg.style.display = 'block';
-          errorMsg.innerText = "The visitor auto-reply FAILED: " + (result.autoError || "Unknown reason");
+          errorMsg.innerText =
+            "The visitor auto-reply FAILED: " + (result.autoError || "Unknown reason");
         }
-        // نعتبر الإرسال الأساسي ناجح (لأنه وصلك أنت)، لكن نوقف رسالة النجاح
-        return;
+        return; // لا نظهر رسالة النجاح
       }
 
       form.reset();
       showConfirm();
 
+    } catch (err) {
+      console.error(err);
+      if (errorMsg) {
+        errorMsg.style.display = 'block';
+        errorMsg.innerText = err.message || "Failed to send message. Please try again.";
+      }
+    } finally {
+      submitBtn && submitBtn.classList.remove('loading');
+    }
   });
 })();
 </script>
