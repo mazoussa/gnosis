@@ -9,51 +9,57 @@ export default async function handler(req, res) {
     const data = req.body;
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "gparm8.siteground.biz", // 
+      host: process.env.SMTP_HOST,
       port: 465,
-      secure: true, 
+      secure: true,
       auth: {
-        user: process.env.SMTP_USER, // 
-        pass: process.env.SMTP_PASS, // 
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
-    // 1. Admin Notification (To You)
+    const name = data.Name || "Unknown";
+    const email = data.email;
+    const bundle = data.Selected_Asset_Bundle || "General";
+    const message = data.Message || "(no message)";
+
+    if (!email) {
+      return res.status(400).json({ success: false });
+    }
+
+    // 1️⃣ Email to you
     await transporter.sendMail({
       from: process.env.SMTP_USER,
-      to: process.env.SMTP_USER, // 
-      replyTo: data.email, 
-      subject: `New Inquiry: ${data.Selected_Asset_Bundle || 'General'} - from gnosisbase.com`,
-      text: `
-Name: ${data.Name}
-Email: ${data.email}
-Asset Bundle: ${data.Selected_Asset_Bundle}
+      to: process.env.SMTP_USER,
+      replyTo: email,
+      subject: `New Inquiry: ${bundle} - from gnosisbase.com`,
+      text: `Name: ${name}
+Email: ${email}
+Asset Bundle: ${bundle}
 
 Message:
-${data.Message}
-      `,
+${message}`,
     });
 
-    // 2. Auto-Response (To the Investor)
+    // 2️⃣ Auto-reply to client
     await transporter.sendMail({
       from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`,
-      to: data.email, 
+      to: email,
       replyTo: process.env.SMTP_USER,
-      subject: "Confirmation: Inquiry Received - Gnosis Assets",
-      text: `Thank you for contacting Gnosis Assets.
+      subject: "Confirmation : demande reçue - Gnosis Assets",
+      text: `Merci d’avoir contacté Gnosis Assets.
 
-We have successfully received your inquiry regarding the portfolio.
+Nous avons bien reçu votre demande concernant le portefeuille.
 
-Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+Notre équipe examine actuellement les demandes entrantes. Nous priorisons les acheteurs stratégiques et les opérateurs institutionnels.
 
-We aim to respond to all relevant acquisition requests within 24 business hours.
+Nous visons à répondre aux demandes pertinentes sous 24 heures ouvrées.
 
-Best regards,
+Cordialement,
 
-The Gnosis Assets Team
+L’équipe Gnosis Assets
 Identity Infrastructure for the AI Era.
-https://gnosisbase.com
-      `,
+https://gnosisbase.com`,
     });
 
     return res.status(200).json({ success: true });
