@@ -2,11 +2,11 @@ import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false });
+    return res.status(405).json({ success: false, error: "Method not allowed" });
   }
 
   try {
-    const data = req.body;
+    const data = req.body || {};
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -19,33 +19,30 @@ export default async function handler(req, res) {
     });
 
     const name = data.Name || "Unknown";
-    const email = data.email;
+    const email = (data.email || "").trim();
     const bundle = data.Selected_Asset_Bundle || "General";
     const message = data.Message || "(no message)";
 
     if (!email) {
-      return res.status(400).json({ success: false });
+      return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
 
-    // 1️⃣ Email to you
-    await transporter.sendMail({
+    // 1) Email to you
+    const adminInfo = await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: process.env.SMTP_USER,
       replyTo: email,
       subject: `New Inquiry: ${bundle} - from gnosisbase.com`,
-      text: `Name: ${name}
-Email: ${email}
-Asset Bundle: ${bundle}
-
-Message:
-${message}`,
+      text: `Name: ${name}\nEmail: ${email}\nAsset Bundle: ${bundle}\n\nMessage:\n${message}`,
     });
 
-        // 2️⃣ Auto-reply to client
-    let autoInfo;
+    // 2) Auto-reply to visitor
+    let autoInfo = null;
+    let autoError = null;
+
     try {
       autoInfo = await transporter.sendMail({
-        from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`,
+        from: process.env.SMTP_USER, // أبسط وأفضل للتسليم
         to: email,
         replyTo: process.env.SMTP_USER,
         subject: "Confirmation : demande reçue - Gnosis Assets",
@@ -53,18 +50,23 @@ ${message}`,
 
 Nous avons bien reçu votre demande concernant le portefeuille.
 
-Notre équipe examine actuellement les demandes entrantes. Nous priorisons les acheteurs stratégiques et les opérateurs institutionnels.
-
-Nous visons à répondre aux demandes pertinentes sous 24 heures ouvrées.
+Nous vous répondrons dès que possible.
 
 Cordialement,
-
 L’équipe Gnosis Assets
-Identity Infrastructure for the AI Era.
 https://gnosisbase.com`,
       });
     } catch (err) {
-      console.error("AUTO_REPLY_FAILED:", err);
+      autoError = err?.message || String(err);
     }
 
-    return res.status(200).json({ success: true, autoReplySent: !!autoInfo?.messageId });
+    return res.status(200).json({
+      success: true,
+      adminSent: !!adminInfo?.messageId,
+      autoReplySent: !!autoInfo?.messageId,
+      autoError,
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, error: e?.message || "Server error" });
+  }
+}
