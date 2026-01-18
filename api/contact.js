@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     // ----------------------------
     const hp = (data.website || "").trim();
     if (hp) {
-      // Pretend success to not help bots
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
@@ -73,54 +72,64 @@ The Gnosis Assets Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
+    // Dark-mode friendly HTML (works well across email clients)
     const html = `
-<div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; color:#111; background:#fff; padding:24px;">
-  <div style="max-width:640px; margin:0 auto; border:1px solid #eee; border-radius:12px; overflow:hidden;">
-    <div style="padding:20px; background:#0b0f17; color:#fff;">
-  <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-    <img
-      src="https://gnosisbase.com/logo.png"
-      alt="Gnosis Assets"
-      width="200"
-      style="display:block; margin:0 0 14px 0; border:0;"
-    />
-  </a>
-  <div style="font-size:20px; font-weight:700;">
-    Inquiry received
-  </div>
-</div>
+<div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
+  <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
 
+    <!-- Header image (dark) -->
+    <div style="padding:0; background:#0b0f17;">
+      <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+        <img
+          src="https://gnosisbase.com/gnosis-assets-header.png"
+          alt="Gnosis Assets"
+          width="640"
+          style="display:block; width:100%; max-width:640px; border:0;"
+        />
+      </a>
+    </div>
 
-    <div style="padding:22px 20px; background:#fff;">
-      <p style="margin:0 0 12px;">Hi${name ? ` ${escapeHtml(name)}` : ""},</p>
-
-      <p style="margin:0 0 12px;">
-        Thank you for contacting <b>Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+    <!-- Body -->
+    <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
+      <p style="margin:0 0 12px; color:#e5e7eb;">
+        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
       </p>
 
-      <div style="margin:16px 0; padding:14px 14px; background:#f6f8fb; border:1px solid #eef2f7; border-radius:10px;">
-        <div style="font-size:13px; color:#334155; margin-bottom:6px;">Inquiry summary</div>
-        <div style="font-size:14px;"><b>Asset bundle:</b> ${escapeHtml(bundle)}</div>
-        <div style="font-size:14px;"><b>Email:</b> ${escapeHtml(email)}</div>
+      <p style="margin:0 0 14px; color:#e5e7eb;">
+        Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+      </p>
+
+      <!-- Summary box -->
+      <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
+        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
+        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
+        </div>
       </div>
 
-      <p style="margin:0 0 12px; color:#334155;">
+      <p style="margin:0 0 12px; color:#cbd5e1;">
         Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
       </p>
 
-      <p style="margin:0 0 18px; color:#334155;">
-        We aim to respond to all relevant acquisition requests within <b>24 business hours</b>.
+      <p style="margin:0 0 18px; color:#cbd5e1;">
+        We aim to respond to all relevant acquisition requests within <b style="color:#ffffff;">24 business hours</b>.
       </p>
 
-      <a href="https://gnosisbase.com" style="display:inline-block; text-decoration:none; padding:10px 14px; border-radius:10px; background:#0b0f17; color:#fff; font-weight:600;">
+      <!-- CTA -->
+      <a href="https://gnosisbase.com"
+         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
+                background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
         Visit gnosisbase.com
       </a>
 
-      <hr style="border:none; border-top:1px solid #eee; margin:18px 0;">
+      <hr style="border:none; border-top:1px solid #1f2937; margin:20px 0;">
 
-      <div style="font-size:12px; color:#64748b;">
+      <div style="font-size:12px; color:#94a3b8;">
         Best regards,<br>
-        <b>The Gnosis Assets Team</b><br>
+        <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
         Identity Infrastructure for the AI Era.
       </div>
     </div>
