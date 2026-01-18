@@ -302,26 +302,20 @@ header .container { height: 100%; }
 
 
 .brand-name span {
-  background: none;
-  -webkit-text-fill-color: #ffffff;
-  color: #ffffff;
-
-  /* Typography refinement */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  font-weight: 400;
-  font-size: 0.72em;      /* متناسق مع تصغير الحجم */
-  letter-spacing: 0.14em; /* إحساس descriptor */
-  
-  margin-left: 6px;
-  opacity: 0.9;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 4px;
 }
-
 
 .brand-tagline {
     margin-top: 3px;
     font-weight: 600;
     font-size: 10px;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
     color: rgba(240, 240, 255, .65);
     white-space: nowrap;
@@ -347,7 +341,7 @@ header .container { height: 100%; }
     
 
     .brand-tagline {
-        letter-spacing: 0.2px;
+        letter-spacing: 1px;
         font-size: 9px;
         text-align: left;
     }
@@ -3482,9 +3476,9 @@ dialog::backdrop {
 
 .portfolio .tlds{
   color: rgba(0,240,240,.95);
-  font-weight: 700;
-  letter-spacing: .16em;
-  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: none;
   font-family: var(--sans);
   font-size: 12px;
 }
@@ -3650,9 +3644,15 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   background: none !important;
   -webkit-background-clip: initial !important;
   background-clip: initial !important;
+  -webkit-text-fill-color: rgba(0,240,240,.95) !important;
 
-  -webkit-text-fill-color: rgba(0, 240, 240, .95) !important;
-  color: rgba(0, 240, 240, .95) !important;
+  color: rgba(0,240,240,.95) !important;
+  font-family: var(--sans) !important;
+  font-weight: 600 !important;
+  letter-spacing: .08em !important;
+  text-transform: none !important;
+  font-size: 0.45em !important;
+  vertical-align: middle;
 }
 
 /* If you have spans for parts like Base/Flow that had their own colors */
@@ -3684,176 +3684,95 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 }
 
 
-
-/* ===============================
-   HERO MOBILE OVERRIDES — FINAL
-   (These rules come LAST to override earlier !important mobile tweaks)
-   =============================== */
+/* =====================================
+   FINAL MOBILE OVERRIDES (Hero + Assurance)
+   ===================================== */
 @media (max-width: 768px){
-  /* Force axiom to stay on ONE line */
-  .hero .hero-axiom{
-    white-space: nowrap !important;
-    max-width: none !important;
-    width: auto !important;
-    font-size: 13px !important;
-    letter-spacing: 0.06em !important;
-    margin: 16px auto 22px !important;
-  }
-
-  /* Button sizing (override earlier width:65% + tiny font) */
-  .hero .hero-box a.btn-primary[href="#inquiry"]{
-    width: auto !important;
-    min-width: 0 !important;
-    padding: 12px 18px !important;
-    font-size: 14px !important;
-    letter-spacing: 0.06em !important;
-    line-height: 1.1 !important;
-    white-space: nowrap !important;
-  }
-
-  .hero .hero-box a.btn-secondary[href="#collection"]{
-    width: auto !important;
-    min-width: 0 !important;
-    padding: 12px 16px !important;
-    font-size: 13px !important;
-    white-space: nowrap !important;
-  }
-
-  /* Keep the two CTAs on one row unless screen is extremely narrow */
-  .hero .hero-box > div[style*="flex-wrap"]{
-    flex-wrap: nowrap !important;
-  }
-}
-
-@media (max-width: 360px){
-  /* Ultra small screens: allow wrapping gracefully */
-  .hero .hero-box > div[style*="flex-wrap"]{ flex-wrap: wrap !important; }
-  .hero .hero-axiom{ font-size: 12px !important; letter-spacing: 0.04em !important; }
-}
-/* === MOBILE HERO FULLSCREEN OVERRIDE (FINAL) === */
-@media (max-width: 768px){
+  /* Hero should fill the screen under the fixed header */
   .hero{
+    height: calc(100svh - var(--header-height)) !important;
     min-height: calc(100svh - var(--header-height)) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    align-items: center !important;
     padding: 0 !important;
   }
-  .hero-box{ margin: 0 auto !important; }
+  .hero-box{
+    width: 100% !important;
+    padding: 24px 16px 34px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Keep CTA buttons readable but not oversized */
+  .hero-box a[href="#inquiry"],
+  .hero-box a[href="#collection"]{
+    font-size: 14px !important;
+    padding: 12px 18px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Keep the gold axiom on one line */
+  .hero-axiom{
+    max-width: none !important;
+    white-space: nowrap !important;
+    opacity: 0.85 !important;
+    font-size: 12.5px !important;
+    letter-spacing: 0.06em !important;
+    margin: 14px auto 22px !important;
+  }
 }
-/* ===============================
-   HERO MOBILE LINE SPACING
-   =============================== */
-@media (max-width: 768px) {
 
-  /* Axiom */
-  .hero-axiom {
-    line-height: 1.9 !important;
-  }
-
-  /* Main headline */
-  .hero h1,
-  .hero-title {
-    line-height: 1.85 !important;
-  }
-
-  /* Gradient sub-headline */
-  .hero h1 span,
-  .hero-title span {
-    line-height: 1.85 !important;
-  }
-
-  /* Supporting text */
-  .hero p,
-  .hero-subtitle {
-    line-height: 1.9 !important;
-  }
-
-}
-/* =====================================
-   MOBILE: COMPACT "Secure Asset Transfer" CARD
-   ===================================== */
 @media (max-width: 768px){
+  /* Make Secure Asset Transfer card much more compact */
+  .assurance-section{ margin-top: 40px !important; }
 
-  /* Card container */
-  .assurance-section .assurance-rail{
-    padding: 10px 10px !important;
-  }
-  .assurance-section .assurance-inner{
-    padding: 18px 14px !important;
+  .assurance-rail{
+    padding: 1px !important;
     border-radius: 18px !important;
+    box-shadow: none !important; /* remove heavy outer glow on mobile */
+  }
+  .assurance-rail:hover{ transform: none !important; box-shadow: none !important; }
+
+  .assurance-inner{
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
     gap: 12px !important;
   }
 
-  /* Left block spacing */
-  .assurance-section .assurance-left{
-    gap: 10px !important;
-  }
+  .assurance-left{ gap: 12px !important; }
 
-  /* Icon box smaller */
-  .assurance-section .assurance-icon-box{
+  .assurance-icon-box{
     width: 44px !important;
     height: 44px !important;
+    min-width: 44px !important;
     border-radius: 14px !important;
-  }
-  .assurance-section .assurance-icon-box .ico{
-    width: 18px !important;
-    height: 18px !important;
+    animation: none !important;
+    box-shadow: none !important;
   }
 
-  /* Title smaller */
-  .assurance-section .assurance-text h4{
+  .assurance-text h4{
     font-size: 18px !important;
     line-height: 1.25 !important;
-    margin: 0 0 6px 0 !important;
+    margin-bottom: 6px !important;
   }
 
-  /* Paragraph smaller */
-  .assurance-section .assurance-text p{
+  .assurance-text p{
     font-size: 13.5px !important;
     line-height: 1.55 !important;
-    margin: 0 !important;
-    opacity: 0.9;
   }
 
- /* =====================================
-   REMOVE OUTER GLOW / BACKDROP EFFECT
-   ===================================== */
-@media (max-width: 768px){
-
-  /* Remove any outer glow or blur */
-  .assurance-section .assurance-rail{
-    box-shadow: none !important;
-    filter: none !important;
-    background: transparent !important;
+  .btn-escrow-premium{
+    font-size: 14px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    gap: 10px !important;
   }
-
-  /* Kill pseudo-element glow if exists */
-  .assurance-section .assurance-rail::before,
-  .assurance-section .assurance-rail::after{
-    content: none !important;
-    display: none !important;
-  }
-
+  .btn-escrow-premium .ico{ width: 14px !important; height: 14px !important; }
 }
-/* Mobile: make ASSETS smaller than GNOSIS */
-@media (max-width: 768px){
-  .brand .brand-name{
-    font-size: 18px !important;   /* GNOSIS size */
-    line-height: 1 !important;
-  }
-
-  .brand .brand-name > span{
-    font-size: 0.6em !important; /* ASSETS smaller */
-    opacity: 0.9 !important;
-    letter-spacing: 0.14em !important;
-    position: relative;
-    top: -1px;                    /* optional: align baseline nicely */
-  }
-}
-
 </style>
-
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -4233,7 +4152,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                         </div>
                         <div>
                             <div class="form-card mandate-form">
-                                <form action="/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate>
+                                <form action="https://formspree.io/f/meeoydwd" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate="">
                                     <div class="grid-form">
                                         <div class="field">
                                             <label for="fullName">Full Name</label>
@@ -4241,7 +4160,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                                         </div>
                                         <div class="field">
                                             <label for="email">Email Address</label>
-                                            <input autocomplete="email" id="email" name="email" placeholder="Enter your email" required="" type="email"/>
+                                            <input autocomplete="email" id="email" name="Email" placeholder="Enter your email" required="" type="email"/>
                                         </div>
                                         <div class="field field-full">
                                             <label for="asset">Portfolio Scope</label>
@@ -4638,6 +4557,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 })();
 </script>
 
+
 <script>
 // INQUIRY_FORM_AJAX
 (function(){
@@ -4653,50 +4573,6 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 
   if (!form || !confirmBox) return;
 
-  // ----------------------------
-  // Anti-spam: Honeypot + Time trap
-  // (No HTML edits needed)
-  // ----------------------------
-
-  // 1) Honeypot field (bots often fill it)
-  if (!form.querySelector('input[name="website"]')) {
-    const hpWrap = document.createElement('div');
-    hpWrap.setAttribute('aria-hidden', 'true');
-    hpWrap.style.position = 'absolute';
-    hpWrap.style.left = '-9999px';
-    hpWrap.style.width = '1px';
-    hpWrap.style.height = '1px';
-    hpWrap.style.overflow = 'hidden';
-
-    const hpLabel = document.createElement('label');
-    hpLabel.setAttribute('for', 'website');
-    hpLabel.textContent = 'Website';
-
-    const hpInput = document.createElement('input');
-    hpInput.type = 'text';
-    hpInput.id = 'website';
-    hpInput.name = 'website';
-    hpInput.tabIndex = -1;
-    hpInput.autocomplete = 'off';
-
-    hpWrap.appendChild(hpLabel);
-    hpWrap.appendChild(hpInput);
-
-    // Put honeypot early in the form
-    form.insertBefore(hpWrap, form.firstChild);
-  }
-
-  // 2) Time trap field (very fast submissions are likely bots)
-  let formStartTs = form.querySelector('input[name="formStartTs"]');
-  if (!formStartTs) {
-    formStartTs = document.createElement('input');
-    formStartTs.type = 'hidden';
-    formStartTs.name = 'formStartTs';
-    form.appendChild(formStartTs);
-  }
-  formStartTs.value = String(Date.now());
-  // ----------------------------
-
   let autoCloseTimer = null;
 
   function closeConfirm(){
@@ -4711,8 +4587,10 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   function showConfirm(){
     const wantsNda = !!(ndaCheckbox && ndaCheckbox.checked);
     if (ndaNote) ndaNote.style.display = wantsNda ? 'flex' : 'none';
+
     form.style.display = 'none';
     confirmBox.style.display = 'block';
+
   }
 
   closeBtn && closeBtn.addEventListener('click', closeConfirm);
@@ -4734,54 +4612,24 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     submitBtn && submitBtn.classList.add('loading');
 
     try {
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      const res = await fetch('/api/contact', {
+      const res = await fetch(form.action, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
       });
 
-      const result = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error('Request failed');
 
-      if (!res.ok || result.success !== true) {
-        throw new Error(result.error || 'Send failed');
-      }
-
-      if (result.autoReplySent === false) {
-        if (errorMsg) {
-          errorMsg.style.display = 'block';
-          errorMsg.innerText =
-            "The visitor auto-reply FAILED: " + (result.autoError || "Unknown reason");
-        }
-        return;
-      }
-
-      form.reset();
-
-      // بعد reset نعيد ضبط وقت البداية مرة ثانية
-      const ts2 = form.querySelector('input[name="formStartTs"]');
-      if (ts2) ts2.value = String(Date.now());
-
-      showConfirm();
-
-    } catch (err) {
-      console.error(err);
-      if (errorMsg) {
-        errorMsg.style.display = 'block';
-        errorMsg.innerText = err.message || "Failed to send message. Please try again.";
-      }
-    } finally {
       submitBtn && submitBtn.classList.remove('loading');
+      form.reset();
+      showConfirm();
+    } catch (err) {
+      submitBtn && submitBtn.classList.remove('loading');
+      if (errorMsg) errorMsg.style.display = 'block';
     }
   });
 })();
 </script>
-
 
 </body>
 </html>
