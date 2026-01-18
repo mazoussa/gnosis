@@ -76,10 +76,20 @@ https://gnosisbase.com`;
     const html = `
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; color:#111; background:#fff; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #eee; border-radius:12px; overflow:hidden;">
-    <div style="padding:18px 20px; background:#0b0f17; color:#fff;">
-      <div style="font-size:14px; opacity:0.9;">Gnosis Assets</div>
-      <div style="font-size:20px; font-weight:700; margin-top:4px;">Inquiry received</div>
-    </div>
+    <div style="padding:20px; background:#0b0f17; color:#fff;">
+  <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+    <img
+      src="https://gnosisbase.com/logo.png"
+      alt="Gnosis Assets"
+      width="200"
+      style="display:block; margin:0 0 14px 0; border:0;"
+    />
+  </a>
+  <div style="font-size:20px; font-weight:700;">
+    Inquiry received
+  </div>
+</div>
+
 
     <div style="padding:22px 20px; background:#fff;">
       <p style="margin:0 0 12px;">Hi${name ? ` ${escapeHtml(name)}` : ""},</p>
