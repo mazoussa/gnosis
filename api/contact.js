@@ -41,13 +41,15 @@ Message:
 ${message}`,
     });
 
-    // 2️⃣ Auto-reply to client
-    await transporter.sendMail({
-      from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`,
-      to: email,
-      replyTo: process.env.SMTP_USER,
-      subject: "Confirmation : demande reçue - Gnosis Assets",
-      text: `Merci d’avoir contacté Gnosis Assets.
+        // 2️⃣ Auto-reply to client
+    let autoInfo;
+    try {
+      autoInfo = await transporter.sendMail({
+        from: `"Gnosis Assets Team" <${process.env.SMTP_USER}>`,
+        to: email,
+        replyTo: process.env.SMTP_USER,
+        subject: "Confirmation : demande reçue - Gnosis Assets",
+        text: `Merci d’avoir contacté Gnosis Assets.
 
 Nous avons bien reçu votre demande concernant le portefeuille.
 
@@ -60,11 +62,9 @@ Cordialement,
 L’équipe Gnosis Assets
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`,
-    });
+      });
+    } catch (err) {
+      console.error("AUTO_REPLY_FAILED:", err);
+    }
 
-    return res.status(200).json({ success: true });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ success: false });
-  }
-}
+    return res.status(200).json({ success: true, autoReplySent: !!autoInfo?.messageId });
