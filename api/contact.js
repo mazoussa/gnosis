@@ -1,72 +1,142 @@
-import nodemailer from "nodemailer";
+<script>
+// INQUIRY_FORM_AJAX
+(function(){
+  const form = document.getElementById('inquiryForm');
+  const confirmBox = document.getElementById('formConfirmation');
+  const closeBtn = document.getElementById('closeConfirmation');
+  const ndaCheckbox = document.getElementById('nda');
+  const ndaNote = document.getElementById('ndaNote');
+  const emailInput = document.getElementById('email');
+  const replyto = document.getElementById('_replyto');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
+  if (!form || !confirmBox) return;
+
+  // ----------------------------
+  // Anti-spam: Honeypot + Time trap
+  // (No HTML edits needed)
+  // ----------------------------
+
+  // 1) Honeypot field (bots often fill it)
+  if (!form.querySelector('input[name="website"]')) {
+    const hpWrap = document.createElement('div');
+    hpWrap.setAttribute('aria-hidden', 'true');
+    hpWrap.style.position = 'absolute';
+    hpWrap.style.left = '-9999px';
+    hpWrap.style.width = '1px';
+    hpWrap.style.height = '1px';
+    hpWrap.style.overflow = 'hidden';
+
+    const hpLabel = document.createElement('label');
+    hpLabel.setAttribute('for', 'website');
+    hpLabel.textContent = 'Website';
+
+    const hpInput = document.createElement('input');
+    hpInput.type = 'text';
+    hpInput.id = 'website';
+    hpInput.name = 'website';
+    hpInput.tabIndex = -1;
+    hpInput.autocomplete = 'off';
+
+    hpWrap.appendChild(hpLabel);
+    hpWrap.appendChild(hpInput);
+
+    // Put honeypot early in the form
+    form.insertBefore(hpWrap, form.firstChild);
   }
 
-  try {
-    const data = req.body || {};
+  // 2) Time trap field (very fast submissions are likely bots)
+  let formStartTs = form.querySelector('input[name="formStartTs"]');
+  if (!formStartTs) {
+    formStartTs = document.createElement('input');
+    formStartTs.type = 'hidden';
+    formStartTs.name = 'formStartTs';
+    form.appendChild(formStartTs);
+  }
+  formStartTs.value = String(Date.now());
+  // ----------------------------
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+  let autoCloseTimer = null;
 
-    const name = data.Name || "Unknown";
-    const email = (data.email || "").trim();
-    const bundle = data.Selected_Asset_Bundle || "General";
-    const message = data.Message || "(no message)";
+  function closeConfirm(){
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
+    }
+    confirmBox.style.display = 'none';
+    form.style.display = '';
+  }
 
-    if (!email) {
-      return res.status(400).json({ success: false, error: "Missing visitor email" });
+  function showConfirm(){
+    const wantsNda = !!(ndaCheckbox && ndaCheckbox.checked);
+    if (ndaNote) ndaNote.style.display = wantsNda ? 'flex' : 'none';
+    form.style.display = 'none';
+    confirmBox.style.display = 'block';
+  }
+
+  closeBtn && closeBtn.addEventListener('click', closeConfirm);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && confirmBox.style.display === 'block') closeConfirm();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
 
-    // 1) Email to you
-    const adminInfo = await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.SMTP_USER,
-      replyTo: email,
-      subject: `New Inquiry: ${bundle} - from gnosisbase.com`,
-      text: `Name: ${name}\nEmail: ${email}\nAsset Bundle: ${bundle}\n\nMessage:\n${message}`,
-    });
+    if (replyto && emailInput) replyto.value = (emailInput.value || '').trim();
 
-    // 2) Auto-reply to visitor
-    let autoInfo = null;
-    let autoError = null;
+    if (errorMsg) errorMsg.style.display = 'none';
+    submitBtn && submitBtn.classList.add('loading');
 
     try {
-      autoInfo = await transporter.sendMail({
-        from: process.env.SMTP_USER, // أبسط وأفضل للتسليم
-        to: email,
-        replyTo: process.env.SMTP_USER,
-        subject: "Confirmation : demande reçue - Gnosis Assets",
-        text: `Merci d’avoir contacté Gnosis Assets.
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
 
-Nous avons bien reçu votre demande concernant le portefeuille.
-
-Nous vous répondrons dès que possible.
-
-Cordialement,
-L’équipe Gnosis Assets
-https://gnosisbase.com`,
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
       });
-    } catch (err) {
-      autoError = err?.message || String(err);
-    }
 
-    return res.status(200).json({
-      success: true,
-      adminSent: !!adminInfo?.messageId,
-      autoReplySent: !!autoInfo?.messageId,
-      autoError,
-    });
-  } catch (e) {
-    return res.status(500).json({ success: false, error: e?.message || "Server error" });
-  }
-}
+      const result = await res.json().catch(() => ({}));
+
+      if (!res.ok || result.success !== true) {
+        throw new Error(result.error || 'Send failed');
+      }
+
+      if (result.autoReplySent === false) {
+        if (errorMsg) {
+          errorMsg.style.display = 'block';
+          errorMsg.innerText =
+            "The visitor auto-reply FAILED: " + (result.autoError || "Unknown reason");
+        }
+        return;
+      }
+
+      form.reset();
+
+      const ts2 = form.querySelector('input[name="formStartTs"]');
+      if (ts2) ts2.value = String(Date.now());
+
+      showConfirm();
+
+    } catch (err) {
+      console.error(err);
+      if (errorMsg) {
+        errorMsg.style.display = 'block';
+        errorMsg.innerText = err.message || "Failed to send message. Please try again.";
+      }
+    } finally {
+      submitBtn && submitBtn.classList.remove('loading');
+    }
+  });
+})();
+</script>
