@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Gnosis Assets | Premium AI Domain Bundles &amp; Identity Infrastructure</title>
-<meta content="Premium .com + .ai domain bundles for the next generation of AI startups. Secure your institutional-grade identity infrastructure today." name="description"/>
+<meta content="Strategic AI domain assets designed for long-term brand dominance. Institutional-grade identity infrastructure for serious builders." name="description"/>
 <meta content="Gnosis Assets" name="author"/>
 <meta content="index, follow, max-image-preview:large" name="robots"/>
 <meta content="#020204" name="theme-color"/>
@@ -14,7 +14,7 @@
 <meta content="website" property="og:type"/>
 <meta content="https://gnosisbase.com/" property="og:url"/>
 <meta content="Gnosis Assets | Premium AI Domain Portfolio" property="og:title"/>
-<meta content="Acquire exclusive .com + .ai bundles for AI startups. Verified ownership and secure transfer workflows." property="og:description"/>
+<meta content="Acquire exclusive AI domain assets built for institutional positioning, verified ownership, and secure private transfer." property="og:description"/>
 <meta content="https://gnosisbase.com/og-image.jpg" property="og:image"/>
 <meta content="Gnosis Assets – Premium AI domain bundles" property="og:image:alt"/>
 <meta content="Gnosis Assets" property="og:site_name"/>
@@ -54,6 +54,11 @@
 @media (max-width: 768px) {
   header.is-glass .brand-logo { height: 40px; }
   header.is-glass .brand-name { font-size: 16px; }
+
+  /* Mobile hero polish */
+  .hero-box{ box-shadow: 0 28px 80px -22px rgba(0,240,240,.18), inset 0 0 60px -10px rgba(0,240,240,.08); }
+
+
 }
 
 
@@ -219,7 +224,7 @@ header {
 }
 
 header.is-glass {
-    height: 60px;
+    height: var(--header-height);
     background: var(--header-glass);
     border-bottom: 1px solid var(--border-2);
     backdrop-filter: blur(16px);
@@ -263,7 +268,7 @@ header .container { height: 100%; }
 }
 
 .brand-logo {
-    height: 70px; /* الحجم الأصلي */
+    height: 70px; 
     width: auto;
     filter: var(--icon-glow);
     transition: transform .25s ease, height .35s ease;
@@ -281,7 +286,7 @@ header .container { height: 100%; }
     align-items: flex-start;
 }
 
-/* تنسيق كلمة GNOSIS (التدرج الأزرق) */
+/* GNOSIS  */
 .brand-name {
     font-weight: 800;
     font-size: 22px;
@@ -310,12 +315,28 @@ header .container { height: 100%; }
     font-size: 16px;
     margin-left: 4px;
 }
+/* GNOSIS */
+.brand-name {
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/*  ASSETS */
+.brand-name span {
+    font-size: 0.6em;   /*  ASSETS  */
+    font-weight: 500;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    margin-left: 4px;
+}
 
 .brand-tagline {
     margin-top: 3px;
     font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 1.6px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: rgba(240, 240, 255, .65);
     white-space: nowrap;
@@ -342,7 +363,7 @@ header .container { height: 100%; }
 
     .brand-tagline {
         letter-spacing: 1px;
-        font-size: 9px;
+        font-size: 8px;
         text-align: left;
     }
 
@@ -1087,6 +1108,51 @@ main { position: relative; z-index: 2; }
   .hero h1 .grad-text{
     font-size: 1.35em;
   }
+  /* Mobile hero: wider, less side padding */
+  :root{ --gutter: 12px; }
+  .hero{ padding-left: 0; padding-right: 0; }
+  .hero-box{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 18px;
+  }
+
+  /* Stronger mobile hero: clearer hierarchy + tighter spacing + stronger glow */
+  .hero{ padding-top: clamp(18px, 5vh, 44px); padding-bottom: 28px; }
+  .hero-box{
+    padding-top: 18px !important;
+    padding-bottom: 28px !important;
+    box-shadow: 0 34px 90px -22px rgba(0,240,240,.24),
+                inset 0 0 70px -10px rgba(0,240,240,.12);
+    border-color: rgba(0,240,240,.95);
+  }
+
+  .pill{ margin-bottom: 16px; padding: 12px 0; }
+  .pill-top{ font-size: 18px; }
+  .pill-bottom{ font-size: 16px; }
+
+  .retro-typewriter{ font-size: 13px; padding: 8px 12px; border-radius: 12px; }
+  .typing-text{ animation: typing 2.6s steps(40,end) forwards, blinkCursor .75s step-end infinite; }
+
+  .hero h1{ letter-spacing: -1.2px; margin-bottom: 14px; }
+  .hero h1 .hero-topline{ font-size: 1.05em; }
+  .hero h1 .grad-text{ font-size: 1.55em; display: inline-block; line-height: 1.05; }
+
+  .hero p{ font-size: 1.02rem; line-height: 1.75; margin-top: 6px; }
+  .trust-row{
+    margin-top: 18px;
+    gap: 10px 14px;
+    font-size: 12px;
+  }
+  .trust{ padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); }
+
+  /* Better scanability on small screens */
+  .trust-row{ flex-wrap: wrap; }
+
+
 }
 
 .si-section {
@@ -1174,19 +1240,50 @@ main { position: relative; z-index: 2; }
 }
 
 .si-card {
-    background: rgba(16, 18, 30, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    background:
+        radial-gradient(circle at 18% 12%, rgba(128, 32, 240, 0.16), transparent 52%),
+        radial-gradient(circle at 78% 22%, rgba(0, 240, 240, 0.08), transparent 58%),
+        linear-gradient(180deg, rgba(8, 10, 20, 0.99), rgba(6, 7, 18, 0.99));
+    border: 1px solid rgba(128, 32, 240, 0.40);
     border-radius: 24px;
     padding: 40px;
     text-align: left;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 34px 95px rgba(0, 0, 0, 0.55), 0 24px 90px rgba(128, 32, 240, 0.22);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .si-card:hover {
     transform: translateY(-10px);
-    border-color: #8020f0;
+    border-color: rgba(128, 32, 240, 0.60);
+    box-shadow: 0 45px 110px rgba(128, 32, 240, 0.45);
+}
+/* Strategic Intelligence cards - darker, premium depth */
+.si-card{
+  background:
+    radial-gradient(circle at 18% 12%, rgba(128, 32, 240, 0.14), transparent 52%),
+    radial-gradient(circle at 78% 22%, rgba(0, 240, 240, 0.07), transparent 58%),
+    linear-gradient(180deg, rgba(7, 9, 18, 0.99), rgba(5, 6, 14, 0.99)) !important;
+
+  border: 1px solid rgba(128, 32, 240, 0.40) !important;
+  box-shadow:
+    0 34px 95px rgba(0, 0, 0, 0.58),
+    0 24px 90px rgba(128, 32, 240, 0.22) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.si-card:hover{
+  transform: translateY(-10px);
+  border-color: rgba(128, 32, 240, 0.65) !important;
+  box-shadow:
+    0 46px 120px rgba(0, 0, 0, 0.62),
+    0 40px 115px rgba(128, 32, 240, 0.32) !important;
 }
 
 .si-date {
@@ -2925,7 +3022,7 @@ dialog::backdrop {
   .si-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; margin-bottom: 14px !important; }
   .si-date{ margin-bottom: 10px !important; }
 
-  /* Acquisition steps + assurance: tighter */
+  /* Not publicly listed on marketplaces. Offered exclusively via direct private acquisition.<br><br>Acquisition steps + assurance: tighter */
   .acq2-steps{ gap: 12px !important; }
   .acq-card{ padding: 18px 14px !important; border-radius: 18px !important; }
   .acq-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; }
@@ -3662,10 +3759,6 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 }
 @media (max-width: 520px){
 
-  header{
-    height: 56px;
-  }
-
   header .header-inner{
     padding-top: 6px;
     padding-bottom: 6px;
@@ -3772,6 +3865,56 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   }
   .btn-escrow-premium .ico{ width: 14px !important; height: 14px !important; }
 }
+
+
+/* ================================
+   Typography consistency (Global)
+   ================================ */
+.h2{
+  font-size: var(--fs-h2);
+  line-height: 1.08;
+}
+.si-h2{
+  font-size: var(--fs-h2) !important;
+  line-height: 1.08;
+}
+.sub,
+.si-sub{
+  font-size: clamp(1.0rem, 1.25vw, 1.12rem);
+  line-height: var(--lh-body);
+}
+
+/* Trust signals: remove the frame/border around the three items */
+.trust{
+  border: none !important;
+}
+
+
+/* ===== CONSISTENCY FIXES (Mobile + Desktop) =====
+   1) Unified section headings sizing
+   2) Unified subtitles sizing
+   3) Remove the frame/border from the three trust pills in the hero
+*/
+
+/* Section headings: keep ONE scale across all sections */
+.h2,
+.si-h2{
+  font-size: var(--fs-h2) !important;
+  line-height: 1.1;
+}
+
+/* Section subtitles */
+.sub,
+.si-sub{
+  font-size: var(--fs-body) !important;
+  line-height: var(--lh-body) !important;
+}
+
+/* Trust pills: remove the outline frame */
+.trust{
+  border: 0 !important;
+}
+
 </style>
 </head>
 <body>
@@ -3844,26 +3987,18 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                     </a>
                 </div>
                 </div>
-        </div>
-    </section>
-
-    <!-- =====================================================
-         Trust Signals
-         - Extracted from Hero to avoid duplication
-         - Mobile: keep as 1-column stack
-         ===================================================== -->
-    <section aria-label="Trust" class="trust-section grid-overlay" id="trust">
-        <div class="container">
-            <div class="kicker">CREDIBILITY</div>
-            <div class="h2">Verified Signals</div>
-            <div class="sub">Institutional-grade assurances, shown once and referenced everywhere.</div>
-            <div aria-label="Trust signals" class="trust-row" style="margin-top: 40px;">
+                <div aria-label="Trust signals" class="trust-row" style="margin-top: 40px;">
                     <div class="trust"><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg> Verified Ownership</div>
                     <div class="trust"><svg aria-hidden="true" class="ico s18"><use href="#i-shield"></use></svg> Escrow.com Support</div>
                     <div class="trust"><svg aria-hidden="true" class="ico s18"><use href="#i-bolt"></use></svg> Instant Transfer</div>
                 </div>
         </div>
     </section>
+        </div>
+    </section>
+
+    
+            
 
 
     <!-- =====================================================
@@ -3882,7 +4017,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                         We didn’t collect <span class="accent">domains</span>.
                     </div>
                     <div class="line strong">
-                        We closed a <span class="accent">naming frontier</span>.
+                        We closed a <span>naming frontier</span>.
                     </div>
                 </div>
                 <div class="portfolio-sub">
@@ -3962,7 +4097,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     <section aria-label="The Anatomy of Dominance" class="dominance grid-overlay" id="dominance">
         <div class="container">
             <div class="kicker">THE ANATOMY OF DOMINANCE</div>
-            <div class="h2">Why <span class="word-cyan">Gnosis</span></div>
+            <div class="h2">Why <span class="grad-text">Gnosis</span></div>
             <div class="sub">Not a product listing. A strategic position. Built to signal authority before the first pitch deck.</div>
             <div class="dom-row dom-row-top reveal">
                 <div class="dom-copy dominance-text">
@@ -4056,8 +4191,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
          ===================================================== -->
     <section aria-label="Security" class="acq2 grid-overlay" id="security">
         <div class="container">
-            <div class="kicker">SECURE ACQUISITION</div>
-            <div class="h2">Secure <span class="word-cyan">Acquisition</span></div>
+            <div class="kicker">ACQUISITION PROCESS</div>
+            <div class="h2">Secure <span class="grad-text">Acquisition</span></div>
             <div class="sub">A professional, discreet, and verifiable process — from first contact to final transfer.</div>
             <div class="acq2-steps">
                 <div class="acq-card">
@@ -4522,7 +4657,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     header.classList.toggle("is-glass", y > 20);
 
     // Hide on scroll down (after buffer)
-    if (y > lastY && y > 1800) {
+    const HIDE_AFTER = (window.innerWidth <= 768) ? 120 : 280;
+    if (y > lastY && y > HIDE_AFTER) {
       header.classList.add("is-hidden");
     }
 
