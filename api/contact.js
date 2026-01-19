@@ -11,9 +11,12 @@ export default async function handler(req, res) {
   try {
     const data = req.body || {};
 
-    /* Anti-spam checks */
+    /* ============================
+       Anti-spam: Honeypot + Timing
+       ============================ */
     const honeypot = (data.website || "").trim();
     if (honeypot) {
+      // Fake success to avoid helping bots
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
@@ -21,6 +24,7 @@ export default async function handler(req, res) {
     if (startTs && Date.now() - startTs < 2500) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
+    /* ============================ */
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -32,9 +36,8 @@ export default async function handler(req, res) {
       },
     });
 
-    // 1. Extract Data (Added Company here)
     const name = data.Name || "Unknown";
-    const company = data.Company || "Not specified"; // <--- NEW FIELD
+    const company = data.Company || "Not specified";
     const email = (data.email || "").trim();
     const bundle = data.Selected_Asset_Bundle || "General";
     const message = data.Message || "(no message)";
@@ -49,15 +52,12 @@ export default async function handler(req, res) {
     /* ============================
        1) Admin notification email
        ============================ */
-    // Added Company to the text body so you can see it
     const adminInfo = await transporter.sendMail({
       from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       replyTo: email,
       subject: `New Inquiry: ${bundle} – from gnosisbase.com`,
-      text: `
-Name: ${name}
-Company: ${company}
+      text: `Name: ${name}
 Email: ${email}
 Asset Bundle: ${bundle}
 
@@ -84,56 +84,80 @@ The Gnosis Assets Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
-    // (HTML Code remains the same as previous step)
     const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Gnosis Assets Inquiry</title>
-  <style>
-    body { margin: 0; padding: 0; background-color: #060712; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-    .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #060712; }
-    .content { background-color: #10121e; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px; margin-top: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .logo { text-align: center; margin-bottom: 30px; }
-    .logo-text { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
-    .logo-accent { color: #00f0f0; }
-    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,240,240,0.5), transparent); margin: 20px 0; }
-    p { color: #b0b3c0; line-height: 1.6; font-size: 16px; margin-bottom: 15px; }
-    strong { color: #ffffff; }
-    .btn { display: inline-block; padding: 12px 24px; background-color: rgba(0,240,240,0.1); color: #00f0f0; text-decoration: none; font-weight: bold; border-radius: 6px; border: 1px solid rgba(0,240,240,0.3); margin-top: 10px; font-size: 14px; }
-    .footer { text-align: center; padding: 30px; color: #55596b; font-size: 12px; }
-    .footer a { color: #777b8f; text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="content">
-      <div class="logo">
-        <a href="https://gnosisbase.com" class="logo-text">
-          GNOSIS <span class="logo-accent">ASSETS</span>
-        </a>
-      </div>
-      <p>Dear Investor,</p>
-      <p>We have successfully received your inquiry regarding the <strong>Gnosis Assets Portfolio</strong>.</p>
-      <div class="divider"></div>
-      <p>Our team is currently reviewing incoming mandates. Due to the volume of requests, we prioritize inquiries from strategic buyers and institutional operators capable of executing a full portfolio buyout.</p>
-      <p>We aim to respond to all relevant acquisition requests within <strong>24 business hours</strong>.</p>
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="https://gnosisbase.com" class="btn">Return to Portfolio</a>
-      </div>
+<div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
+  <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
+
+    <!-- Header -->
+    <div style="padding:20px; background:#0b0f17;">
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td align="left" valign="middle">
+            <div style="font-size:22px; font-weight:700; color:#ffffff;">
+              Inquiry received
+            </div>
+          </td>
+          <td align="right" valign="middle">
+            <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+              <img
+                src="https://gnosisbase.com/logo.png"
+                alt="Gnosis Assets"
+                width="110"
+                style="display:block; border:0;"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="footer">
-      <p>&copy; 2026 Gnosis Assets. Identity Infrastructure for the AI Era.</p>
-      <p>
-        <a href="https://gnosisbase.com">Website</a> • 
-        <a href="mailto:invest@gnosisbase.com">Contact Support</a>
+
+    <!-- Body -->
+    <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
+      <p style="margin:0 0 12px;">
+        Hi${name ? ` ${escapeHtml(name)}` : ""},
       </p>
-      <p style="margin-top: 10px; opacity: 0.5;">Private Sale. Serious Inquiries Only.</p>
+
+      <p style="margin:0 0 14px;">
+        Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+      </p>
+
+      <!-- Summary -->
+      <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
+        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">
+          Inquiry summary
+        </div>
+        <div style="font-size:14px; margin:2px 0;">
+          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
+        </div>
+        <div style="font-size:14px; margin:2px 0;">
+          <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
+        </div>
+      </div>
+
+      <p style="margin:0 0 12px; color:#cbd5e1;">
+        Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+      </p>
+
+      <p style="margin:0 0 18px; color:#cbd5e1;">
+        We aim to respond to all relevant acquisition requests within <b style="color:#ffffff;">24 business hours</b>.
+      </p>
+
+      <a href="https://gnosisbase.com"
+         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
+                background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
+        Visit gnosisbase.com
+      </a>
+
+      <hr style="border:none; border-top:1px solid #1f2937; margin:20px 0;">
+
+      <div style="font-size:12px; color:#94a3b8;">
+        Best regards,<br>
+        <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
+        Identity Infrastructure for the AI Era.
+      </div>
     </div>
   </div>
-</body>
-</html>
+</div>
 `;
 
     let autoInfo = null;
@@ -167,4 +191,13 @@ https://gnosisbase.com`;
       error: e?.message || "Server error",
     });
   }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
