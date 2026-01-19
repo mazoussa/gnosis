@@ -4656,8 +4656,14 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     // Glass effect
     header.classList.toggle("is-glass", y > 20);
 
-    // Hide on scroll down (after buffer)
-    const HIDE_AFTER = (window.innerWidth <= 768) ? 120 : 280;
+    // Hide after half page
+    const docH = document.documentElement.scrollHeight;
+    const HIDE_AFTER = Math.max(
+      window.innerHeight * 0.8,
+      docH * 0.5
+    );
+
+    // Hide on scroll down
     if (y > lastY && y > HIDE_AFTER) {
       header.classList.add("is-hidden");
     }
@@ -4673,33 +4679,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 })();
-
-(function(){
-  /* Mobile menu (keep as-is) */
-  const btn = document.getElementById("menuBtn");
-  const nav = document.getElementById("mobileNav");
-  if(!btn || !nav) return;
-
-  function close(){
-    nav.classList.remove("show");
-    btn.setAttribute("aria-expanded", "false");
-    const use = btn.querySelector("use");
-    if (use) use.setAttribute("href", "#i-menu");
-  }
-  function open(){
-    nav.classList.add("show");
-    btn.setAttribute("aria-expanded", "true");
-    const use = btn.querySelector("use");
-    if (use) use.setAttribute("href", "#i-x");
-  }
-
-  btn.addEventListener("click", () => {
-    nav.classList.contains("show") ? close() : open();
-  });
-
-  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
-})();
 </script>
+
 
 
 <script>
