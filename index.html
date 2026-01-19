@@ -51,10 +51,7 @@
 /* Shrink brand on glass (Desktop defaults) */
 /* Hide on scroll down (UX: slide up + light opacity) */
 /* Mobile overrides */
-@media (max-width: 768px) {
-  header.is-glass .brand-logo { height: 40px; }
-  header.is-glass .brand-name { font-size: 16px; }
-}
+
 
 
 :root {
@@ -240,10 +237,7 @@ header.is-glass .brand-tagline {
     margin-top: 0;
 }
 
-@media (max-width: 768px) {
-    header.is-glass .brand-logo { height: 40px; }
-    header.is-glass .brand-name { font-size: 16px; }
-}
+
 
 header .container { height: 100%; }
 
@@ -327,29 +321,7 @@ header .container { height: 100%; }
     text-align: left;
 }
 
-@media (max-width: 768px) {
-    .brand-logo {
-        height: 56px;
-    }
 
-    
-
-    .brand-name {
-        font-size: 20px;
-    }
-
-    
-
-    .brand-tagline {
-        letter-spacing: 1px;
-        font-size: 9px;
-        text-align: left;
-    }
-
-    .brand-copy {
-        align-items: flex-start;
-    }
-}
 .header-right { 
     display: flex; 
     align-items: center; 
@@ -679,7 +651,7 @@ main { position: relative; z-index: 2; }
   font-size: 1em;
 }
 
-.trust-row {
+  .trust-row {
     margin-top: clamp(22px, 4vw, 54px);
     display: flex;
     flex-wrap: wrap;
@@ -688,15 +660,15 @@ main { position: relative; z-index: 2; }
     color: var(--muted);
     font-size: 14px;
     font-weight: 800;
-}
+  }
 
-.trust { 
+  .trust { 
     display: flex; 
     gap: 10px; 
     align-items: center; 
 }
 
-.trust .ico { 
+  .trust .ico { 
     color: rgba(0,240,240,.95); 
     filter: var(--icon-glow); 
 }
@@ -1067,27 +1039,8 @@ main { position: relative; z-index: 2; }
     text-align: center;
 }
 
-@media (max-width: 920px){
-    .dom-row{ 
-        grid-template-columns: 1fr; 
-        gap: 16px;
-    }
-    .dom-media{ min-height: 260px; }
-    .dom-copy{ max-width: 100%; }
 
-    /* Keep visual symmetry when stacked: content block first, media block second */
-    .dom-row-bottom .dom-cards{ order: 1; }
-    .dom-row-bottom .dom-media{ order: 2; }
-}
-@media (max-width: 520px){
-  .hero h1 .hero-topline{
-    font-size: 1em;
-  }
 
-  .hero h1 .grad-text{
-    font-size: 1.35em;
-  }
-}
 
 .si-section {
     padding: 80px 0;
@@ -1390,12 +1343,12 @@ main { position: relative; z-index: 2; }
     border: 1px solid rgba(255,255,255,.08);
 }
 
-.assurance-left {
+  .assurance-left {
     display: flex;
     align-items: center;
     gap: 25px;
     min-width: 0;
-}
+  }
 
 .assurance-icon-box {
     width: 64px;
@@ -1443,7 +1396,7 @@ main { position: relative; z-index: 2; }
     font-weight: 300;
 }
 
-.btn-escrow-premium {
+  .btn-escrow-premium {
     background: linear-gradient(135deg, #22c55e, #0c8b3a);
     color: #fff !important;
     padding: 16px 35px;
@@ -1458,9 +1411,9 @@ main { position: relative; z-index: 2; }
     text-decoration: none;
     white-space: nowrap;
     font-family: var(--sans);
-}
+  }
 
-.btn-escrow-premium:hover {
+  .btn-escrow-premium:hover {
     transform: scale(1.05);
     filter: brightness(1.02);
     box-shadow: 0 20px 40px -10px rgba(34, 197, 94, 0.60);
@@ -2259,91 +2212,19 @@ dialog::backdrop {
     font-size: 12px;
 }
 
-@media (hover: none) { .cursor-glow { display: none; } }
 
-@media (max-width: 1100px) {
-    .acq2-steps { grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
 
-@media (max-width: 980px) {
-    .cards { grid-template-columns: 1fr; }
-    .cards2, .grid-form, .si-grid { grid-template-columns: 1fr; }
-    .mandate-grid { grid-template-columns: 1fr; }
-    .mandate-stamp { position: static; display: inline-flex; margin-bottom: 12px; }
-}
 
-@media (max-width: 860px) {
-    nav { display: none; }
-    .menu-btn { display: grid; }
-}
 
-@media (max-width: 768px) {
-    .acq2-steps { grid-template-columns: 1fr !important; gap: 20px; }
-    .acq-card { min-height: auto; padding: 30px 20px; }
-    
-    .assurance-inner {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
-        align-items: stretch;
-    }
-    
-    .assurance-left {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .btn-escrow-premium {
-        width: 100%;
-        justify-content: center;
-    }
-}
 
-@media (max-width: 680px) {
-    :root { 
-        --header-height: 70px; 
-        --gutter: 16px; 
-    }
-    
-    .trust-row { gap: 12px 20px; }
-    .brand-name { font-size: 18px; }
-    .brand-logo { height: 46px; }
 
-    .typing-text {
-        white-space: normal;
-        width: 100% !important;
-        border-right: none;
-        animation: none;
-    }
-    
-    .bundle-pill {
-        white-space: normal;
-        text-align: center;
-    }
-    
-    .card-top {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .pill-top,
-    .pill-bottom {
-        display: block;
-    }
-    
-    .pill-top {
-        font-size: clamp(18px, 4.8vw, 22px);
-    }
-    
-    .pill-bottom {
-        font-size: clamp(11px, 3vw, 13px);
-    }
-}
 
-@media (max-width: 380px) {
-    html { font-size: 14px; }
-    :root { --gutter: 12px; }
-}
+
+
+
+
+
+
 
 .hero-box .pill,
 .hero-box .retro-typewriter {
@@ -2486,22 +2367,22 @@ dialog::backdrop {
   margin-right: auto;
 }
 
-.hero-axiom{
-  margin: 18px auto 0;
-  max-width: 580px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.0rem, 1.3vw, 1.35rem);
-  letter-spacing: .04em;
-  line-height: 1.55;
-  opacity: .92;
-  color: var(--text);
-  padding: 14px 18px;
-  border: none;
-  border-radius: 0;
-  background: rgba(255,255,255,.03);
-  box-shadow: none;
-}
+  .hero-axiom{
+    margin: 18px auto 0;
+    max-width: 580px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.0rem, 1.3vw, 1.35rem);
+    letter-spacing: .04em;
+    line-height: 1.55;
+    opacity: .92;
+    color: var(--text);
+    padding: 14px 18px;
+    border: none;
+    border-radius: 0;
+    background: rgba(255,255,255,.03);
+    box-shadow: none;
+  }
 
 .portfolio-cta{
   margin-top: 28px;
@@ -2542,178 +2423,14 @@ dialog::backdrop {
   justify-content: space-between;
  align-items: center; }
 
-@media (max-width: 520px){
-  :root{
-    --header-height: 64px;
-    --gutter: 14px;
-    --fs-hero: clamp(1.55rem, 7.0vw, 2.35rem);
-    --fs-h2: clamp(1.45rem, 6.2vw, 2.10rem);
-    --fs-body: clamp(.98rem, 3.6vw, 1.05rem);
-    --lh-body: 1.65;
-  }
 
-  .hero{ padding: 34px 0 40px; }
-  .hero-box{ padding: 20px 16px; }
-  .cards{ gap: 12px; }
-  .card{ padding: 16px; }
 
-  .card h3{ font-size: clamp(1.55rem, 7vw, 2.05rem); }
-  .tlds{ font-size: 15px; }
 
-  .btn-portfolio,
-  .portfolio-cta-btn{
-    padding: 12px 16px;
-    font-size: 11px;
-  }
 
-  .card-bottom{flex-wrap:wrap;}
-  .card-bottom .bundle-pill{margin-left:auto;}
-}
-@media (max-width: 380px){
-  :root{
-    --fs-hero: clamp(1.45rem, 7.2vw, 2.15rem);
-    --fs-h2: clamp(1.35rem, 6.6vw, 1.95rem);
-  }
-}
 
-@media (max-width: 680px){
-  :root{
-    --gutter: 16px;
-    --header-height: 70px;
-    --fs-body: 1rem;
-    --lh-body: 1.65;
-  }
 
-  nav{ display:none; }
-  .menu-btn{ display:grid; }
 
-  .hero{ padding: 26px 0 34px; }
-  .portfolio,
-  .dominance,
-  .si-section,
-  .acq2,
-  .inquiry{
-    padding-top: 44px !important;
-    padding-bottom: 44px !important;
-  }
 
-  .hero-box{
-    padding: 18px 14px;
-    border-radius: 22px;
-  }
-  .pill{ margin-bottom: 14px; padding: 14px 0; }
-  .pill::before, .pill::after{ width: 78%; }
-  .retro-typewriter{ font-size: 12px; padding: 7px 12px; }
-
-  .btn-portfolio,
-  .portfolio-cta-btn{
-    width: 100%;
-    justify-content: center;
-  }
-
-  .cards{ gap: 12px; }
-  .card{ padding: 16px; border-radius: 18px; }
-  .card h3{ font-size: 1.55rem; }
-  .tlds{ font-size: 14px; }
-  .quote{ font-size: 14px; }
-  .desc{ font-size: 14px; margin-bottom: 12px; }
-
-  .card .bundle-pill{
-    bottom: 10px;
-    right: 10px;
-    font-size: 10px;
-    padding: 5px 10px;
-  }
-
-  .dom-row{ gap: 18px; }
-  .dom-media{ min-height: 220px; }
-
-  .si-section{ padding: 48px 0 !important; }
-  .si-sub{ font-size: 1rem; margin-bottom: 28px; }
-  .si-grid{ gap: 12px; }
-  .si-card{ padding: 18px; border-radius: 18px; }
-  .si-card h3{ font-size: 1.2rem; }
-
-  .acq2-steps{ grid-template-columns: 1fr !important; }
-  .acq-card{ min-height: auto; padding: 18px 14px; border-radius: 22px; }
-
-  .mandate-shell{ border-radius: 22px; }
-  .mandate-inner{ border-radius: 20px; }
-  .mandate-grid{ grid-template-columns: 1fr !important; }
-  .mandate-stamp{ position: static; display: inline-flex; margin-bottom: 12px; }
-  .grid-form{ grid-template-columns: 1fr !important; }
-}
-
-@media (max-width: 380px){
-  :root{
-    --fs-hero: 1.9rem;
-    --fs-h2: 1.6rem;
-  }
-  .card h3{ font-size: 1.45rem; }
-}
-
-@media (max-width: 980px) {
-    .si-grid {
-        display: flex !important;
-        grid-template-columns: none !important;
-        overflow-x: auto !important;
-        gap: 16px;
-        padding: 10px 5px 30px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        margin-left: -20px;
-        margin-right: -20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        width: calc(100% + 40px);
-        max-width: none;
-    }
-
-    .si-grid::-webkit-scrollbar {
-        display: none;
-    }
-
-    .si-card {
-        min-width: 85vw;
-        max-width: 85vw;
-        scroll-snap-align: center;
-        flex-shrink: 0;
-        margin: 0;
-    }
-
-    .acq2-steps {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-    }
-
-    .acq-card {
-        padding: 15px 10px;
-        min-height: auto;
-    }
-    
-    .acq-card h4 {
-        font-size: 16px;
-    }
-    
-    .acq-card p {
-        font-size: 12px;
-        line-height: 1.3;
-        padding-bottom: 0;
-    }
-    
-    .acq-icon-circle {
-        width: 42px;
-        height: 42px;
-        margin-bottom: 10px;
-    }
-    
-    .acq-badge {
-        font-size: 9px;
-        padding: 6px 8px;
-        margin-top: 8px;
-    }
-}
 
 .check {
     background: transparent !important;
@@ -2778,11 +2495,11 @@ dialog::backdrop {
     border-color: rgba(0,240,240,0.4) !important;
 }
 
-.hero-box a[href="#collection"] {
+  .hero-box a[href="#collection"] {
     display: none !important;
 }
 
-.hero-box a[href="#inquiry"] {
+  .hero-box a[href="#inquiry"] {
     margin: 0 auto !important;
     min-width: 260px;
     display: flex !important;
@@ -2802,9 +2519,9 @@ dialog::backdrop {
     -webkit-backdrop-filter: blur(8px);
     position: relative;
     overflow: hidden;
-}
+  }
 
-.hero-box a[href="#inquiry"]::after {
+  .hero-box a[href="#inquiry"]::after {
     content: "";
     position: absolute;
     top: 0;
@@ -2828,7 +2545,7 @@ dialog::backdrop {
     100% { left: 200%; opacity: 0; }
 }
 
-.hero-box a[href="#inquiry"]:hover {
+  .hero-box a[href="#inquiry"]:hover {
     background: rgba(255, 255, 255, 0.06) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 0 40px rgba(0, 240, 240, 0.15), 
@@ -2837,165 +2554,15 @@ dialog::backdrop {
     transform: translateY(-2px);
 }
 
-.hero-box a[href="#collection"] {
+  .hero-box a[href="#collection"] {
     display: none !important;
 }
 
 
 /* ===== Mobile Calm Pass (keeps premium, reduces bulk) ===== */
-@media (max-width: 520px){
 
-  /* Global rhythm */
-  :root{
-    --gutter: 14px;
-    --header-height: 64px;
-    --lh-body: 1.65;
-  }
 
-  /* Reduce section vertical padding */
-  .hero{ padding: 26px 0 34px !important; }
-  .portfolio,
-  .dominance,
-  .si-section,
-  .acq2,
-  .inquiry,
-  .authority-break{
-    padding-top: 44px !important;
-    padding-bottom: 44px !important;
-  }
 
-  /* Hero box: lighter */
-  .hero-box{
-    padding: 18px 14px !important;
-    border-radius: 20px !important;
-    box-shadow: 0 22px 55px rgba(0,0,0,.32) !important;
-  }
-  .hero h1{
-    line-height: 1.08 !important;
-    letter-spacing: -0.9px !important;
-    margin-bottom: 12px !important;
-  }
-  .hero p{
-    font-size: 0.98rem !important;
-    line-height: 1.6 !important;
-  }
-
-  /* Cards: less bulky */
-  .cards{ gap: 12px !important; }
-  .card{
-    padding: 16px !important;
-    border-radius: 18px !important;
-  }
-  .card h3{ font-size: clamp(1.35rem, 6.2vw, 1.85rem) !important; }
-  .desc{ font-size: 0.92rem !important; line-height: 1.55 !important; margin-bottom: 12px !important; }
-  .quote{ font-size: 0.95rem !important; margin: 8px 0 10px !important; }
-
-  /* Bundle pill: slightly smaller on mobile */
-  .card .bundle-pill{
-    bottom: 10px !important;
-    right: 10px !important;
-    padding: 5px 10px !important;
-    font-size: 10px !important;
-  }
-
-  /* Portfolio rail + CTA: compact */
-  .portfolio-rail{
-    padding: 16px !important;
-    border-radius: 18px !important;
-  }
-  .portfolio-cta-btn{
-    padding: 12px 16px !important;
-    font-size: 11px !important;
-  }
-
-  /* Dominance: reduce media height and text padding */
-  .dom-media{ min-height: 240px !important; border-radius: 20px !important; }
-  .dominance-text{ padding: 18px 16px !important; border-radius: 20px !important; }
-  .dom-point, .dom-lead-card{ padding: 14px 14px !important; border-radius: 18px !important; }
-
-  /* Strategic Intelligence: big offender */
-  .si-container{ padding: 0 14px !important; }
-  .si-sub{ font-size: 0.98rem !important; margin-bottom: 22px !important; }
-  .si-grid{ gap: 12px !important; }
-  .si-card{
-    padding: 16px !important;
-    border-radius: 18px !important;
-  }
-  .si-card h3{ font-size: 1.15rem !important; }
-  .si-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; margin-bottom: 14px !important; }
-  .si-date{ margin-bottom: 10px !important; }
-
-  /* Acquisition steps + assurance: tighter */
-  .acq2-steps{ gap: 12px !important; }
-  .acq-card{ padding: 18px 14px !important; border-radius: 18px !important; }
-  .acq-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; }
-  .assurance-inner{ padding: 20px 16px !important; border-radius: 18px !important; }
-  .btn-escrow-premium{ padding: 12px 18px !important; border-radius: 14px !important; }
-
-  /* Inquiry: reduce "hero-like" feel */
-  .mandate-shell{ border-radius: 20px !important; box-shadow: 0 22px 60px rgba(0,0,0,.40) !important; }
-  .mandate-inner{ border-radius: 18px !important; padding: 16px !important; }
-  .mandate-grid{ gap: 14px !important; }
-  .mandate-copy h3{ font-size: 1.25rem !important; }
-  .mandate-copy p{ font-size: 0.92rem !important; line-height: 1.6 !important; }
-
-  .form-card.mandate-form{
-    padding: 16px !important;
-    border-radius: 18px !important;
-  }
-
-  .grid-form{ grid-template-columns: 1fr !important; gap: 12px !important; margin-bottom: 12px !important; }
-
-  .form-card.mandate-form label{ font-size: 10px !important; }
-
-  .field input, .field select, .field textarea{
-    padding: 12px !important;
-    font-size: 14px !important;
-    border-radius: 12px !important;
-  }
-
-  /* Checkbox rows: smaller + cleaner */
-  .form-card.mandate-form .check{
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
-    gap: 10px !important;
-  }
-  .form-card.mandate-form .check span{
-    font-size: 12px !important;
-    line-height: 1.35 !important;
-    letter-spacing: .06em !important;
-    font-weight: 800 !important;
-  }
-  .form-card.mandate-form .check input{
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  .form-card.mandate-form .submit{
-    height: 48px !important;
-    border-radius: 14px !important;
-    font-size: 14px !important;
-  }
-  .form-card.mandate-form .submit .btn-text{
-    font-size: 14px !important;
-    letter-spacing: .02em !important;
-  }
-
-  .form-card.mandate-form .gdpr-text{
-    font-size: 10.5px !important;
-    line-height: 1.45 !important;
-  }
-  .form-card.mandate-form .privacy-note{
-    font-size: 11px !important;
-    line-height: 1.35 !important;
-  }
-}
-
-@media (max-width: 380px){
-  .hero-box{ padding: 16px 12px !important; }
-  .card{ padding: 14px !important; }
-  .si-card{ padding: 14px !important; }
-}
 .cards {
     align-items: stretch !important;
 }
@@ -3012,61 +2579,8 @@ dialog::backdrop {
     padding-top: 15px;
 }
 
-@media (max-width: 980px) {
-    .card {
-        min-height: auto !important;
-        height: auto !important;
-    }
-}
-@media (max-width: 768px) {
-    .trust-row {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: space-between !important;
-        align-items: flex-start !important;
-        gap: 4px !important;
-        margin-top: 24px !important;
-        width: 100% !important;
-    }
 
-    .trust {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
-        font-size: 9px !important;
-        line-height: 1.3 !important;
-        flex: 1 !important;
-        white-space: normal !important;
-    }
 
-    .trust .ico {
-        font-size: 18px !important;
-        margin-bottom: 6px !important;
-        margin-right: 0 !important;
-        display: block !important;
-    }
-
-    .hero-box a[href="#inquiry"] {
-        min-width: unset !important;
-        width: 65% !important;
-        padding: 12px 0 !important;
-        font-size: 11px !important;
-        letter-spacing: 0.5px !important;
-    }
-
-    .hero-axiom {
-        font-size: 15px !important;
-        line-height: 1.6 !important;
-        max-width: 180px !important;
-        margin: 15px auto 0 !important;
-        white-space: normal !important;
-        background: transparent !important;
-        padding: 0 !important;
-        opacity: 0.7 !important;
-    }
-}
 
 
 
@@ -3117,7 +2631,7 @@ dialog::backdrop {
 }
 
 /* Portfolio axiom — clean & discreet */
-.hero-axiom{
+  .hero-axiom{
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -3133,8 +2647,8 @@ dialog::backdrop {
 }
 
 /* Subtle side lines (desktop only) */
-.hero-axiom::before,
-.hero-axiom::after{
+  .hero-axiom::before,
+  .hero-axiom::after{
   content: "";
   display: inline-block;
   width: 28px;
@@ -3150,7 +2664,7 @@ dialog::backdrop {
 }
 
 /* CTA button — calm & premium */
-.hero-box a[href="#inquiry"]{
+  .hero-box a[href="#inquiry"]{
   margin-top: 6px !important;
   background: rgba(255,255,255,.06) !important;
   border: 1px solid rgba(255,255,255,.18) !important;
@@ -3158,16 +2672,16 @@ dialog::backdrop {
 }
 
 /* Trust row — understated */
-.trust-row{
+  .trust-row{
   margin-top: 36px !important;
   opacity: .6;
   transition: opacity .3s ease;
 }
-.trust-row:hover{
+  .trust-row:hover{
   opacity: 1;
 }
 /* Trust indicators — brighter but institutional */
-.trust-row{
+  .trust-row{
   opacity: .85;
 }
 
@@ -3175,45 +2689,22 @@ dialog::backdrop {
   color: rgba(230, 245, 255, .95);
 }
 
-.trust .ico{
-  color: rgba(0, 240, 240, .95);
-  filter: drop-shadow(0 0 6px rgba(0, 240, 240, .35));
-}
+  .trust .ico{
+    color: rgba(0, 240, 240, .95);
+    filter: drop-shadow(0 0 6px rgba(0, 240, 240, .35));
+  }
 
 /* Hover refinement */
-.trust-row:hover{
+  .trust-row:hover{
   opacity: 1;
 }
 
-.trust-row:hover .ico{
+  .trust-row:hover .ico{
   filter: drop-shadow(0 0 10px rgba(0, 240, 240, .55));
 }
 
 /* ===== Mobile tuning ===== */
-@media (max-width: 768px){
 
-  .hero{
-    padding-top: 40px;
-  }
-
-  .hero-box::before{
-    inset: -30%;
-    opacity: .55;
-  }
-
-  .hero-axiom::before,
-  .hero-axiom::after{
-    display: none;
-  }
-
-  .hero-axiom{
-    margin-bottom: 20px !important;
-  }
-
-  .trust-row{
-    margin-top: 28px !important;
-  }
-}
 .success-modal{
   min-height: 100vh;
   min-height: 100svh;
@@ -3231,29 +2722,7 @@ dialog::backdrop {
   -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 768px) {
 
-  .success-card {
-      width: min(92vw, 420px);
-      padding: 22px 18px;
-      border-radius: 18px;
-  }
-
-  .form-confirmation h3 {
-      font-size: 1.25rem;
-  }
-
-  .form-confirmation p {
-      font-size: 0.9rem;
-      line-height: 1.5;
-  }
-
-  .success-ring {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 12px;
-  }
-}
 
 
 
@@ -3268,51 +2737,9 @@ dialog::backdrop {
   }
 }
 
-@media (max-width: 768px) {
 
-  .form-extras {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-  }
 
-  .form-extras .check {
-      width: 100% !important;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-  }
 
-  .form-extras .check span {
-      white-space: normal;
-      word-break: normal;
-      font-size: 0.4rem;
-      line-height: 1.35;
-  }
-}
-@media (max-width: 768px){
-  .form-extras .privacy-note{ grid-column: 1 / -1; width: 100% !important; }
-}
-@media (min-width: 981px){
-
-  .form-extras{
-    display: flex;
-    flex-direction: row;
-    gap: 26px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .form-extras .check{
-    width: auto !important;    
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-
-  .form-extras .check span{
-    white-space: nowrap;
-  }
-}
 /* === Modern Portfolio Smart-Grid (scoped to .portfolio only) === */
 
 .portfolio{
@@ -3514,31 +2941,7 @@ dialog::backdrop {
    and keep your current .bundle-pill positioning rules. */
 
 /* === Mobile: single column + horizontal borders only === */
-@media (max-width: 768px){
-  .portfolio .cards{
-    grid-template-columns: 1fr;
-    border-radius: 20px;
-  }
 
-  .portfolio .card{
-    padding: 24px 20px;
-  }
-
-  /* only bottom border for all cards, except last */
-  .portfolio .card::after{
-    background-image:
-      linear-gradient(to right,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,.10) 50%,
-        rgba(255,255,255,0) 100%);
-    background-size: 100% 1px;
-    background-position: left bottom;
-  }
-
-  .portfolio .card:last-child::after{
-    background-size: 0 0;
-  }
-}
 .portfolio-sub {
     font-family: var(--sans);
     color: var(--muted);
@@ -3583,13 +2986,9 @@ dialog::backdrop {
 }
 padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 
-@media (max-width: 680px){
-  .hero{ padding-top: calc(26px + 28px) !important; padding-bottom: 34px !important; }
-}
 
-@media (max-width: 520px){
-  .hero{ padding-top: calc(26px + 32px) !important; }
-}
+
+
 
 
 
@@ -3604,13 +3003,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 .trust-section .trust-row{
   margin-top: 26px;
 }
-@media (max-width: 560px){
-  .trust-section .trust-row{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-}
+
 
 /* ================================
    DUPLICATE BUCKET (Mark for removal)
@@ -3660,117 +3053,738 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   color: inherit !important;
   -webkit-text-fill-color: inherit !important;
 }
-@media (max-width: 520px){
 
-  header{
-    height: 56px;
-  }
-
-  header .header-inner{
-    padding-top: 6px;
-    padding-bottom: 6px;
-  }
-
-  .brand{
-    transform: scale(0.92);
-    transform-origin: left center;
-  }
-
-  .menu-toggle{
-    width: 42px;
-    height: 42px;
-  }
-
-}
 
 
 /* =====================================
    FINAL MOBILE OVERRIDES (Hero + Assurance)
    ===================================== */
-@media (max-width: 768px){
-  /* Hero should fill the screen under the fixed header */
-  .hero{
-    height: calc(100svh - var(--header-height)) !important;
-    min-height: calc(100svh - var(--header-height)) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding: 0 !important;
-  }
-  .hero-box{
-    width: 100% !important;
-    padding: 24px 16px 34px !important;
-    margin: 0 auto !important;
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  header.is-glass .brand-logo { height: 40px; }
+  header.is-glass .brand-name { font-size: 16px; }
+
+  .brand-logo { height: 56px; }
+  .brand-name { font-size: 20px; }
+  .brand-tagline { letter-spacing: 1px; font-size: 9px; text-align: left; }
+  .brand-copy { align-items: flex-start; }
+
+  .acq2-steps { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 14px; }
+  .acq-card { min-height: auto; padding: 30px 20px; }
+
+  .assurance-inner {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+    align-items: stretch;
   }
 
-  /* Keep CTA buttons readable but not oversized */
-  .hero-box a[href="#inquiry"],
-  .hero-box a[href="#collection"]{
-    font-size: 14px !important;
-    padding: 12px 18px !important;
-    width: auto !important;
-    min-width: 0 !important;
-    white-space: nowrap !important;
-  }
-
-  /* Keep the gold axiom on one line */
-  .hero-axiom{
-    max-width: none !important;
-    white-space: nowrap !important;
-    opacity: 0.85 !important;
-    font-size: 12.5px !important;
-    letter-spacing: 0.06em !important;
-    margin: 14px auto 22px !important;
-  }
+  .assurance-left {
+  flex-direction: column;
+  text-align: center;
 }
 
-@media (max-width: 768px){
-  /* Make Secure Asset Transfer card much more compact */
-  .assurance-section{ margin-top: 40px !important; }
+  .btn-escrow-premium {
+  width: 100%;
+  justify-content: center;
+}
 
-  .assurance-rail{
-    padding: 1px !important;
-    border-radius: 18px !important;
-    box-shadow: none !important; /* remove heavy outer glow on mobile */
-  }
-  .assurance-rail:hover{ transform: none !important; box-shadow: none !important; }
+  .trust-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  margin-top: 24px !important;
+  width: 100% !important;
+}
 
-  .assurance-inner{
-    padding: 18px 14px !important;
-    border-radius: 16px !important;
-    gap: 12px !important;
+  .trust {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    flex: 1 !important;
+    white-space: normal !important;
   }
+
+  .trust .ico {
+  font-size: 18px !important;
+  margin-bottom: 6px !important;
+  margin-right: 0 !important;
+  display: block !important;
+}
+
+  .hero-box a[href="#inquiry"] {
+  min-width: unset !important;
+  width: 65% !important;
+  padding: 12px 0 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.5px !important;
+}
+
+  .hero-axiom {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  max-width: 180px !important;
+  margin: 15px auto 0 !important;
+  white-space: normal !important;
+  background: transparent !important;
+  padding: 0 !important;
+  opacity: 0.7 !important;
+}
+
+.hero{
+  padding-top: 40px;
+}
+
+.hero-box::before{
+  inset: -30%;
+  opacity: .55;
+}
+
+  .hero-axiom::before,
+  .hero-axiom::after{
+  display: none;
+}
+
+  .hero-axiom{
+  margin-bottom: 20px !important;
+}
+
+  .trust-row{
+  margin-top: 28px !important;
+}
+
+.success-card {
+  width: min(92vw, 420px);
+  padding: 22px 18px;
+  border-radius: 18px;
+}
+
+.form-confirmation h3 {
+  font-size: 1.25rem;
+}
+
+.form-confirmation p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.success-ring {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+}
+
+.form-extras {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-extras .check {
+  width: 100% !important;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.form-extras .check span {
+  white-space: normal;
+  word-break: normal;
+  font-size: 0.4rem;
+  line-height: 1.35;
+}
+
+.form-extras .privacy-note{ grid-column: 1 / -1; width: 100% !important; }
+
+.portfolio .cards{
+  grid-template-columns: 1fr;
+  border-radius: 20px;
+}
+
+.portfolio .card{
+  padding: 24px 20px;
+}
+
+/* only bottom border for all cards, except last */
+.portfolio .card::after{
+  background-image:
+  linear-gradient(to right,
+  rgba(255,255,255,0) 0%,
+  rgba(255,255,255,.10) 50%,
+  rgba(255,255,255,0) 100%);
+  background-size: 100% 1px;
+  background-position: left bottom;
+}
+
+.portfolio .card:last-child::after{
+  background-size: 0 0;
+}
+
+/* Hero should fill the screen under the fixed header */
+.hero{
+  height: calc(100svh - var(--header-height)) !important;
+  min-height: calc(100svh - var(--header-height)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+.hero-box{
+  width: 100% !important;
+  padding: 24px 16px 34px !important;
+  margin: 0 auto !important;
+}
+
+/* Keep CTA buttons readable but not oversized */
+  .hero-box a[href="#inquiry"],
+  .hero-box a[href="#collection"]{
+  font-size: 14px !important;
+  padding: 12px 18px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Keep the gold axiom on one line */
+  .hero-axiom{
+  max-width: none !important;
+  white-space: nowrap !important;
+  opacity: 0.85 !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.06em !important;
+  margin: 14px auto 22px !important;
+}
+
+/* Make Secure Asset Transfer card much more compact */
+.assurance-section{ margin-top: 40px !important; }
+
+.assurance-rail{
+  padding: 1px !important;
+  border-radius: 18px !important;
+  box-shadow: none !important; /* remove heavy outer glow on mobile */
+}
+.assurance-rail:hover{ transform: none !important; box-shadow: none !important; }
+
+.assurance-inner{
+  padding: 18px 14px !important;
+  border-radius: 16px !important;
+  gap: 12px !important;
+}
 
   .assurance-left{ gap: 12px !important; }
 
-  .assurance-icon-box{
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    border-radius: 14px !important;
-    animation: none !important;
-    box-shadow: none !important;
-  }
+.assurance-icon-box{
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 14px !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
 
-  .assurance-text h4{
-    font-size: 18px !important;
-    line-height: 1.25 !important;
-    margin-bottom: 6px !important;
-  }
+.assurance-text h4{
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+  margin-bottom: 6px !important;
+}
 
-  .assurance-text p{
-    font-size: 13.5px !important;
-    line-height: 1.55 !important;
-  }
+.assurance-text p{
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+}
 
   .btn-escrow-premium{
-    font-size: 14px !important;
-    padding: 12px 14px !important;
-    border-radius: 14px !important;
-    gap: 10px !important;
-  }
+  font-size: 14px !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  gap: 10px !important;
+}
   .btn-escrow-premium .ico{ width: 14px !important; height: 14px !important; }
+}
+
+@media (max-width: 920px) {
+  .dom-row{
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+.dom-media{ min-height: 260px; }
+.dom-copy{ max-width: 100%; }
+
+/* Keep visual symmetry when stacked: content block first, media block second */
+.dom-row-bottom .dom-cards{ order: 1; }
+.dom-row-bottom .dom-media{ order: 2; }
+}
+
+@media (max-width: 520px) {
+  .hero h1 .hero-topline{
+    font-size: 1em;
+  }
+
+.hero h1 .grad-text{
+  font-size: 1.35em;
+}
+
+:root{
+  --header-height: 64px;
+  --gutter: 14px;
+  --fs-hero: clamp(1.55rem, 7.0vw, 2.35rem);
+  --fs-h2: clamp(1.45rem, 6.2vw, 2.10rem);
+  --fs-body: clamp(.98rem, 3.6vw, 1.05rem);
+  --lh-body: 1.65;
+}
+
+.hero{ padding: 34px 0 40px; }
+.hero-box{ padding: 20px 16px; }
+
+/* Hero: more vertical breathing room */
+.hero-box .pill{ margin-bottom: 20px !important; }
+.hero-box .retro-typewriter{ margin-bottom: 26px !important; }
+
+.cards{ gap: 12px; }
+.card{ padding: 16px; }
+
+.card h3{ font-size: clamp(1.55rem, 7vw, 2.05rem); }
+.tlds{ font-size: 15px; }
+
+.btn-portfolio,
+.portfolio-cta-btn{
+  padding: 12px 16px;
+  font-size: 11px;
+}
+
+.card-bottom{flex-wrap:wrap;}
+.card-bottom .bundle-pill{margin-left:auto;}
+
+/* Global rhythm */
+:root{
+  --gutter: 14px;
+  --header-height: 64px;
+  --lh-body: 1.65;
+}
+
+/* Reduce section vertical padding */
+.hero{ padding: 26px 0 34px !important; }
+.portfolio,
+.dominance,
+.si-section,
+.acq2,
+.inquiry{
+  padding-top: 44px !important;
+  padding-bottom: 44px !important;
+}
+
+/* Credibility section: move up slightly without creeping into hero viewport */
+.authority-break{
+  padding-top: 28px !important;
+  padding-bottom: 44px !important;
+}
+
+/* Hero box: lighter */
+.hero-box{
+  padding: 18px 14px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 22px 55px rgba(0,0,0,.32) !important;
+}
+.hero h1{
+  line-height: 1.18 !important;
+  letter-spacing: -0.9px !important;
+  margin-bottom: 18px !important;
+}
+.hero p{
+  font-size: 0.98rem !important;
+  line-height: 1.75 !important;
+  margin-top: 10px !important;
+}
+
+/* Cards: less bulky */
+.cards{ gap: 12px !important; }
+.card{
+  padding: 16px !important;
+  border-radius: 18px !important;
+}
+.card h3{ font-size: clamp(1.35rem, 6.2vw, 1.85rem) !important; }
+.desc{ font-size: 0.92rem !important; line-height: 1.55 !important; margin-bottom: 12px !important; }
+.quote{ font-size: 0.95rem !important; margin: 8px 0 10px !important; }
+
+/* Bundle pill: slightly smaller on mobile */
+.card .bundle-pill{
+  bottom: 10px !important;
+  right: 10px !important;
+  padding: 5px 10px !important;
+  font-size: 10px !important;
+}
+
+/* Portfolio rail + CTA: compact */
+.portfolio-rail{
+  padding: 16px !important;
+  border-radius: 18px !important;
+}
+.portfolio-cta-btn{
+  padding: 12px 16px !important;
+  font-size: 11px !important;
+}
+
+/* Dominance: reduce media height and text padding */
+.dom-media{ min-height: 240px !important; border-radius: 20px !important; }
+.dominance-text{ padding: 18px 16px !important; border-radius: 20px !important; }
+.dom-point, .dom-lead-card{ padding: 14px 14px !important; border-radius: 18px !important; }
+
+/* Strategic Intelligence: big offender */
+.si-container{ padding: 0 14px !important; }
+.si-sub{ font-size: 0.98rem !important; margin-bottom: 22px !important; }
+.si-grid{ gap: 12px !important; }
+.si-card{
+  padding: 16px !important;
+  border-radius: 18px !important;
+}
+.si-card h3{ font-size: 1.15rem !important; }
+.si-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; margin-bottom: 14px !important; }
+.si-date{ margin-bottom: 10px !important; }
+
+/* Acquisition steps + assurance: tighter */
+.acq2-steps{ gap: 12px !important; }
+.acq-card{ padding: 18px 14px !important; border-radius: 18px !important; }
+.acq-card p{ font-size: 0.9rem !important; line-height: 1.55 !important; }
+.assurance-inner{ padding: 20px 16px !important; border-radius: 18px !important; }
+  .btn-escrow-premium{ padding: 12px 18px !important; border-radius: 14px !important; }
+
+/* Inquiry: reduce "hero-like" feel */
+.mandate-shell{ border-radius: 20px !important; box-shadow: 0 22px 60px rgba(0,0,0,.40) !important; }
+.mandate-inner{ border-radius: 18px !important; padding: 16px !important; }
+.mandate-grid{ gap: 14px !important; }
+.mandate-copy h3{ font-size: 1.25rem !important; }
+.mandate-copy p{ font-size: 0.92rem !important; line-height: 1.6 !important; }
+
+.form-card.mandate-form{
+  padding: 16px !important;
+  border-radius: 18px !important;
+}
+
+.grid-form{ grid-template-columns: 1fr !important; gap: 12px !important; margin-bottom: 12px !important; }
+
+.form-card.mandate-form label{ font-size: 10px !important; }
+
+.field input, .field select, .field textarea{
+  padding: 12px !important;
+  font-size: 14px !important;
+  border-radius: 12px !important;
+}
+
+/* Checkbox rows: smaller + cleaner */
+.form-card.mandate-form .check{
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  gap: 10px !important;
+}
+.form-card.mandate-form .check span{
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  letter-spacing: .06em !important;
+  font-weight: 800 !important;
+}
+.form-card.mandate-form .check input{
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.form-card.mandate-form .submit{
+  height: 48px !important;
+  border-radius: 14px !important;
+  font-size: 14px !important;
+}
+.form-card.mandate-form .submit .btn-text{
+  font-size: 14px !important;
+  letter-spacing: .02em !important;
+}
+
+.form-card.mandate-form .gdpr-text{
+  font-size: 10.5px !important;
+  line-height: 1.45 !important;
+}
+.form-card.mandate-form .privacy-note{
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+.hero{ padding-top: calc(26px + 32px) !important; }
+
+header{
+  height: 56px;
+}
+
+header .header-inner{
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.brand{
+  transform: scale(0.92);
+  transform-origin: left center;
+}
+
+.menu-toggle{
+  width: 42px;
+  height: 42px;
+}
+
+
+/* Credibility: bring slightly higher on mobile (but keep it off the hero screen) */
+.authority-break{
+  padding-top: 28px !important;
+  padding-bottom: 58px !important;
+}
+}
+
+@media (hover: none) {
+  .cursor-glow { display: none; }
+}
+
+@media (max-width: 1100px) {
+  .acq2-steps { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 980px) {
+  .cards { grid-template-columns: 1fr; }
+  .cards2, .grid-form, .si-grid { grid-template-columns: 1fr; }
+  .mandate-grid { grid-template-columns: 1fr; }
+  .mandate-stamp { position: static; display: inline-flex; margin-bottom: 12px; }
+
+  .si-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    overflow-x: auto !important;
+    gap: 16px;
+    padding: 10px 5px 30px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% + 40px);
+    max-width: none;
+  }
+
+.si-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.si-card {
+  min-width: 85vw;
+  max-width: 85vw;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.acq2-steps {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px;
+}
+
+.acq-card {
+  padding: 15px 10px;
+  min-height: auto;
+}
+
+.acq-card h4 {
+  font-size: 16px;
+}
+
+.acq-card p {
+  font-size: 12px;
+  line-height: 1.3;
+  padding-bottom: 0;
+}
+
+.acq-icon-circle {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 10px;
+}
+
+.acq-badge {
+  font-size: 9px;
+  padding: 6px 8px;
+  margin-top: 8px;
+}
+
+.card {
+  min-height: auto !important;
+  height: auto !important;
+}
+}
+
+@media (max-width: 860px) {
+  nav { display: none; }
+  .menu-btn { display: grid; }
+}
+
+@media (max-width: 680px) {
+  :root {
+    --header-height: 70px;
+    --gutter: 16px;
+  }
+
+  .trust-row { gap: 12px 20px; }
+.brand-name { font-size: 18px; }
+.brand-logo { height: 46px; }
+
+.typing-text {
+  white-space: normal;
+  width: 100% !important;
+  border-right: none;
+  animation: none;
+}
+
+.bundle-pill {
+  white-space: normal;
+  text-align: center;
+}
+
+.card-top {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pill-top,
+.pill-bottom {
+  display: block;
+}
+
+.pill-top {
+  font-size: clamp(18px, 4.8vw, 22px);
+}
+
+.pill-bottom {
+  font-size: clamp(11px, 3vw, 13px);
+}
+
+:root{
+  --gutter: 16px;
+  --header-height: 70px;
+  --fs-body: 1rem;
+  --lh-body: 1.65;
+}
+
+nav{ display:none; }
+.menu-btn{ display:grid; }
+
+.hero{ padding: 26px 0 34px; }
+.portfolio,
+.dominance,
+.si-section,
+.acq2,
+.inquiry{
+  padding-top: 44px !important;
+  padding-bottom: 44px !important;
+}
+
+.hero-box{
+  padding: 18px 14px;
+  border-radius: 22px;
+}
+.pill{ margin-bottom: 14px; padding: 14px 0; }
+.pill::before, .pill::after{ width: 78%; }
+.retro-typewriter{ font-size: 12px; padding: 7px 12px; }
+
+.btn-portfolio,
+.portfolio-cta-btn{
+  width: 100%;
+  justify-content: center;
+}
+
+.cards{ gap: 12px; }
+.card{ padding: 16px; border-radius: 18px; }
+.card h3{ font-size: 1.55rem; }
+.tlds{ font-size: 14px; }
+.quote{ font-size: 14px; }
+.desc{ font-size: 14px; margin-bottom: 12px; }
+
+.card .bundle-pill{
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+  padding: 5px 10px;
+}
+
+.dom-row{ gap: 18px; }
+.dom-media{ min-height: 220px; }
+
+.si-section{ padding: 48px 0 !important; }
+.si-sub{ font-size: 1rem; margin-bottom: 28px; }
+.si-grid{ gap: 12px; }
+.si-card{ padding: 18px; border-radius: 18px; }
+.si-card h3{ font-size: 1.2rem; }
+
+.acq2-steps{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+.acq-card{ min-height: auto; padding: 18px 14px; border-radius: 22px; }
+
+.mandate-shell{ border-radius: 22px; }
+.mandate-inner{ border-radius: 20px; }
+.mandate-grid{ grid-template-columns: 1fr !important; }
+.mandate-stamp{ position: static; display: inline-flex; margin-bottom: 12px; }
+.grid-form{ grid-template-columns: 1fr !important; }
+
+.hero{ padding-top: calc(26px + 28px) !important; padding-bottom: 34px !important; }
+}
+
+@media (max-width: 380px) {
+  html { font-size: 14px; }
+  :root { --gutter: 12px; }
+
+  :root{
+    --fs-hero: clamp(1.45rem, 7.2vw, 2.15rem);
+    --fs-h2: clamp(1.35rem, 6.6vw, 1.95rem);
+  }
+
+:root{
+  --fs-hero: 1.9rem;
+  --fs-h2: 1.6rem;
+}
+.card h3{ font-size: 1.45rem; }
+
+.hero-box{ padding: 16px 12px !important; }
+.card{ padding: 14px !important; }
+.si-card{ padding: 14px !important; }
+}
+
+@media (min-width: 981px) {
+  .form-extras{
+    display: flex;
+    flex-direction: row;
+    gap: 26px;
+    align-items: center;
+    justify-content: center;
+  }
+
+.form-extras .check{
+  width: auto !important;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.form-extras .check span{
+  white-space: nowrap;
+}
+}
+
+@media (max-width: 560px) {
+  .trust-section .trust-row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }
 </style>
 </head>
@@ -4159,8 +4173,12 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                                             <input autocomplete="name" id="fullName" name="Name" placeholder="Enter your name" required="" type="text"/>
                                         </div>
                                         <div class="field">
+                                            <label for="company">Company </label>
+                                            <input autocomplete="organization" id="company" name="Company" placeholder="Your company or institution name" type="text"/>
+                                        </div>
+                                        <div class="field field-full">
                                             <label for="email">Email Address</label>
-                                            <input autocomplete="email" id="email" name="Email" placeholder="Enter your email" required="" type="email"/>
+                                            <input autocomplete="email" id="email" name="email" placeholder="Enter your email" required="" type="email"/>
                                         </div>
                                         <div class="field field-full">
                                             <label for="asset">Portfolio Scope</label>
