@@ -332,7 +332,7 @@ header .container { height: 100%; }
     margin-top: 3px;
     font-weight: 600;
     font-size: 9px;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: rgba(240, 240, 255, .65);
     white-space: nowrap;
@@ -4711,7 +4711,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     const docH = document.documentElement.scrollHeight;
     const HIDE_AFTER = Math.max(
       window.innerHeight * 0.8,
-      docH * 0.3
+      docH * 0.2
     );
 
     // Hide on scroll down
@@ -4849,7 +4849,10 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     setOpen(false);
   }
 
-  btn.addEventListener('click', toggle);
+  btn.addEventListener('click', function() {
+    toggle();     // 
+    this.blur();  // 
+});
 
   // Close when clicking outside the panel
   nav.addEventListener('click', (e)=>{
