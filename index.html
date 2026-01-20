@@ -24,9 +24,11 @@
 <meta content="Exclusive .com + .ai domain assets for the next generation of AI companies." name="twitter:description"/>
 <meta content="https://gnosisbase.com/og-image.jpg" name="twitter:image"/>
 <meta content="Gnosis Assets – Premium AI domain bundles" name="twitter:image:alt"/>
-<link href="/favicon.ico" rel="icon"/>
-<link href="/favicon.png" rel="icon" sizes="512x512" type="image/png"/>
-<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="GNOSIS Assets" />
 <link rel="manifest" href="/manifest.webmanifest">
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -311,10 +313,10 @@ header .container { height: 100%; }
     background: none;
     -webkit-text-fill-color: #ffffff;
     color: #ffffff;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-weight: 400;
-    font-size: 16px;
-    margin-left: 4px;
+    font-size: 12px;
+    margin-left: 2px;
 }
 /* GNOSIS */
 .brand-name {
@@ -324,20 +326,13 @@ header .container { height: 100%; }
     text-transform: uppercase;
 }
 
-/*  ASSETS */
-.brand-name span {
-    font-size: 0.6em;   /*  ASSETS  */
-    font-weight: 500;
-    letter-spacing: 1px;
-    opacity: 0.85;
-    margin-left: 4px;
-}
+
 
 .brand-tagline {
     margin-top: 3px;
     font-weight: 600;
     font-size: 9px;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: rgba(240, 240, 255, .65);
     white-space: nowrap;
@@ -4716,7 +4711,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     const docH = document.documentElement.scrollHeight;
     const HIDE_AFTER = Math.max(
       window.innerHeight * 0.8,
-      docH * 0.5
+      docH * 0.3
     );
 
     // Hide on scroll down
