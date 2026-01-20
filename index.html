@@ -434,11 +434,19 @@ nav a.active::after {
     border-color: var(--purple);
 }
 
+/* Menu icon swap: hamburger to X */
+.menu-btn .icon-close{ display: none; }
+.menu-btn.is-open .icon-menu{ display: none; }
+.menu-btn.is-open .icon-close{ display: block; }
+.menu-btn svg{ transition: transform .2s ease, opacity .2s ease; }
+.menu-btn.is-open .icon-close{ transform: rotate(90deg); }
+
+
 .mobile-nav {
-    display: none;
+    display: block;
     position: fixed;
     top: calc(var(--header-height));
-    left: 0; 
+    left: 0;
     right: 0;
     z-index: 49;
     padding: 14px var(--gutter) 18px;
@@ -446,7 +454,20 @@ nav a.active::after {
     border-bottom: 1px solid var(--border-2);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+
+    /* Smooth slide animation */
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: transform .22s ease, opacity .22s ease;
 }
+
+.mobile-nav.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
 
 .mobile-nav .panel {
     width: min(var(--container), calc(100% - (var(--gutter) * 2)));
@@ -483,7 +504,7 @@ nav a.active::after {
     background: rgba(0,240,240,.06);
 }
 
-.mobile-nav.show { display: block; }
+.mobile-nav.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
 .page { position: relative; min-height: 100vh; }
 main { position: relative; z-index: 2; }
@@ -579,9 +600,6 @@ main { position: relative; z-index: 2; }
 .hero{
   padding-top: clamp(28px, 6vh, 56px);
 }
-
-
-
 
 .hero-box:hover {
     transform: translateY(-5px);
@@ -860,11 +878,6 @@ main { position: relative; z-index: 2; }
   border: none !important;
   box-shadow: none !important;
   background: transparent !important;
-}
-
-.card-bottom::before,
-.card-bottom::after{
-  content: none !important;
 }
 
 .quote {
@@ -3953,6 +3966,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     box-shadow: none !important;
   }
 }
+
+
 </style>
 
 </head>
@@ -3981,7 +3996,8 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
             </nav>
             <div class="header-right">
                 <button aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu" class="menu-btn" id="menuBtn" type="button">
-                    <svg aria-hidden="true" class="ico s20"><use href="#i-menu"></use></svg>
+                    <svg aria-hidden="true" class="ico s20 icon-menu"><use href="#i-menu"></use></svg>
+                    <svg aria-hidden="true" class="ico s20 icon-close"><use href="#i-x"></use></svg>
                 </button>
             </div>
         </div>
@@ -4807,6 +4823,58 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       if (errorMsg) errorMsg.style.display = 'block';
     }
   });
+})();
+</script>
+
+
+
+<script>
+// MOBILE_NAV_TOGGLE
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('mobileNav');
+  if (!btn || !nav) return;
+
+  const panel = nav.querySelector('.panel');
+
+  function setOpen(next){
+    nav.classList.toggle('show', next);
+    btn.classList.toggle('is-open', next);
+    btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+    btn.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+  }
+
+  function toggle(){
+    const isOpen = nav.classList.contains('show');
+    setOpen(!isOpen);
+  }
+
+  function close(){
+    setOpen(false);
+  }
+
+  btn.addEventListener('click', toggle);
+
+  // Close when clicking outside the panel
+  nav.addEventListener('click', (e)=>{
+    if (panel && panel.contains(e.target)) return;
+    close();
+  });
+
+  // Close on Escape
+  window.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape') close();
+  });
+
+  // Close after choosing a link
+  nav.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', close);
+  });
+
+  // Safety: close when leaving mobile breakpoint
+  window.addEventListener('resize', ()=>{
+    if (window.innerWidth > 860) close();
+  }, { passive:true });
 })();
 </script>
 
