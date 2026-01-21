@@ -392,10 +392,17 @@ header .container {
   }
 
   .brand-tagline {
+    font-size: 7px;
     letter-spacing: 1px;
-    font-size: 8px;
     text-align: left;
+
+    max-width: var(--brand-name-w, 100%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
+}
+
 
   .brand-copy {
     align-items: flex-start;
@@ -5385,6 +5392,22 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   window.addEventListener('resize', ()=>{
     if (window.innerWidth > 860) close();
   }, { passive:true });
+})();
+</script>
+<script>
+(function () {
+  function syncBrandNameWidth() {
+    const name = document.querySelector('.brand-name');
+    if (!name) return;
+
+    document.documentElement.style.setProperty(
+      '--brand-name-w',
+      name.getBoundingClientRect().width + 'px'
+    );
+  }
+
+  window.addEventListener('load', syncBrandNameWidth);
+  window.addEventListener('resize', syncBrandNameWidth);
 })();
 </script>
 
