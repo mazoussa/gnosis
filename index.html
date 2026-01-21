@@ -363,24 +363,30 @@ header .container {
   margin-left: 2px;
 }
 
+/*GNOSIS*/
+
+.brand-name {
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
 
 .brand-tagline {
   margin-top: 3px;
   font-weight: 600;
-  font-size: 9px;
+  font-size: 7.8px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(240, 240, 255, .65);
   white-space: nowrap;
   max-height: 20px;
   overflow: hidden;
-  text-overflow: ellipsis;
   transition: all .35s ease;
   display: inline-block;
-  max-width: 100%;
+  width: 100%;
   text-align: left;
 }
-
 
 @media (max-width: 768px) {
   .brand-logo {
@@ -392,17 +398,10 @@ header .container {
   }
 
   .brand-tagline {
-    font-size: 7px;
     letter-spacing: 1px;
+    font-size: 7.5px;
     text-align: left;
-
-    max-width: var(--brand-name-w, 100%);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
-}
-
 
   .brand-copy {
     align-items: flex-start;
@@ -5392,22 +5391,6 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   window.addEventListener('resize', ()=>{
     if (window.innerWidth > 860) close();
   }, { passive:true });
-})();
-</script>
-<script>
-(function () {
-  function syncBrandNameWidth() {
-    const name = document.querySelector('.brand-name');
-    if (!name) return;
-
-    document.documentElement.style.setProperty(
-      '--brand-name-w',
-      name.getBoundingClientRect().width + 'px'
-    );
-  }
-
-  window.addEventListener('load', syncBrandNameWidth);
-  window.addEventListener('resize', syncBrandNameWidth);
 })();
 </script>
 
