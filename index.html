@@ -363,14 +363,6 @@ header .container {
   margin-left: 2px;
 }
 
-/*GNOSIS*/
-
-.brand-name {
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
 
 .brand-tagline {
   margin-top: 3px;
@@ -382,11 +374,13 @@ header .container {
   white-space: nowrap;
   max-height: 20px;
   overflow: hidden;
+  text-overflow: ellipsis;
   transition: all .35s ease;
   display: inline-block;
-  width: 100%;
+  max-width: 100%;
   text-align: left;
 }
+
 
 @media (max-width: 768px) {
   .brand-logo {
@@ -468,7 +462,7 @@ nav a.active::after {
 .menu-btn:hover {
   transform: translateY(-1px);
   background: var(--surface-2);
-  border-color: var(--purple);
+  border-color: var(--border);
 }
 
 /*Menu icon swap: hamburger to X*/
