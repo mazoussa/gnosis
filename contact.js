@@ -1,98 +1,226 @@
 import nodemailer from "nodemailer";
 
-// 1. إعدادات الحظر (سهلة التعديل مستقبلاً)
-const SPAM_CONFIG = {
-  ips: ["92.255.85.72", "92.255.85.74"],
-  keywords: ["Roberttum", "Cryto", "Investment", "Google leads"], // كلمات ممنوعة في الاسم أو الشركة
-  emails: ["michael_kennedy@brown.edu", "eric.jones.z.mail@gmail.com"]
-};
-
-// تخزين مؤقت للحد من التكرار (Simple Rate Limiting)
-const ipStore = new Map();
-
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, error: "Method not allowed" });
+  }
 
   try {
     const data = req.body || {};
-    const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || "unknown";
-    
-    // استخراج البيانات الأساسية
-    const name = (data.Name || "").trim();
-    const email = (data.email || data.Email || "").trim();
-    const company = (data.Company || "").trim();
-    const message = data.Message || "(no message)";
-    const bundle = data.Selected_Asset_Bundle || "General";
-    
-    // ============================================================
-    // منطقة الحماية (The Firewall)
-    // ============================================================
-    
-    // 1. فحص المصيدة (Honeypot): يجب أن يكون حقل website فارغاً
-    const isHoneypotFilled = data.website && data.website.length > 0;
 
-    // 2. فحص سرعة الروبوت (إذا أرسل في أقل من 2.5 ثانية)
-    const isBotSpeed = data.formStartTs && (Date.now() - Number(data.formStartTs) < 2500);
-
-    // 3. فحص المحتوى المحظور (الاسم، الشركة، الإيميل)
-    const containsSpamContent = SPAM_CONFIG.keywords.some(k => 
-      name.toLowerCase().includes(k.toLowerCase()) || 
-      company.toLowerCase().includes(k.toLowerCase())
-    );
-    const isBlockedEmail = SPAM_CONFIG.emails.includes(email.toLowerCase());
-
-    // 4. فحص الـ IP
-    const isBlockedIP = SPAM_CONFIG.ips.includes(ip);
-
-    // إذا تحقق أي شرط من شروط السبام، نعطي نجاح وهمي وننهي العملية فوراً
-    if (isHoneypotFilled || isBotSpeed || containsSpamContent || isBlockedEmail || isBlockedIP) {
-      console.log(`⛔ Spam blocked from IP: ${ip} | Name: ${name}`);
-      return res.status(200).json({ success: true, message: "Sent!" }); // خداع البوت
+    // ----------------------------
+    // Anti-spam: Honeypot + Time trap
+    // ----------------------------
+    const hp = (data.website || "").trim();
+    if (hp) {
+      return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ============================================================
-    // فحص التكرار (Rate Limiting)
-    // ============================================================
-    const lastRequest = ipStore.get(ip);
-    if (lastRequest && Date.now() - lastRequest < 24 * 60 * 60 * 1000) {
-       // يمكنك تفعيل هذا السطر إذا أردت منعهم، أو تركه لعدم إزعاج المستخدمين الحقيقيين
-       // return res.status(429).json({ error: "Try again later" });
+    const startTs = Number(data.formStartTs || 0);
+    if (startTs && Date.now() - startTs < 2500) {
+      return res.status(200).json({ success: true, autoReplySent: false });
     }
-    ipStore.set(ip, Date.now());
 
-    // ============================================================
-    // إرسال الإيميل (فقط للطلبات النظيفة)
-    // ============================================================
+    // ----------------------------
+    // --- NEW: Specific Content Blocker (Roberttum / Google) ---
+    // هذا الكود يمنع البوت المحدد دون التأثير على العملاء الآخرين
+    // ----------------------------
+    
+    // نتحقق من البيانات الخام القادمة من الفورم
+    const checkName = (data.Name || data.name || "").toLowerCase();
+    const checkCompany = (data.Company || data.company || "").toLowerCase();
+
+    // كلمات الحظر المحددة (Targeted Ban)
+    const blockedName = "roberttum";
+    const blockedCompany = "google";
+
+    if (
+      checkName.includes(blockedName) || 
+      checkCompany.includes(blockedCompany)
+    ) {
+      console.log(`Spam Intercepted: ${checkName} / ${checkCompany}`);
+      // نرسل نجاح وهمي (200 OK) ليظن البوت أنه نجح ويغادر
+      return res.status(200).json({ success: true, autoReplySent: false });
+    }
+    // ----------------------------
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
       secure: true,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
     });
 
-    // إيميل الإشعار لك
-    await transporter.sendMail({
-      from: `"GNOSIS System" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
-      replyTo: email,
-      subject: `New Inquiry: ${bundle} [${name}]`,
-      text: `From: ${name} (${email})\nCompany: ${company}\nLocation IP: ${ip}\n\nMessage:\n${message}`,
-    });
+    const name = data.Name || "Unknown";
+    const company = data.Company || "Not specified";
+    // Support both "email" and "Email" field names
+    const email = (data.email || data.Email || "").trim();
+    const bundle = data.Selected_Asset_Bundle || "General";
+    const message = data.Message || "(no message)";
 
-    // إيميل التأكيد للمستخدم
-    if (email) {
-      await transporter.sendMail({
-        from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
-        to: email,
-        subject: "We received your inquiry",
-        text: "Thank you via Gnosis Assets. We will get back to you shortly.",
-      });
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
 
-    return res.status(200).json({ success: true });
+    // 1) Admin email (to you)
+    const adminInfo = await transporter.sendMail({
+      from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+      to: process.env.SMTP_USER,
+      replyTo: email,
+      subject: `New Inquiry: ${bundle} – from gnosisbase.com`,
+      text: `Name: ${name}
+Company: ${company}
+Email: ${email}
+Asset Bundle: ${bundle}
 
-  } catch (error) {
-    console.error("Handler Error:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+Message:
+${message}`,
+    });
+
+    // 2) Auto-reply (English only) — HTML + text fallback
+    const subject = "Confirmation: Inquiry Received – Gnosis Assets";
+
+    const text = `Thank you for contacting Gnosis Assets.
+
+We have successfully received your inquiry regarding the portfolio.
+
+Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+
+We aim to respond to all relevant acquisition requests within 24 business hours.
+
+Best regards,
+
+The Gnosis Assets Team
+Identity Infrastructure for the AI Era.
+https://gnosisbase.com`;
+
+    // Dark-mode friendly HTML (works well across email clients)
+    const html = `
+<div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
+  <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
+
+    <div style="padding:0; background:#0b0f17;">
+      <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+        <img
+          src="https://gnosisbase.com/gnosis-assets-header.png"
+          alt="Gnosis Assets"
+          width="640"
+          style="display:block; width:100%; max-width:640px; border:0;"
+        />
+      </a>
+    </div>
+
+    <div style="padding:20px; background:#0b0f17;">
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td align="left" valign="middle">
+            <div style="font-size:22px; font-weight:700; color:#ffffff;">
+              Inquiry received
+            </div>
+          </td>
+          <td align="right" valign="middle">
+            <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+              <img
+                src="https://gnosisbase.com/logo.png"
+                alt="Gnosis Assets"
+                width="110"
+                style="display:block; border:0;"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
+      <p style="margin:0 0 12px; color:#e5e7eb;">
+        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
+      </p>
+
+      <p style="margin:0 0 14px; color:#e5e7eb;">
+        Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+      </p>
+
+      <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
+        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
+        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Company:</b> ${escapeHtml(company)}
+        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
+        </div>
+      </div>
+
+      <p style="margin:0 0 12px; color:#cbd5e1;">
+        Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+      </p>
+
+      <p style="margin:0 0 18px; color:#cbd5e1;">
+        We aim to respond to all relevant acquisition requests within <b style="color:#ffffff;">24 business hours</b>.
+      </p>
+
+      <a href="https://gnosisbase.com"
+         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
+                background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
+        Visit gnosisbase.com
+      </a>
+
+      <hr style="border:none; border-top:1px solid #1f2937; margin:20px 0;">
+
+      <div style="font-size:12px; color:#94a3b8;">
+        Best regards,<br>
+        <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
+        Identity Infrastructure for the AI Era.
+      </div>
+    </div>
+  </div>
+</div>
+    `;
+
+    let autoInfo = null;
+    let autoError = null;
+
+    try {
+      autoInfo = await transporter.sendMail({
+        from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        to: email,
+        replyTo: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        subject,
+        text,
+        html,
+        headers: {
+          "Auto-Submitted": "auto-replied",
+          "X-Auto-Response-Suppress": "All",
+        },
+      });
+    } catch (err) {
+      autoError = err?.message || String(err);
+      console.error("AUTO_REPLY_FAILED:", err);
+    }
+
+    return res.status(200).json({
+      success: true,
+      adminSent: !!adminInfo?.messageId,
+      autoReplySent: !!autoInfo?.messageId,
+      autoError,
+    });
+  } catch (e) {
+    console.error("CONTACT_API_ERROR:", e);
+    return res.status(500).json({ success: false, error: e?.message || "Server error" });
   }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
