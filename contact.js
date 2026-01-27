@@ -1,155 +1,98 @@
 import nodemailer from "nodemailer";
 
-// 1. قائمة حظر العناوين (IPs) - (قد لا تكون كافية وحدها)
-const BLOCKED_IPS = ["92.255.85.72", "92.255.85.74"];
-
-// 2. قائمة حظر المحتوى (الأسماء والإيميلات المزعجة) - هذا هو الحل الجذري لـ Roberttum
-const BLOCKED_CONTENT = {
-  names: ["Roberttum", "Cryto", "Investment", "Google leads"],
+// 1. إعدادات الحظر (سهلة التعديل مستقبلاً)
+const SPAM_CONFIG = {
+  ips: ["92.255.85.72", "92.255.85.74"],
+  keywords: ["Roberttum", "Cryto", "Investment", "Google leads"], // كلمات ممنوعة في الاسم أو الشركة
   emails: ["michael_kennedy@brown.edu", "eric.jones.z.mail@gmail.com"]
 };
 
-// ملاحظة: المتغيرات العامة مثل ipStore قد لا تعمل بدقة 100% على Vercel لأن السيرفر يغلق ويعمل عند الطلب
-// لكن سنبقيها كخط دفاع إضافي بسيط
+// تخزين مؤقت للحد من التكرار (Simple Rate Limiting)
 const ipStore = new Map();
-const WINDOW_MS = 24 * 60 * 60 * 1000; // 24 ساعة
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
-  }
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
     const data = req.body || {};
+    const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || "unknown";
     
-    // استخراج البيانات وتنظيفها
-    const name = (data.Name || "Unknown").trim();
+    // استخراج البيانات الأساسية
+    const name = (data.Name || "").trim();
     const email = (data.email || data.Email || "").trim();
-    const company = data.Company || "Not specified";
-    const bundle = data.Selected_Asset_Bundle || "General";
+    const company = (data.Company || "").trim();
     const message = data.Message || "(no message)";
+    const bundle = data.Selected_Asset_Bundle || "General";
+    
+    // ============================================================
+    // منطقة الحماية (The Firewall)
+    // ============================================================
+    
+    // 1. فحص المصيدة (Honeypot): يجب أن يكون حقل website فارغاً
+    const isHoneypotFilled = data.website && data.website.length > 0;
 
-    // الحصول على IP
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
-      req.socket.remoteAddress ||
-      "unknown";
+    // 2. فحص سرعة الروبوت (إذا أرسل في أقل من 2.5 ثانية)
+    const isBotSpeed = data.formStartTs && (Date.now() - Number(data.formStartTs) < 2500);
 
-    // ---------------------------------------------------------
-    // خط الدفاع الأول: حظر الـ IP المعروف
-    // ---------------------------------------------------------
-    if (BLOCKED_IPS.includes(ip)) {
-      console.log(`Blocked IP: ${ip}`);
-      return res.status(200).json({ success: true }); // نجاح وهمي
-    }
-
-    // ---------------------------------------------------------
-    // خط الدفاع الثاني: المصيدة (Honeypot)
-    // ---------------------------------------------------------
-    // هذا الحقل website موجود في كود HTML الخاص بك وهو مخفي
-    const hp = (data.website || "").trim();
-    if (hp) {
-      console.log("Honeypot filled - Spam blocked");
-      return res.status(200).json({ success: true }); // نجاح وهمي
-    }
-
-    // ---------------------------------------------------------
-    // خط الدفاع الثالث: توقيت الإرسال (Bot Speed)
-    // ---------------------------------------------------------
-    const startTs = Number(data.formStartTs || 0);
-    // إذا تم الإرسال في أقل من 2.5 ثانية، فهو روبوت
-    if (startTs && Date.now() - startTs < 2500) {
-        console.log("Form submitted too fast - Bot detected");
-        return res.status(200).json({ success: true });
-    }
-
-    // ---------------------------------------------------------
-    // خط الدفاع الرابع (الأهم): فلترة المحتوى (Roberttum Killer)
-    // ---------------------------------------------------------
-    const lowerName = name.toLowerCase();
-    const lowerEmail = email.toLowerCase();
-
-    // هل الاسم يحتوي على كلمة محظورة؟
-    const isBlockedName = BLOCKED_CONTENT.names.some(blockedName => 
-        lowerName.includes(blockedName.toLowerCase())
+    // 3. فحص المحتوى المحظور (الاسم، الشركة، الإيميل)
+    const containsSpamContent = SPAM_CONFIG.keywords.some(k => 
+      name.toLowerCase().includes(k.toLowerCase()) || 
+      company.toLowerCase().includes(k.toLowerCase())
     );
-    
-    // هل الإيميل محظور؟
-    const isBlockedEmail = BLOCKED_CONTENT.emails.includes(lowerEmail);
+    const isBlockedEmail = SPAM_CONFIG.emails.includes(email.toLowerCase());
 
-    if (isBlockedName || isBlockedEmail) {
-        console.log(`Content Blocked: Name=${name}, Email=${email}`);
-        // نعطيه نجاح وهمي حتى يعتقد أنه نجح ولا يحاول تغيير أسلوبه
-        return res.status(200).json({ success: true });
+    // 4. فحص الـ IP
+    const isBlockedIP = SPAM_CONFIG.ips.includes(ip);
+
+    // إذا تحقق أي شرط من شروط السبام، نعطي نجاح وهمي وننهي العملية فوراً
+    if (isHoneypotFilled || isBotSpeed || containsSpamContent || isBlockedEmail || isBlockedIP) {
+      console.log(`⛔ Spam blocked from IP: ${ip} | Name: ${name}`);
+      return res.status(200).json({ success: true, message: "Sent!" }); // خداع البوت
     }
 
-    // ---------------------------------------------------------
-    // خط الدفاع الخامس: Rate Limiting (بسيط)
-    // ---------------------------------------------------------
-    const now = Date.now();
-    const last = ipStore.get(ip);
-
-    if (last && now - last < WINDOW_MS) {
-      return res.status(429).json({
-        success: false,
-        error: "Too many requests from this IP. Please wait 24 hours.",
-      });
+    // ============================================================
+    // فحص التكرار (Rate Limiting)
+    // ============================================================
+    const lastRequest = ipStore.get(ip);
+    if (lastRequest && Date.now() - lastRequest < 24 * 60 * 60 * 1000) {
+       // يمكنك تفعيل هذا السطر إذا أردت منعهم، أو تركه لعدم إزعاج المستخدمين الحقيقيين
+       // return res.status(429).json({ error: "Try again later" });
     }
-    ipStore.set(ip, now);
+    ipStore.set(ip, Date.now());
 
-    // ---------------------------------------------------------
-    // الإرسال الفعلي (إذا نجح في تجاوز كل ما سبق)
-    // ---------------------------------------------------------
-    
+    // ============================================================
+    // إرسال الإيميل (فقط للطلبات النظيفة)
+    // ============================================================
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
       secure: true,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
     });
 
-    if (!email) {
-      return res.status(400).json({ success: false, error: "Missing email" });
+    // إيميل الإشعار لك
+    await transporter.sendMail({
+      from: `"GNOSIS System" <${process.env.SMTP_USER}>`,
+      to: process.env.SMTP_USER,
+      replyTo: email,
+      subject: `New Inquiry: ${bundle} [${name}]`,
+      text: `From: ${name} (${email})\nCompany: ${company}\nLocation IP: ${ip}\n\nMessage:\n${message}`,
+    });
+
+    // إيميل التأكيد للمستخدم
+    if (email) {
+      await transporter.sendMail({
+        from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        to: email,
+        subject: "We received your inquiry",
+        text: "Thank you via Gnosis Assets. We will get back to you shortly.",
+      });
     }
 
-    // إرسال الإشعار لك
-    await transporter.sendMail({
-      from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
-      replyTo: email, // لكي تستطيع الرد عليه مباشرة بضغطة زر
-      subject: `New Inquiry: ${bundle} – gnosisbase.com`,
-      text: `Name: ${name}
-Company: ${company}
-Email: ${email}
-Bundle: ${bundle}
-Sender IP: ${ip}
-
-Message:
-${message}`,
-    });
-
-    // إرسال تأكيد للمستخدم (Auto-reply)
-    await transporter.sendMail({
-      from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
-      to: email,
-      subject: "Inquiry received – Gnosis Assets",
-      text: `Thank you for contacting Gnosis Assets.
-
-We have received your inquiry and will respond within 24 business hours.
-
-— Gnosis Assets`,
-      headers: {
-        "Auto-Submitted": "auto-replied",
-        "X-Auto-Response-Suppress": "All",
-      },
-    });
-
     return res.status(200).json({ success: true });
-  } catch (e) {
-    console.error("Server Error:", e);
-    return res.status(500).json({ success: false, error: "Server error" });
+
+  } catch (error) {
+    console.error("Handler Error:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
