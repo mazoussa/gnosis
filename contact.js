@@ -41,6 +41,19 @@ export default async function handler(req, res) {
     if (!email) {
       return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
+// ----------------------------
+// 24h block per email (by cookie - simple & effective)
+// ----------------------------
+const emailKey = Buffer.from(email.toLowerCase()).toString("base64").replaceAll("=", "");
+const cookieName = `sent_${emailKey}`;
+const cookieHeader = req.headers.cookie || "";
+
+if (cookieHeader.includes(`${cookieName}=1`)) {
+  return res.status(429).json({
+    success: false,
+    error: "You have already sent a message. Please wait 24 hours.",
+  });
+}
 
     // 1) Admin email (to you)
     const adminInfo = await transporter.sendMail({
@@ -202,3 +215,4 @@ function escapeHtml(str) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
