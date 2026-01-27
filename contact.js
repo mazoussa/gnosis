@@ -1,5 +1,11 @@
 import nodemailer from "nodemailer";
 
+function getClientIp(req) {
+  const xf = req.headers["x-forwarded-for"];
+  if (typeof xf === "string" && xf.length) return xf.split(",")[0].trim();
+  return req.socket?.remoteAddress || "";
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, error: "Method not allowed" });
@@ -9,9 +15,20 @@ export default async function handler(req, res) {
     const data = req.body || {};
 
     // ----------------------------
+    // Vercel: extract client IP + block known spam range
+    // ----------------------------
+    const clientIp = getClientIp(req);
+
+    // Block the range seen in your spam (92.255.85.xx)
+    if (clientIp && clientIp.startsWith("92.255.85.")) {
+      console.log("Blocked IP range:", clientIp);
+      return res.status(200).json({ success: true, autoReplySent: false });
+    }
+
+    // ----------------------------
     // Anti-spam: Honeypot + Time trap
     // ----------------------------
-    const hp = (data.website || "").trim();
+    const hp = String(data.website || "").trim();
     if (hp) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
@@ -22,28 +39,36 @@ export default async function handler(req, res) {
     }
 
     // ----------------------------
-    // --- NEW: Specific Content Blocker (Roberttum / Google) ---
-    // هذا الكود يمنع البوت المحدد دون التأثير على العملاء الآخرين
+    // Specific Content Blocker (safe version)
     // ----------------------------
-    
-    // نتحقق من البيانات الخام القادمة من الفورم
-    const checkName = (data.Name || data.name || "").toLowerCase();
-    const checkCompany = (data.Company || data.company || "").toLowerCase();
+    const checkName = String(data.Name || data.name || "").toLowerCase().trim();
+    const checkCompany = String(data.Company || data.company || "").toLowerCase().trim();
 
-    // كلمات الحظر المحددة (Targeted Ban)
-    const blockedName = "roberttum";
-    const blockedCompany = "google";
+    const isRoberttum = checkName.includes("roberttum");
+    const isCompanyExactlyGoogle = checkCompany === "google";
 
-    if (
-      checkName.includes(blockedName) || 
-      checkCompany.includes(blockedCompany)
-    ) {
-      console.log(`Spam Intercepted: ${checkName} / ${checkCompany}`);
-      // نرسل نجاح وهمي (200 OK) ليظن البوت أنه نجح ويغادر
+    // Block Roberttum always, and don't broadly block "google" unless it's exactly "google"
+    if (isRoberttum || (isRoberttum && isCompanyExactlyGoogle) || isCompanyExactlyGoogle) {
+      console.log(`Spam Intercepted: ${checkName} / ${checkCompany} / IP=${clientIp}`);
       return res.status(200).json({ success: true, autoReplySent: false });
     }
-    // ----------------------------
 
+    // ----------------------------
+    // Normalize inputs + basic length caps
+    // ----------------------------
+    const name = String(data.Name || data.name || "Unknown").trim().slice(0, 120);
+    const company = String(data.Company || data.company || "Not specified").trim().slice(0, 120);
+    const email = String(data.email || data.Email || "").trim().slice(0, 200);
+    const bundle = String(data.Selected_Asset_Bundle || "General").trim().slice(0, 120);
+    const message = String(data.Message || "(no message)").trim().slice(0, 4000);
+
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Missing visitor email" });
+    }
+
+    // ----------------------------
+    // SMTP
+    // ----------------------------
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
@@ -53,17 +78,6 @@ export default async function handler(req, res) {
         pass: process.env.SMTP_PASS,
       },
     });
-
-    const name = data.Name || "Unknown";
-    const company = data.Company || "Not specified";
-    // Support both "email" and "Email" field names
-    const email = (data.email || data.Email || "").trim();
-    const bundle = data.Selected_Asset_Bundle || "General";
-    const message = data.Message || "(no message)";
-
-    if (!email) {
-      return res.status(400).json({ success: false, error: "Missing visitor email" });
-    }
 
     // 1) Admin email (to you)
     const adminInfo = await transporter.sendMail({
@@ -75,12 +89,13 @@ export default async function handler(req, res) {
 Company: ${company}
 Email: ${email}
 Asset Bundle: ${bundle}
+IP: ${clientIp}
 
 Message:
 ${message}`,
     });
 
-    // 2) Auto-reply (English only) — HTML + text fallback
+    // 2) Auto-reply
     const subject = "Confirmation: Inquiry Received – Gnosis Assets";
 
     const text = `Thank you for contacting Gnosis Assets.
@@ -97,19 +112,13 @@ The Gnosis Assets Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
-    // Dark-mode friendly HTML (works well across email clients)
     const html = `
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
-
     <div style="padding:0; background:#0b0f17;">
       <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-        <img
-          src="https://gnosisbase.com/gnosis-assets-header.png"
-          alt="Gnosis Assets"
-          width="640"
-          style="display:block; width:100%; max-width:640px; border:0;"
-        />
+        <img src="https://gnosisbase.com/gnosis-assets-header.png" alt="Gnosis Assets" width="640"
+             style="display:block; width:100%; max-width:640px; border:0;" />
       </a>
     </div>
 
@@ -117,18 +126,11 @@ https://gnosisbase.com`;
       <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
         <tr>
           <td align="left" valign="middle">
-            <div style="font-size:22px; font-weight:700; color:#ffffff;">
-              Inquiry received
-            </div>
+            <div style="font-size:22px; font-weight:700; color:#ffffff;">Inquiry received</div>
           </td>
           <td align="right" valign="middle">
             <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-              <img
-                src="https://gnosisbase.com/logo.png"
-                alt="Gnosis Assets"
-                width="110"
-                style="display:block; border:0;"
-              />
+              <img src="https://gnosisbase.com/logo.png" alt="Gnosis Assets" width="110" style="display:block; border:0;" />
             </a>
           </td>
         </tr>
@@ -136,9 +138,7 @@ https://gnosisbase.com`;
     </div>
 
     <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
-      <p style="margin:0 0 12px; color:#e5e7eb;">
-        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
-      </p>
+      <p style="margin:0 0 12px; color:#e5e7eb;">Hi${name ? ` ${escapeHtml(name)}` : ""},</p>
 
       <p style="margin:0 0 14px; color:#e5e7eb;">
         Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
@@ -146,15 +146,9 @@ https://gnosisbase.com`;
 
       <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
         <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
-        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
-          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
-        </div>
-        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
-          <b style="color:#ffffff;">Company:</b> ${escapeHtml(company)}
-        </div>
-        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
-          <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
-        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;"><b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}</div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;"><b style="color:#ffffff;">Company:</b> ${escapeHtml(company)}</div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;"><b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}</div>
       </div>
 
       <p style="margin:0 0 12px; color:#cbd5e1;">
@@ -166,13 +160,11 @@ https://gnosisbase.com`;
       </p>
 
       <a href="https://gnosisbase.com"
-         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
-                background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
+         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px; background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
         Visit gnosisbase.com
       </a>
 
       <hr style="border:none; border-top:1px solid #1f2937; margin:20px 0;">
-
       <div style="font-size:12px; color:#94a3b8;">
         Best regards,<br>
         <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
