@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 
+const BLOCKED_IPS = ["92.255.85.72", "92.255.85.74"];
+
 const ipStore = new Map();
 const WINDOW_MS = 24 * 60 * 60 * 1000;
 
@@ -11,6 +13,15 @@ export default async function handler(req, res) {
   try {
     const data = req.body || {};
 
+    const ip =
+      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+      req.socket.remoteAddress ||
+      "unknown";
+
+    if (BLOCKED_IPS.includes(ip)) {
+      return res.status(200).json({ success: true });
+    }
+
     const hp = (data.website || "").trim();
     if (hp) return res.status(200).json({ success: true });
 
@@ -18,11 +29,6 @@ export default async function handler(req, res) {
     if (startTs && Date.now() - startTs < 2500) {
       return res.status(200).json({ success: true });
     }
-
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
-      req.socket.remoteAddress ||
-      "unknown";
 
     const now = Date.now();
     const last = ipStore.get(ip);
@@ -65,6 +71,7 @@ export default async function handler(req, res) {
 Company: ${company}
 Email: ${email}
 Bundle: ${bundle}
+Sender IP: ${ip}
 
 Message:
 ${message}`,
