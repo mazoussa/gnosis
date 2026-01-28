@@ -5266,9 +5266,24 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   const errorMsg = document.getElementById('errorMsg');
   const startTsInput = document.getElementById('formStartTs');
 
+  // عناصر شاشة التأكيد المصممة
+  const confirmation = document.getElementById('formConfirmation');
+  const closeBtn = document.getElementById('closeConfirmation');
+  const ndaCheckbox = document.getElementById('nda');
+  const ndaNote = document.getElementById('ndaNote');
+
   if (!form) return;
 
+  // سجل وقت فتح الفورم (Time trap)
   if (startTsInput) startTsInput.value = String(Date.now());
+
+  // زر إغلاق شاشة النجاح (يرجع الفورم)
+  if (closeBtn && confirmation) {
+    closeBtn.addEventListener('click', () => {
+      confirmation.style.display = 'none';
+      form.style.display = 'block';
+    });
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -5286,12 +5301,11 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       const payload = Object.fromEntries(fd.entries());
 
       const res = await fetch(form.action, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'x-form-token': 'GNOSIS_SECRET_2026_9f3c'
-
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "x-form-token": "GNOSIS_SECRET_2026_9f3c"
         },
         body: JSON.stringify(payload)
       });
@@ -5302,9 +5316,31 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
         throw new Error('Request failed');
       }
 
+      // نجاح
       submitBtn && submitBtn.classList.remove('loading');
       form.reset();
-      alert('تم إرسال الطلب بنجاح');
+
+      // عرض شاشة النجاح المصممة بدل alert
+      if (confirmation) {
+        // أخفِ الفورم
+        form.style.display = 'none';
+
+        // إظهار/إخفاء ملاحظة NDA حسب الاختيار
+        if (ndaNote) {
+          if (ndaCheckbox && ndaCheckbox.checked) {
+            ndaNote.style.display = 'flex';
+          } else {
+            ndaNote.style.display = 'none';
+          }
+        }
+
+        // أظهر شاشة التأكيد
+        confirmation.style.display = 'block';
+      } else {
+        // fallback لو عنصر confirmation غير موجود
+        alert('تم إرسال الطلب بنجاح');
+      }
+
     } catch (err) {
       submitBtn && submitBtn.classList.remove('loading');
       errorMsg && (errorMsg.style.display = 'block');
@@ -5312,9 +5348,6 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   });
 })();
 </script>
-
-
-
 
 <script>
 // MOBILE_NAV_TOGGLE
