@@ -1,70 +1,17 @@
 import nodemailer from "nodemailer";
 
-// ✅ CORS (حل عملي لتشغيل الفورم بين SiteGround -> Vercel)
-function setCors(req, res) {
-  // ملاحظة: استخدام * هنا لتفادي مشاكل www/بدون www وأي اختلافات Origin
-  // والحماية الأساسية عندك هي FORM_TOKEN + الفلاتر
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, x-form-token");
-  res.setHeader("Access-Control-Max-Age", "86400");
-}
-
-function getClientIp(req) {
-  const xf = req.headers["x-forwarded-for"];
-  if (typeof xf === "string" && xf.length) return xf.split(",")[0].trim();
-  const xr = req.headers["x-real-ip"];
-  if (typeof xr === "string" && xr.length) return xr.trim();
-  return req.socket?.remoteAddress || "";
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
 export default async function handler(req, res) {
-  // ✅ CORS على كل الردود
-  setCors(req, res);
-
-  // ✅ Preflight للطلبات التي فيها x-form-token
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
-  }
-
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, error: "Method not allowed" });
   }
 
   try {
     const data = req.body || {};
-    const clientIp = getClientIp(req);
 
     // ----------------------------
-    // 0) Secret token (الأهم)
+    // Anti-spam: Honeypot + Time trap
     // ----------------------------
-    const token = String(req.headers["x-form-token"] || "");
-    if (!process.env.FORM_TOKEN || token !== process.env.FORM_TOKEN) {
-      // نجاح وهمي
-      return res.status(200).json({ success: true, autoReplySent: false });
-    }
-
-    // ----------------------------
-    // 1) Block known spam IP range
-    // ----------------------------
-    if (clientIp && clientIp.startsWith("92.255.85.")) {
-      console.log("Blocked IP range:", clientIp);
-      return res.status(200).json({ success: true, autoReplySent: false });
-    }
-
-    // ----------------------------
-    // 2) Anti-spam: Honeypot + Time trap
-    // ----------------------------
-    const hp = String(data.website || "").trim();
+    const hp = (data.website || "").trim();
     if (hp) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
@@ -75,31 +22,28 @@ export default async function handler(req, res) {
     }
 
     // ----------------------------
-    // 3) Targeted blocker: roberttum فقط
+    // --- NEW: Specific Content Blocker (Roberttum / Google) ---
+    // هذا الكود يمنع البوت المحدد دون التأثير على العملاء الآخرين
     // ----------------------------
-    const checkName = String(data.Name || data.name || "").toLowerCase().trim();
-    if (checkName.includes("roberttum")) {
-      console.log("Spam Intercepted:", checkName, "IP=", clientIp);
+    
+    // نتحقق من البيانات الخام القادمة من الفورم
+    const checkName = (data.Name || data.name || "").toLowerCase();
+    const checkCompany = (data.Company || data.company || "").toLowerCase();
+
+    // كلمات الحظر المحددة (Targeted Ban)
+    const blockedName = "roberttum";
+    const blockedCompany = "google";
+
+    if (
+      checkName.includes(blockedName) || 
+      checkCompany.includes(blockedCompany)
+    ) {
+      console.log(`Spam Intercepted: ${checkName} / ${checkCompany}`);
+      // نرسل نجاح وهمي (200 OK) ليظن البوت أنه نجح ويغادر
       return res.status(200).json({ success: true, autoReplySent: false });
     }
+    // ----------------------------
 
-    // ----------------------------
-    // 4) Normalize inputs + caps
-    // ----------------------------
-    const name = String(data.Name || data.name || "Unknown").trim().slice(0, 120);
-    const company = String(data.Company || data.company || "Not specified").trim().slice(0, 120);
-    const email = String(data.email || data.Email || "").trim().slice(0, 200);
-    const bundle = String(data.Selected_Asset_Bundle || "General").trim().slice(0, 120);
-    const message = String(data.Message || "(no message)").trim().slice(0, 4000);
-
-    if (!email) {
-      // لا نعطي البوت معلومة
-      return res.status(200).json({ success: true, autoReplySent: false });
-    }
-
-    // ----------------------------
-    // SMTP
-    // ----------------------------
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
@@ -109,6 +53,17 @@ export default async function handler(req, res) {
         pass: process.env.SMTP_PASS,
       },
     });
+
+    const name = data.Name || "Unknown";
+    const company = data.Company || "Not specified";
+    // Support both "email" and "Email" field names
+    const email = (data.email || data.Email || "").trim();
+    const bundle = data.Selected_Asset_Bundle || "General";
+    const message = data.Message || "(no message)";
+
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Missing visitor email" });
+    }
 
     // 1) Admin email (to you)
     const adminInfo = await transporter.sendMail({
@@ -120,7 +75,6 @@ export default async function handler(req, res) {
 Company: ${company}
 Email: ${email}
 Asset Bundle: ${bundle}
-IP: ${clientIp}
 
 Message:
 ${message}`,
@@ -143,7 +97,7 @@ The Gnosis Assets Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
-    // نفس تصميمك
+    // Dark-mode friendly HTML (works well across email clients)
     const html = `
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
@@ -258,7 +212,15 @@ https://gnosisbase.com`;
     });
   } catch (e) {
     console.error("CONTACT_API_ERROR:", e);
-    // نجاح وهمي
-    return res.status(200).json({ success:true, autoReplySent: false });
+    return res.status(500).json({ success: false, error: e?.message || "Server error" });
   }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
