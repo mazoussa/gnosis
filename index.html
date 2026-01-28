@@ -4863,7 +4863,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                         </div>
                         <div>
                             <div class="form-card mandate-form">
-                                <form action="/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate="">
+                                    <form action="https://gnosis-5ex4g8nyh-mazoussas-projects.vercel.app/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate="">
                                     <!-- Anti-spam fields (hidden) -->
                                     <input autocomplete="off" name="website" tabindex="-1" type="text" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;"/>
                                     <input id="formStartTs" name="formStartTs" type="hidden" value=""/>
@@ -5260,48 +5260,15 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 
 
 <script>
-// INQUIRY_FORM_AJAX
 (function(){
   const form = document.getElementById('inquiryForm');
-  const confirmBox = document.getElementById('formConfirmation');
-  const closeBtn = document.getElementById('closeConfirmation');
-  const ndaCheckbox = document.getElementById('nda');
-  const ndaNote = document.getElementById('ndaNote');
-  const emailInput = document.getElementById('email');
-  const replyto = document.getElementById('_replyto');
-  const startTsInput = document.getElementById('formStartTs');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
+  const startTsInput = document.getElementById('formStartTs');
 
-  if (!form || !confirmBox) return;
+  if (!form) return;
 
-  // Timestamp used by the API to detect ultra-fast bot submissions
   if (startTsInput) startTsInput.value = String(Date.now());
-
-  let autoCloseTimer = null;
-
-  function closeConfirm(){
-    if (autoCloseTimer) {
-      clearTimeout(autoCloseTimer);
-      autoCloseTimer = null;
-    }
-    confirmBox.style.display = 'none';
-    form.style.display = '';
-  }
-
-  function showConfirm(){
-    const wantsNda = !!(ndaCheckbox && ndaCheckbox.checked);
-    if (ndaNote) ndaNote.style.display = wantsNda ? 'flex' : 'none';
-
-    form.style.display = 'none';
-    confirmBox.style.display = 'block';
-
-  }
-
-  closeBtn && closeBtn.addEventListener('click', closeConfirm);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && confirmBox.style.display === 'block') closeConfirm();
-  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -5311,13 +5278,10 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       return;
     }
 
-    if (replyto && emailInput) replyto.value = (emailInput.value || '').trim();
-
-    if (errorMsg) errorMsg.style.display = 'none';
     submitBtn && submitBtn.classList.add('loading');
+    errorMsg && (errorMsg.style.display = 'none');
 
     try {
-      // Send JSON so the API can read req.body (FormData/multipart would be empty)
       const fd = new FormData(form);
       const payload = Object.fromEntries(fd.entries());
 
@@ -5325,7 +5289,9 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-form-token': 'GNOSIS_SECRET_2026_9f3c'
+
         },
         body: JSON.stringify(payload)
       });
@@ -5333,19 +5299,20 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       const out = await res.json().catch(() => ({}));
 
       if (!res.ok || out?.success === false) {
-        throw new Error(out?.error || 'Request failed');
+        throw new Error('Request failed');
       }
 
       submitBtn && submitBtn.classList.remove('loading');
       form.reset();
-      showConfirm();
+      alert('تم إرسال الطلب بنجاح');
     } catch (err) {
       submitBtn && submitBtn.classList.remove('loading');
-      if (errorMsg) errorMsg.style.display = 'block';
+      errorMsg && (errorMsg.style.display = 'block');
     }
   });
 })();
 </script>
+
 
 
 
