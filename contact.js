@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 
-/** Vercel/Proxy-safe IP extraction */
 function getClientIp(req) {
   const xf = req.headers["x-forwarded-for"];
   if (typeof xf === "string" && xf.length) return xf.split(",")[0].trim();
@@ -19,7 +18,6 @@ function escapeHtml(str) {
 }
 
 export default async function handler(req, res) {
-  // Optional: handle OPTIONS preflight if any browser sends it
   if (req.method === "OPTIONS") {
     res.setHeader("Access-Control-Allow-Origin", "https://gnosisbase.com");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -35,76 +33,61 @@ export default async function handler(req, res) {
     const data = req.body || {};
     const clientIp = getClientIp(req);
 
-    // ----------------------------
-    // 0) Hard allowlist: secret token (strongest anti-spam)
-    // ----------------------------
+    // 1 توكن سري
     const token = String(req.headers["x-form-token"] || "");
     if (!process.env.FORM_TOKEN || token !== process.env.FORM_TOKEN) {
-      // fake success so bots don't learn anything
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // 1) Origin/Referer check (server-side)
-    // ----------------------------
+    // 2 فحص Origin و Referer
     const origin = String(req.headers.origin || "");
     const referer = String(req.headers.referer || "");
+    const allowed = ["https://gnosisbase.com", "https://www.gnosisbase.com"];
 
-    const allowedOrigins = ["https://gnosisbase.com", "https://www.gnosisbase.com"];
-    const okOrigin = allowedOrigins.includes(origin);
-    const okReferer = allowedOrigins.some((d) => referer.startsWith(d));
+    const okOrigin = allowed.includes(origin);
+    const okReferer = allowed.some((d) => referer.startsWith(d));
 
     if (!okOrigin && !okReferer) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // 2) IP block (known spam range)
-    // ----------------------------
+    // 3 حظر رينج IP المزعج
     if (clientIp && clientIp.startsWith("92.255.85.")) {
       console.log("Blocked IP range:", clientIp);
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // 3) Honeypot + Time trap
-    // ----------------------------
+    // 4 Honeypot
     const hp = String(data.website || "").trim();
     if (hp) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
+    // 5 Time trap
     const startTs = Number(data.formStartTs || 0);
     if (startTs && Date.now() - startTs < 2500) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // 4) Targeted content blocker (safe)
-    // ----------------------------
+    // 6 حظر الاسم المستهدف فقط
     const checkName = String(data.Name || data.name || "").toLowerCase().trim();
     if (checkName.includes("roberttum")) {
-      console.log("Blocked targeted spam name:", checkName, "IP=", clientIp);
+      console.log("Blocked targeted spam:", checkName, "IP=", clientIp);
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // 5) Normalize + cap lengths
-    // ----------------------------
+    // 7 تطبيع وقطع الأطوال
     const name = String(data.Name || data.name || "Unknown").trim().slice(0, 120);
     const company = String(data.Company || data.company || "Not specified").trim().slice(0, 120);
     const email = String(data.email || data.Email || "").trim().slice(0, 200);
     const bundle = String(data.Selected_Asset_Bundle || "General").trim().slice(0, 120);
     const message = String(data.Message || "(no message)").trim().slice(0, 4000);
 
-    // If missing email, don't error loudly (avoid giving bots feedback)
     if (!email) {
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
-    // ----------------------------
-    // SMTP
-    // ----------------------------
+    // 8 SMTP
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
@@ -115,7 +98,7 @@ export default async function handler(req, res) {
       },
     });
 
-    // 1) Admin email
+    // 9 بريد الأدمن
     const adminInfo = await transporter.sendMail({
       from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
@@ -133,7 +116,7 @@ Message:
 ${message}`,
     });
 
-    // 2) Auto-reply (keep your designed HTML)
+    // 10 رد تلقائي مع تصميمك
     const subject = "Confirmation: Inquiry Received – Gnosis Assets";
 
     const text = `Thank you for contacting Gnosis Assets.
@@ -242,7 +225,6 @@ https://gnosisbase.com`;
     });
   } catch (e) {
     console.error("CONTACT_API_ERROR:", e);
-    // Return 200 to not help bots learn
     return res.status(200).json({ success: true, autoReplySent: false });
   }
 }
