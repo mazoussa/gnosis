@@ -1,58 +1,53 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  // Allow POST only
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, error: "Method not allowed" });
   }
 
   try {
     const data = req.body || {};
+    const ip = getClientIp(req);
 
-    /* ============================
-       Anti-spam: Honeypot + Timing
-       ============================ */
-    const honeypot = (data.website || "").trim();
-    if (honeypot) {
-      return res.status(200).json({ success: true, autoReplySent: false });
+    // 1. فحص الحجب الفوري بالـ IP (نطاقات Roberttum)
+    if (ip.startsWith("92.255.") || ip.startsWith("80.94.")) {
+      console.log("BOT HARD-KILLED (IP range)", ip);
+      return res.status(200).json({ success: true });
     }
+
+    // 2. فحص الأسماء المحظورة (في الاسم والشركة فقط لتجنب حجب المستخدمين الحقيقيين)
+    const identityString = `${data.Name} ${data.Company}`.toLowerCase();
+    if (identityString.includes("roberttum") || identityString.includes("google")) {
+      console.log("BOT HARD-KILLED (Identity)");
+      return res.status(200).json({ success: true });
+    }
+
+    // 3. Honeypot + Timing
+    const honeypot = (data.website || "").trim();
+    if (honeypot) return res.status(200).json({ success: true });
 
     const startTs = Number(data.formStartTs || 0);
-    if (startTs && Date.now() - startTs < 2500) {
-      return res.status(200).json({ success: true, autoReplySent: false });
-    }
+    if (startTs && Date.now() - startTs < 2500) return res.status(200).json({ success: true });
 
-    /* ============================
-       Configuration
-       ============================ */
+    // 4. Configuration & Email Logic
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
       secure: true,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
     });
 
-    // Extract form data (email is flexible: email or Email)
     const name = data.Name || "Unknown";
     const company = data.Company || "Not specified";
     const email = (data.email || data.Email || "").trim();
     const bundle = data.Selected_Asset_Bundle || "General";
     const message = data.Message || "(no message)";
 
-    if (!email) {
-      return res.status(400).json({ success: false, error: "Missing visitor email" });
-    }
+    if (!email) return res.status(400).json({ success: false, error: "Missing email" });
 
-    /* ============================
-       IP + Location Logic
-       ============================ */
-    const ip = getClientIp(req);
+    // 5. Geo Info
     const geo = getGeoFromHeaders(req);
-    const locationParts = [geo.city, geo.region, geo.country].filter(Boolean);
-    const location = locationParts.length ? locationParts.join(", ") : "Unknown";
+    const location = [geo.city, geo.region, geo.country].filter(Boolean).join(", ") || "Unknown";
 
     /* ============================
        Templates
