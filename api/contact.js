@@ -7,9 +7,9 @@ export default async function handler(req, res) {
 
   // --- التحقق من التوكن (Header Token) ---
   const formToken = req.headers["x-form-token"];
-  const SECRET_TOKEN = "GNOSIS_SECRET_2026_9f3c";
+  const SECRET_TOKEN = process.env.FORM_TOKEN_SECRET;
 
-  if (formToken !== SECRET_TOKEN) {
+  if (!SECRET_TOKEN || formToken !== SECRET_TOKEN) {
     return res.status(403).json({ success: false, error: "Unauthorized request" });
   }
 
@@ -17,11 +17,9 @@ export default async function handler(req, res) {
     const data = req.body || {};
 
     // ----------------------------
-    // Anti-spam: Honeypot (تم التصحيح هنا)
+    // Anti-spam: Honeypot (Defensive)
     // ----------------------------
-    // نتحقق من النوع قبل استخدام trim لمنع الانهيار
     const hp = typeof data.website === "string" ? data.website.trim() : "";
-    
     if (hp) {
       console.log("Honeypot Triggered");
       return res.status(200).json({ success: true, autoReplySent: false });
@@ -33,7 +31,7 @@ export default async function handler(req, res) {
     }
 
     // ----------------------------
-    // الحماية من محتوى محدد (Roberttum)
+    // Targeted content blocker
     // ----------------------------
     const checkName = String(data.Name || data.name || "").toLowerCase();
     const checkCompany = String(data.Company || data.company || "").toLowerCase();
@@ -43,7 +41,7 @@ export default async function handler(req, res) {
     }
 
     // ----------------------------
-    // معالجة البيانات SMTP
+    // SMTP transport
     // ----------------------------
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -55,8 +53,10 @@ export default async function handler(req, res) {
       },
     });
 
-    // تأمين جلب البريد الإلكتروني
-    const email = typeof data.email === "string" ? data.email.trim() : "";
+    // Support both "email" and "Email"
+    const rawEmail = data.email ?? data.Email;
+    const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
+
     const name = String(data.Name || "Unknown");
     const company = String(data.Company || "Not specified");
     const bundle = String(data.Selected_Asset_Bundle || "General");
@@ -66,16 +66,22 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
 
-    // إرسال الإيميل للمسؤول
+    // Admin email
     const adminInfo = await transporter.sendMail({
       from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       replyTo: email,
       subject: `New Inquiry: ${bundle} – from gnosisbase.com`,
-      text: `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nBundle: ${bundle}\n\nMessage:\n${message}`,
+      text: `Name: ${name}
+Company: ${company}
+Email: ${email}
+Bundle: ${bundle}
+
+Message:
+${message}`,
     });
 
-    // إرسال الرد التلقائي (Auto-reply)
+    // Auto-reply (safe try/catch)
     let autoInfo = null;
     try {
       autoInfo = await transporter.sendMail({
@@ -83,20 +89,19 @@ export default async function handler(req, res) {
         to: email,
         subject: "Confirmation: Inquiry Received – Gnosis Assets",
         text: `Thank you ${name}, we have received your inquiry for ${bundle}.`,
-        // يمكنك إضافة الـ HTML هنا كما في كودك الأصلي
+        // ضع HTML هنا إن رغبت (كما في كودك الأصلي)
       });
-    } catch (e) {
-      console.error("Auto-reply failed:", e);
+    } catch (err) {
+      console.error("AUTO_REPLY_FAILED:", err);
     }
 
     return res.status(200).json({
       success: true,
       adminSent: !!adminInfo?.messageId,
-      autoReplySent: !!autoInfo?.messageId
+      autoReplySent: !!autoInfo?.messageId,
     });
-
   } catch (e) {
     console.error("CONTACT_API_ERROR:", e);
-    return res.status(500).json({ success: false, error: "Server error" });
+    return res.status(500).json({ success: false, error: e?.message || "Server error" });
   }
 }
