@@ -5,23 +5,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: "Method not allowed" });
   }
 
-  // --- التحقق من التوكن (Header Token) ---
-  const formToken = req.headers["x-form-token"];
-  const SECRET_TOKEN = process.env.FORM_TOKEN_SECRET;
-
-  if (!SECRET_TOKEN || formToken !== SECRET_TOKEN) {
-    return res.status(403).json({ success: false, error: "Unauthorized request" });
-  }
-
   try {
     const data = req.body || {};
 
     // ----------------------------
-    // Anti-spam: Honeypot (Defensive)
+    // Anti-spam: Honeypot + Time trap
     // ----------------------------
     const hp = typeof data.website === "string" ? data.website.trim() : "";
     if (hp) {
-      console.log("Honeypot Triggered");
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
@@ -31,18 +22,28 @@ export default async function handler(req, res) {
     }
 
     // ----------------------------
-    // Targeted content blocker
+    // --- NEW: Specific Content Blocker (Roberttum / Google) ---
+    // هذا الكود يمنع البوت المحدد دون التأثير على العملاء الآخرين
     // ----------------------------
-    const checkName = String(data.Name || data.name || "").toLowerCase();
-    const checkCompany = String(data.Company || data.company || "").toLowerCase();
+    
+    // نتحقق من البيانات الخام القادمة من الفورم
+    const checkName = (data.Name || data.name || "").toLowerCase();
+    const checkCompany = (data.Company || data.company || "").toLowerCase();
 
-    if (checkName.includes("roberttum") || checkCompany.includes("google")) {
+    // كلمات الحظر المحددة (Targeted Ban)
+    const blockedName = "roberttum";
+    const blockedCompany = "google";
+
+    if (
+      checkName.includes(blockedName) || 
+      checkCompany.includes(blockedCompany)
+    ) {
+      console.log(`Spam Intercepted: ${checkName} / ${checkCompany}`);
+      // نرسل نجاح وهمي (200 OK) ليظن البوت أنه نجح ويغادر
       return res.status(200).json({ success: true, autoReplySent: false });
     }
+    // ----------------------------
 
-    // ----------------------------
-    // SMTP transport
-    // ----------------------------
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: 465,
@@ -53,20 +54,19 @@ export default async function handler(req, res) {
       },
     });
 
-    // Support both "email" and "Email"
+    const name = data.Name || "Unknown";
+    const company = data.Company || "Not specified";
+    // Support both "email" and "Email" field names
     const rawEmail = data.email ?? data.Email;
     const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
-
-    const name = String(data.Name || "Unknown");
-    const company = String(data.Company || "Not specified");
-    const bundle = String(data.Selected_Asset_Bundle || "General");
-    const message = String(data.Message || "(no message)");
+    const bundle = data.Selected_Asset_Bundle || "General";
+    const message = data.Message || "(no message)";
 
     if (!email) {
       return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
 
-    // Admin email
+    // 1) Admin email (to you)
     const adminInfo = await transporter.sendMail({
       from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
@@ -75,23 +75,133 @@ export default async function handler(req, res) {
       text: `Name: ${name}
 Company: ${company}
 Email: ${email}
-Bundle: ${bundle}
+Asset Bundle: ${bundle}
 
 Message:
 ${message}`,
     });
 
-    // Auto-reply (safe try/catch)
+    // 2) Auto-reply (English only) — HTML + text fallback
+    const subject = "Confirmation: Inquiry Received – Gnosis Assets";
+
+    const text = `Thank you for contacting Gnosis Assets.
+
+We have successfully received your inquiry regarding the portfolio.
+
+Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+
+We aim to respond to all relevant acquisition requests within 24 business hours.
+
+Best regards,
+
+The Gnosis Assets Team
+Identity Infrastructure for the AI Era.
+https://gnosisbase.com`;
+
+    // Dark-mode friendly HTML (works well across email clients)
+    const html = `
+<div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
+  <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
+
+    <div style="padding:0; background:#0b0f17;">
+      <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+        <img
+          src="https://gnosisbase.com/gnosis-assets-header.png"
+          alt="Gnosis Assets"
+          width="640"
+          style="display:block; width:100%; max-width:640px; border:0;"
+        />
+      </a>
+    </div>
+
+    <div style="padding:20px; background:#0b0f17;">
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td align="left" valign="middle">
+            <div style="font-size:22px; font-weight:700; color:#ffffff;">
+              Inquiry received
+            </div>
+          </td>
+          <td align="right" valign="middle">
+            <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
+              <img
+                src="https://gnosisbase.com/logo.png"
+                alt="Gnosis Assets"
+                width="110"
+                style="display:block; border:0;"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
+      <p style="margin:0 0 12px; color:#e5e7eb;">
+        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
+      </p>
+
+      <p style="margin:0 0 14px; color:#e5e7eb;">
+        Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+      </p>
+
+      <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
+        <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
+        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Company:</b> ${escapeHtml(company)}
+        </div>
+        <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
+          <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
+        </div>
+      </div>
+
+      <p style="margin:0 0 12px; color:#cbd5e1;">
+        Our team is currently reviewing incoming requests. Please note that we prioritize inquiries from strategic buyers and institutional operators.
+      </p>
+
+      <p style="margin:0 0 18px; color:#cbd5e1;">
+        We aim to respond to all relevant acquisition requests within <b style="color:#ffffff;">24 business hours</b>.
+      </p>
+
+      <a href="https://gnosisbase.com"
+         style="display:inline-block; text-decoration:none; padding:12px 16px; border-radius:12px;
+                background:#111827; color:#ffffff; font-weight:700; border:1px solid #1f2937;">
+        Visit gnosisbase.com
+      </a>
+
+      <hr style="border:none; border-top:1px solid #1f2937; margin:20px 0;">
+
+      <div style="font-size:12px; color:#94a3b8;">
+        Best regards,<br>
+        <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
+        Identity Infrastructure for the AI Era.
+      </div>
+    </div>
+  </div>
+</div>
+    `;
+
     let autoInfo = null;
+    let autoError = null;
+
     try {
       autoInfo = await transporter.sendMail({
         from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
         to: email,
-        subject: "Confirmation: Inquiry Received – Gnosis Assets",
-        text: `Thank you ${name}, we have received your inquiry for ${bundle}.`,
-        // ضع HTML هنا إن رغبت (كما في كودك الأصلي)
+        replyTo: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        subject,
+        text,
+        html,
+        headers: {
+          "Auto-Submitted": "auto-replied",
+          "X-Auto-Response-Suppress": "All",
+        },
       });
     } catch (err) {
+      autoError = err?.message || String(err);
       console.error("AUTO_REPLY_FAILED:", err);
     }
 
@@ -99,9 +209,19 @@ ${message}`,
       success: true,
       adminSent: !!adminInfo?.messageId,
       autoReplySent: !!autoInfo?.messageId,
+      autoError,
     });
   } catch (e) {
     console.error("CONTACT_API_ERROR:", e);
     return res.status(500).json({ success: false, error: e?.message || "Server error" });
   }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
