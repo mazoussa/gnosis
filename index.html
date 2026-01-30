@@ -4864,11 +4864,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
                         <div>
                             <div class="form-card mandate-form">
                                     <form action="https://gnosisbase.com/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate="">
-                                    <!-- Anti-spam fields (hidden) -->
-                                    <input autocomplete="off" name="website" tabindex="-1" type="text" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;"/>
-                                    <input id="formStartTs" name="formStartTs" type="hidden" value=""/>
-
-                                    <div class="grid-form">
+<div class="grid-form">
                                         <div class="field field-full">
                                             <label for="fullName">Full Name</label>
                                             <input autocomplete="name" id="fullName" name="Name" placeholder="Enter your name" required="" type="text"/>
@@ -5273,35 +5269,34 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
 <script>
 (function(){
   const form = document.getElementById('inquiryForm');
+  if (!form) return;
+
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const startTsInput = document.getElementById('formStartTs');
 
-  // عناصر شاشة التأكيد المصممة
+  // Confirmation modal elements
   const confirmation = document.getElementById('formConfirmation');
   const closeBtn = document.getElementById('closeConfirmation');
   const ndaCheckbox = document.getElementById('nda');
   const ndaNote = document.getElementById('ndaNote');
 
-  if (!form) return;
+  function setStartTs(){
+    if (startTsInput) startTsInput.value = String(Date.now());
+  }
 
-  // سجل وقت فتح الفورم (Time trap)
-  if (startTsInput) startTsInput.value = String(Date.now());
+  // Time trap starts when page loads
+  setStartTs();
 
-  // زر إغلاق شاشة النجاح (يرجع الفورم)
+  // Close success modal (show form again)
   if (closeBtn && confirmation) {
     closeBtn.addEventListener('click', () => {
       confirmation.style.display = 'none';
       form.style.display = 'block';
+      setStartTs();
     });
   }
-<div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
-    <input type="text" name="full_name_confirm" tabindex="-1" autocomplete="off">
-    <input type="email" name="user_backup_email" tabindex="-1" autocomplete="off">
-    <input type="url" name="website" tabindex="-1" autocomplete="off">
-</div>
 
-<input id="formStartTs" name="formStartTs" type="hidden" value=""/>
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -5318,44 +5313,31 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
       const payload = Object.fromEntries(fd.entries());
 
       const res = await fetch(form.action, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "x-form-token": "GNOSIS_SECRET_2026_9f3c"
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
 
       const out = await res.json().catch(() => ({}));
+      if (!res.ok || out?.success === false) throw new Error('Request failed');
 
-      if (!res.ok || out?.success === false) {
-        throw new Error('Request failed');
-      }
-
-      // نجاح
+      // Success UI
       submitBtn && submitBtn.classList.remove('loading');
       form.reset();
+      setStartTs();
 
-      // عرض شاشة النجاح المصممة بدل alert
       if (confirmation) {
-        // أخفِ الفورم
-        form.style.display = 'none';
-
-        // إظهار/إخفاء ملاحظة NDA حسب الاختيار
+        // Show/hide NDA note depending on checkbox
         if (ndaNote) {
-          if (ndaCheckbox && ndaCheckbox.checked) {
-            ndaNote.style.display = 'flex';
-          } else {
-            ndaNote.style.display = 'none';
-          }
+          ndaNote.style.display = (ndaCheckbox && ndaCheckbox.checked) ? 'flex' : 'none';
         }
-
-        // أظهر شاشة التأكيد
+        form.style.display = 'none';
         confirmation.style.display = 'block';
       } else {
-        // fallback لو عنصر confirmation غير موجود
-        alert('تم إرسال الطلب بنجاح');
+        alert('Inquiry received.');
       }
 
     } catch (err) {
@@ -5365,6 +5347,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   });
 })();
 </script>
+
 
 <script>
 // MOBILE_NAV_TOGGLE
