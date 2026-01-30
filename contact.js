@@ -7,6 +7,14 @@ export default async function handler(req, res) {
 
   try {
     const data = req.body || {};
+    // HARD BLOCK — FINAL
+    const badName = String(data.Name || data.name || "").toLowerCase();
+    const badCompany = String(data.Company || data.company || "").toLowerCase();
+
+    if (badName.includes("roberttum") || badCompany === "google") {
+      console.log("HARD BLOCKED ROBERTTUM", badName, badCompany);
+      return res.status(200).json({ success: true });
+    }
 
     // ----------------------------
     // Anti-spam: Honeypot + Time trap
