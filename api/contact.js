@@ -59,7 +59,10 @@ export default async function handler(req, res) {
     // Support both "email" and "Email" field names
     const rawEmail = data.email ?? data.Email;
     const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
-    const bundle = data.portfolio_scope || data.Selected_Asset_Bundle || "General";
+    const bundle =
+    data.portfolio_scope ||
+    data.Selected_Asset_Bundle ||
+    "General";
     const message = data.Message || "(no message)";
 
     if (!email) {
