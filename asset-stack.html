@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Gnosis Base | Asset Stack</title>
+  <meta name="description" content="The Gnosis Base Asset Stack: a sovereign AI identity stack composed of a primary naming core and strategic extensions, designed for long-term control, trust, and expansion."/>
+  <meta name="author" content="Gnosis Base"/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+  <meta name="theme-color" content="#020204"/>
+
+  <link rel="canonical" href="https://gnosisbase.com/asset-stack.html"/>
+
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://gnosisbase.com/asset-stack.html"/>
+  <meta property="og:title" content="Gnosis Base | Asset Stack"/>
+  <meta property="og:description" content="A sovereign AI identity stack: core naming authority plus strategic extensions designed for institutional trust and expansion."/>
+  <meta property="og:image" content="https://gnosisbase.com/og-image.jpg"/>
+  <meta property="og:image:alt" content="Gnosis Base — Asset Stack"/>
+  <meta property="og:site_name" content="Gnosis Base"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:url" content="https://gnosisbase.com/asset-stack.html"/>
+  <meta name="twitter:title" content="Gnosis Base | Asset Stack"/>
+  <meta name="twitter:description" content="A sovereign AI identity stack: core naming authority plus strategic extensions designed for institutional trust and expansion."/>
+  <meta name="twitter:image" content="https://gnosisbase.com/og-image.jpg"/>
+  <meta name="twitter:image:alt" content="Gnosis Base — Asset Stack"/>
+
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/manifest.webmanifest"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=optional" rel="stylesheet"/>
+
+  <script>
+    (function(){
+      document.documentElement.setAttribute('data-theme','dark');
+      try { localStorage.setItem('theme','dark'); } catch(e) {}
+    })();
+  </script>
+
+  <style>
+    :root{
+      --serif:"Playfair Display",serif;
+      --sans:"Outfit",sans-serif;
+      --cyan:#00f0f0;
+      --purple:#8020f0;
+      --gold1:#f2d073;
+      --bg:#060712;
+      --text:#f3f4f8;
+      --muted:rgba(243,244,248,.78);
+      --surface:rgba(16,18,30,.72);
+      --surface2:rgba(30,32,50,.82);
+      --border:rgba(255,255,255,.10);
+      --border2:rgba(255,255,255,.08);
+      --shadow1:0 18px 60px rgba(0,0,0,.35);
+      --shadow2:0 30px 80px rgba(0,0,0,.55);
+      --radius:22px;
+      --radius2:28px;
+      --maxw:1240px;
+      --gutter:20px;
+      --grad:linear-gradient(90deg,var(--cyan),var(--purple));
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:var(--sans);
+      background:radial-gradient(circle at 50% 30%, #0f172a 0%, #020204 70%);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    :focus-visible{outline:2px solid rgba(0,240,240,.85);outline-offset:3px;border-radius:10px}
+
+    .container{
+      width:min(var(--maxw),calc(100% - (var(--gutter)*2)));
+      margin:0 auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background:rgba(6,7,18,.55);
+      border-bottom:1px solid var(--border2);
+    }
+
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:16px 0;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+
+    .brand-top{
+      font-weight:900;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      font-size:18px;
+      background:var(--grad);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .brand-sub{
+      margin-top:4px;
+      font-size:10px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      color:rgba(240,240,255,.65);
+      font-weight:800;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.5px;
+      color:rgba(243,244,248,.72);
+    }
+    .nav a{padding:8px 10px;border-radius:12px;border:1px solid transparent}
+    .nav a:hover{color:var(--text);border-color:rgba(0,240,240,.18);background:rgba(0,240,240,.06)}
+
+    .hero{
+      padding:56px 0 28px;
+      text-align:center;
+    }
+
+    .kicker{
+      font-size:11px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      font-weight:900;
+      color:rgba(0,240,240,.90);
+      margin-bottom:10px;
+    }
+
+    h1{
+      font-family:var(--serif);
+      font-size:clamp(2.2rem,4.6vw,4.2rem);
+      letter-spacing:-1.2px;
+      line-height:1.05;
+      margin:0 auto 12px;
+      max-width:980px;
+    }
+
+    .grad{
+      background:var(--grad);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:clamp(1.02rem,1.3vw,1.15rem);
+      line-height:1.75;
+      max-width:900px;
+      margin:0 auto;
+      font-weight:300;
+    }
+
+    .hero-cta{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      letter-spacing:.3px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      transition:transform .2s ease, filter .2s ease, border-color .2s ease, background .2s ease;
+      font-size:13px;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.05);border-color:rgba(0,240,240,.26)}
+    .btn.primary{
+      background:rgba(0,240,240,.06);
+      border-color:rgba(0,240,240,.45);
+      color:var(--cyan);
+    }
+    .btn.primary:hover{
+      background:var(--cyan);
+      border-color:var(--cyan);
+      color:#060712;
+      box-shadow:0 0 30px rgba(0,240,240,.35);
+    }
+
+    section.block{
+      padding:34px 0;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    .block-head{
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .h2{
+      font-family:var(--serif);
+      font-size:clamp(1.7rem,2.8vw,2.6rem);
+      letter-spacing:-.8px;
+      margin-bottom:10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .card{
+      background:radial-gradient(circle at 18% 12%, rgba(128, 32, 240, 0.14), transparent 52%),
+               radial-gradient(circle at 78% 22%, rgba(0, 240, 240, 0.07), transparent 58%),
+               linear-gradient(180deg, rgba(7, 9, 18, 0.96), rgba(5, 6, 14, 0.98));
+      border:1px solid rgba(128,32,240,.40);
+      border-radius:var(--radius2);
+      padding:22px;
+      box-shadow:var(--shadow1);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .card h3{
+      font-family:var(--serif);
+      font-size:22px;
+      letter-spacing:-.4px;
+      margin-bottom:10px;
+    }
+
+    .card p{
+      color:rgba(243,244,248,.68);
+      line-height:1.75;
+      font-weight:300;
+      font-size:15px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(242,208,115,.25);
+      background:linear-gradient(180deg, rgba(242,208,115,.10), rgba(185,138,45,.06));
+      color:rgba(242,208,115,.95);
+      font-weight:900;
+      font-size:11px;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .span-12{grid-column:span 12}
+    .span-8{grid-column:span 8}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+
+    .list{
+      margin-top:12px;
+      display:grid;
+      gap:8px;
+    }
+    .li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.02);
+      color:rgba(243,244,248,.75);
+      font-size:14px;
+      line-height:1.65;
+      font-weight:300;
+    }
+    .li strong{
+      color:rgba(242,208,115,.95);
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:11px;
+      white-space:nowrap;
+      margin-top:2px;
+    }
+
+    .options{
+      display:grid;
+      gap:14px;
+    }
+
+    .option{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(16,18,30,.55);
+      border-radius:24px;
+      padding:18px;
+    }
+
+    .option-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:11px;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      border:1px solid rgba(0,240,240,.18);
+      background:rgba(0,240,240,.06);
+      color:rgba(0,240,240,.95);
+    }
+
+    .option h3{
+      font-family:var(--serif);
+      font-size:20px;
+      margin:0;
+    }
+
+    .option p{margin-top:8px;color:rgba(243,244,248,.72);font-weight:300;line-height:1.75}
+
+    .option ul{margin-top:10px;padding-left:18px;color:rgba(243,244,248,.70);line-height:1.75}
+    .option li{margin:6px 0}
+
+    .footnote{
+      margin-top:12px;
+      font-size:12px;
+      letter-spacing:.08em;
+      color:rgba(242,208,115,.78);
+      font-weight:700;
+      text-transform:uppercase;
+      text-align:center;
+      opacity:.92;
+    }
+
+    footer{
+      padding:26px 0 40px;
+      border-top:1px solid rgba(255,255,255,.06);
+      color:rgba(243,244,248,.55);
+      font-size:12px;
+      text-align:center;
+    }
+
+    @media (max-width: 980px){
+      .span-8{grid-column:span 12}
+      .span-6{grid-column:span 12}
+      .span-4{grid-column:span 12}
+      .nav{gap:10px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Gnosis Base",
+        "url": "https://gnosisbase.com/",
+        "logo": "https://gnosisbase.com/logo.png",
+        "description": "Sovereign AI identity infrastructure and premium domain assets for institutional positioning and strategic leverage."
+      },
+      {
+        "@type": "WebPage",
+        "name": "Gnosis Base | Asset Stack",
+        "url": "https://gnosisbase.com/asset-stack.html",
+        "isPartOf": { "@id": "https://gnosisbase.com/" },
+        "about": { "@type": "Thing", "name": "AI Identity Asset Stack" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Gnosis Base Asset Stack",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Gnosis Base", "url": "https://gnosisbase.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Gnosis Flow", "url": "https://gnosisbase.com/asset-stack.html#extensions" },
+          { "@type": "ListItem", "position": 3, "name": "Gnosis Agent", "url": "https://gnosisbase.com/asset-stack.html#extensions" },
+          { "@type": "ListItem", "position": 4, "name": "Gnosis Aegis", "url": "https://gnosisbase.com/asset-stack.html#extensions" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Go to Gnosis Base home">
+          <div class="brand-top">Gnosis <span style="color:#fff;font-weight:700">Base</span></div>
+          <div class="brand-sub">Sovereign AI Identity Infrastructure</div>
+        </a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/#intelligence">Intelligence</a>
+          <a href="/asset-stack.html" aria-current="page">Asset Stack</a>
+          <a href="/#inquiry">Inquiry</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="kicker">THE SOVEREIGN IDENTITY STACK</div>
+        <h1>The <span class="grad">Gnosis Base</span> Asset Stack</h1>
+        <p class="sub">
+          A sovereign AI identity stack composed of a primary naming core and strategic extensions, designed for long-term control, trust, and expansion.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn primary" href="/#inquiry" aria-label="Request acquisition details">Request Acquisition Details</a>
+          <a class="btn" href="/#intelligence" aria-label="Read Gnosis Base intelligence">Read Intelligence</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="includes">
+      <div class="container">
+        <div class="block-head">
+          <h2 class="h2">What the Stack Includes</h2>
+          <p class="sub">A clear inventory of assets and the role each layer plays in the identity system.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card span-8">
+            <div class="pill">Core Asset</div>
+            <h3>Gnosis Base</h3>
+            <p>
+              The sovereign naming core of the system. Built to establish immediate identity authority, reduce fragmentation, and anchor institutional trust.
+            </p>
+
+            <div class="list" aria-label="Core asset details">
+              <div class="li"><strong>Includes</strong><span>.com + .ai paired acquisition</span></div>
+              <div class="li"><strong>Role</strong><span>Primary identity layer and naming authority</span></div>
+              <div class="li"><strong>Outcome</strong><span>Long-term control, trust velocity, and expansion headroom</span></div>
+              <div class="li"><strong>Fit</strong><span>AI platforms, holding companies, institutional buyers</span></div>
+            </div>
+          </div>
+
+          <div class="card span-4" id="extensions">
+            <div class="pill">Strategic Extensions</div>
+            <h3>Aligned Reinforcements</h3>
+            <p>
+              Extensions reinforce the Base identity rather than fragment it. Each is aligned to a distinct functional layer.
+            </p>
+
+            <div class="list" aria-label="Extensions list">
+              <div class="li"><strong>Flow</strong><span>Operational and orchestration layer</span></div>
+              <div class="li"><strong>Agent</strong><span>Autonomous systems and agents layer</span></div>
+              <div class="li"><strong>Aegis</strong><span>Security, trust, and governance layer</span></div>
+            </div>
+          </div>
+
+          <div class="card span-12">
+            <div class="pill">Deliverable</div>
+            <h3>Bundle Composition</h3>
+            <p>
+              Each asset is delivered as a locked pair: the primary .com and its .ai counterpart, enabling unified identity across brand, product, and ecosystem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="paths">
+      <div class="container">
+        <div class="block-head">
+          <h2 class="h2">Acquisition Paths</h2>
+          <p class="sub">Choose a path based on roadmap horizon, institutional needs, and expansion strategy.</p>
+        </div>
+
+        <div class="options">
+          <div class="option">
+            <div class="option-top">
+              <h3>Option A — Core Only</h3>
+              <span class="tag">Gnosis Base only</span>
+            </div>
+            <p>Acquire Gnosis Base as a standalone sovereign identity asset.</p>
+            <ul>
+              <li>Best for early-stage platform foundations</li>
+              <li>Brand consolidation and naming authority</li>
+              <li>Identity-first roadmap with maximum flexibility</li>
+            </ul>
+          </div>
+
+          <div class="option">
+            <div class="option-top">
+              <h3>Option B — Core + Strategic Extensions</h3>
+              <span class="tag">Base + selected</span>
+            </div>
+            <p>Acquire Gnosis Base with one or more aligned extensions: Flow, Agent, or Aegis.</p>
+            <ul>
+              <li>Best for multi-product roadmaps</li>
+              <li>Platform strategy and category defensibility</li>
+              <li>Controlled expansion without identity fragmentation</li>
+            </ul>
+          </div>
+
+          <div class="option">
+            <div class="option-top">
+              <h3>Option C — Full Asset Stack</h3>
+              <span class="tag">Complete stack</span>
+            </div>
+            <p>Acquire the complete Gnosis Base Asset Stack in a single strategic transaction.</p>
+            <ul>
+              <li>Includes Base, Flow, Agent, and Aegis</li>
+              <li>Best for institutional buyers and holding strategies</li>
+              <li>Maximum expansion headroom and long-term leverage</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footnote">Confidential acquisition discussions available on request</div>
+      </div>
+    </section>
+
+    <section class="block" id="transfer">
+      <div class="container">
+        <div class="block-head">
+          <h2 class="h2">Transfer and Control Model</h2>
+          <p class="sub">Built for clean ownership transfer and immediate operational control.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card span-6">
+            <div class="pill">Transfer</div>
+            <h3>Verified Ownership Transfer</h3>
+            <p>
+              Direct transfer of domain ownership to the buyer, aligned to a clean operational handoff model.
+            </p>
+            <div class="list">
+              <div class="li"><strong>Model</strong><span>Direct asset acquisition, not a license</span></div>
+              <div class="li"><strong>Control</strong><span>Full registrar-level control post-transfer</span></div>
+              <div class="li"><strong>History</strong><span>Clean identity positioning for enterprise use</span></div>
+            </div>
+          </div>
+
+          <div class="card span-6">
+            <div class="pill">Operational</div>
+            <h3>Designed for Institutional Readiness</h3>
+            <p>
+              The stack is intended to reduce perceived risk and increase trust velocity for serious buyers.
+            </p>
+            <div class="list">
+              <div class="li"><strong>Outcome</strong><span>Reduced fragmentation and brand confusion</span></div>
+              <div class="li"><strong>Trust</strong><span>Improved buyer confidence and negotiation leverage</span></div>
+              <div class="li"><strong>Scalability</strong><span>Expansion-ready namespace architecture</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="rationale">
+      <div class="container">
+        <div class="block-head">
+          <h2 class="h2">Why the Stack Model Matters</h2>
+          <p class="sub">A stack is not a collection. It is controlled identity architecture.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card span-4">
+            <div class="pill">Control</div>
+            <h3>Prevents Fragmentation</h3>
+            <p>Secures a coherent namespace across product lines, agents, and security layers.</p>
+          </div>
+          <div class="card span-4">
+            <div class="pill">Leverage</div>
+            <h3>Strengthens Negotiation</h3>
+            <p>Signals durability and reduces perceived risk in institutional discussions.</p>
+          </div>
+          <div class="card span-4">
+            <div class="pill">Expansion</div>
+            <h3>Protects Headroom</h3>
+            <p>Creates room for future products without identity compromise.</p>
+          </div>
+
+          <div class="card span-12">
+            <div class="pill">Proof Layer</div>
+            <h3>Supported by Published Intelligence</h3>
+            <p>
+              This stack is supported by original strategic intelligence exploring identity, valuation, and trust in AI-native markets.
+              Explore the reports below.
+            </p>
+            <div class="list" aria-label="Intelligence links">
+              <div class="li"><strong>Report</strong><span><a href="/article-1.html">The Strategic Premium</a></span></div>
+              <div class="li"><strong>Report</strong><span><a href="/article-2.html">Identity Valuation</a></span></div>
+              <div class="li"><strong>Analysis</strong><span><a href="/article-3.html">Are Premium AI Domains Worth It?</a></span></div>
+              <div class="li"><strong>Report</strong><span><a href="/article-4.html">From Asset to Leverage</a></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cta" style="margin-top:18px">
+          <a class="btn primary" href="/#inquiry">Discuss Acquisition Scenarios</a>
+          <a class="btn" href="/">Return to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="y"></span> Gnosis Base. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
