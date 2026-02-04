@@ -5404,48 +5404,96 @@ All domain assets presented are privately held by a single beneficial owner and 
                         </div>
                         <div>
                             <div class="form-card mandate-form">
-                                    <form action="/api/contact" class="js-inquiry-form" id="inquiryForm" method="POST" novalidate>
+                                    <form action="/api/contact"
+      class="js-inquiry-form"
+      id="inquiryForm"
+      method="POST"
+      novalidate>
 
-<div class="grid-form">
-                                        <div class="field field-full">
-                                            <label for="fullName">Full Name</label>
-                                            <input autocomplete="name" id="fullName" name="Name" placeholder="Enter your name" required="" type="text"/>
-                                        </div>
-                                        <div class="field field-full">
-                                            <label for="company">Company / Organization</label>
-                                            <input autocomplete="organization" id="company" name="Company" placeholder="Your company or institution name" type="text"/>
-                                        </div>
-                                        <div class="field field-full">
-                                            <label for="email">Email Address</label>
-                                            <input autocomplete="email" id="email" name="email" placeholder="Enter your email" required="" type="email"/>
-                                        </div>
-                                        <div class="field field-full">
-                                            <label for="asset">Portfolio Scope</label>
-<select id="asset" name="portfolio_scope" required>
-  <option value="" disabled selected>Select Acquisition Scope</option>
-  <option value="core_asset">Sovereign Core (Gnosis Base Only)</option>
-  <option value="full_stack">Full Identity Stack (Core + Strategic Moats)</option>
-  <option value="custom_inquiry">Custom Strategic Inquiry</option>
-</select>
+  <div class="grid-form">
 
-                                        </div>
-                                        <div class="field field-full">
-                                            <label for="message">Message</label>
-                                            <textarea id="message" name="Message" placeholder="Timeline, questions, or specific requirements..." rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-extras" style="margin-top:0; margin-bottom:16px; align-items:stretch;">
-                                        <label class="check" style="width:100%;">
-                                            <input name="Consent" required="" type="checkbox" value="Yes"/>
-                                            <span style="font-weight:700; font-size:13px;">Consent to be contacted.</span>
-                                        </label>
-                                        <label class="check" style="width:100%;">
-                                            <input id="nda" name="NDA_Requested" type="checkbox" value="Yes"/>
-                                            <span>NDA required prior to disclosure.</span>
-                                        </label>
-                                    </div>
-                                    <input name="_subject" type="hidden" value="New Inquiry from Gnosis Assets"/>
-                                    <input id="_replyto" name="_replyto" type="hidden"/>
+    <div class="field field-full">
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        id="fullName"
+        name="Name"
+        placeholder="Enter your name"
+        autocomplete="name"
+        required>
+    </div>
+
+    <div class="field field-full">
+      <label for="company">Company / Organization</label>
+      <input
+        type="text"
+        id="company"
+        name="Company"
+        placeholder="Your company or institution name"
+        autocomplete="organization">
+    </div>
+
+    <div class="field field-full">
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+        required>
+    </div>
+
+    <div class="field field-full">
+      <label for="asset">Portfolio Scope</label>
+      <select
+        id="asset"
+        name="Selected_Asset_Bundle"
+        required>
+        <option value="" disabled selected>Select Acquisition Scope</option>
+        <option value="Sovereign Core (Gnosis Base Only)">
+          Sovereign Core (Gnosis Base Only)
+        </option>
+        <option value="Full Identity Stack (Core + Strategic Moats)">
+          Full Identity Stack (Core + Strategic Moats)
+        </option>
+        <option value="Custom Strategic Inquiry">
+          Custom Strategic Inquiry
+        </option>
+      </select>
+    </div>
+
+    <div class="field field-full">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="Message"
+        placeholder="Timeline, questions, or specific requirements..."
+        rows="4"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-extras" style="margin-top:0; margin-bottom:16px; align-items:stretch;">
+
+    <label class="check" style="width:100%;">
+      <input type="checkbox" name="Consent" value="Yes" required>
+      <span style="font-weight:700; font-size:13px;">
+        Consent to be contacted.
+      </span>
+    </label>
+
+    <label class="check" style="width:100%;">
+      <input type="checkbox" id="nda" name="NDA_Requested" value="Yes">
+      <span>NDA required prior to disclosure.</span>
+    </label>
+
+  </div>
+
+  <input type="hidden" name="_subject" value="New Inquiry from Gnosis Assets">
+  <input type="hidden" id="_replyto" name="_replyto">
+
+</form>
 
 <!-- honeypot fields -->
 <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
