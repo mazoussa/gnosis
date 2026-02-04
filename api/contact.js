@@ -112,19 +112,7 @@ https://gnosisbase.com`;
 <div style="font-family: Arial, Helvetica, sans-serif; line-height:1.5; background:#0b0f17; padding:24px;">
   <div style="max-width:640px; margin:0 auto; border:1px solid #121826; border-radius:14px; overflow:hidden; background:#0b0f17;">
 
-    <div style="padding:0; background:#0b0f17;">
-      <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
-        <img
-          
-          src="https://gnosisbase.com/og-image.jpg"
-          alt="Gnosis Base"
-          width="640"
-          style="display:block; width:100%; max-width:640px; border:0;"
-        />
-      </a>
-    </div>
-
-    <div style="padding:20px; background:#0b0f17;">
+        <div style="padding:20px; background:#0b0f17;">
       <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
         <tr>
           <td align="left" valign="middle">
