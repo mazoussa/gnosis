@@ -62,29 +62,38 @@ export default async function handler(req, res) {
     const bundle = data.Selected_Asset_Bundle || "General";
     const message = data.Message || "(no message)";
 
+    // ----------------------------
+    // Basic validation / hardening
+    // ----------------------------
+    const safeName = String(name || "").trim().slice(0, 120);
+    const safeCompany = String(company || "").trim().slice(0, 160);
+    const safeBundle = String(bundle || "").trim().slice(0, 160);
+    const safeMessage = String(message || "").trim().slice(0, 4000);
+
+
     if (!email) {
       return res.status(400).json({ success: false, error: "Missing visitor email" });
     }
 
     // 1) Admin email (to you)
     const adminInfo = await transporter.sendMail({
-      from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+      from: `"GNOSIS Base" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       replyTo: email,
-      subject: `New Inquiry: ${bundle} – from gnosisbase.com`,
-      text: `Name: ${name}
-Company: ${company}
+      subject: `New Inquiry: ${bundle} – Gnosis Base (gnosisbase.com)`,
+      text: `Name: ${safeName}
+Company: ${safeCompany}
 Email: ${email}
-Asset Bundle: ${bundle}
+Asset Bundle: ${safeBundle}
 
 Message:
-${message}`,
+${safeMessage}`,
     });
 
     // 2) Auto-reply (English only) — HTML + text fallback
-    const subject = "Confirmation: Inquiry Received – Gnosis Assets";
+    const subject = "Confirmation: Inquiry Received – Gnosis Base";
 
-    const text = `Thank you for contacting Gnosis Assets.
+    const text = `Thank you for contacting Gnosis Base.
 
 We have successfully received your inquiry regarding the portfolio.
 
@@ -94,7 +103,7 @@ We aim to respond to all relevant acquisition requests within 24 business hours.
 
 Best regards,
 
-The Gnosis Assets Team
+The Gnosis Base Team
 Identity Infrastructure for the AI Era.
 https://gnosisbase.com`;
 
@@ -106,8 +115,9 @@ https://gnosisbase.com`;
     <div style="padding:0; background:#0b0f17;">
       <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
         <img
-          src="https://gnosisbase.com/gnosis-assets-header.png"
-          alt="Gnosis Assets"
+          
+          src="https://gnosisbase.com/og-image.jpg"
+          alt="Gnosis Base"
           width="640"
           style="display:block; width:100%; max-width:640px; border:0;"
         />
@@ -126,7 +136,7 @@ https://gnosisbase.com`;
             <a href="https://gnosisbase.com" target="_blank" style="text-decoration:none;">
               <img
                 src="https://gnosisbase.com/logo.png"
-                alt="Gnosis Assets"
+                alt="Gnosis Base"
                 width="110"
                 style="display:block; border:0;"
               />
@@ -138,20 +148,20 @@ https://gnosisbase.com`;
 
     <div style="padding:22px 20px; background:#0b0f17; color:#e5e7eb;">
       <p style="margin:0 0 12px; color:#e5e7eb;">
-        Hi${name ? ` ${escapeHtml(name)}` : ""}, 
+        Hi${safeName ? ` ${escapeHtml(safeName)}` : ""}, 
       </p>
 
       <p style="margin:0 0 14px; color:#e5e7eb;">
-        Thank you for contacting <b style="color:#ffffff;">Gnosis Assets</b>. We have successfully received your inquiry regarding the portfolio.
+        Thank you for contacting <b style="color:#ffffff;">Gnosis Base</b>. We have successfully received your inquiry regarding the portfolio.
       </p>
 
       <div style="margin:16px 0; padding:14px; background:#0f172a; border:1px solid #1f2937; border-radius:12px;">
         <div style="font-size:13px; color:#93c5fd; margin-bottom:8px; font-weight:700;">Inquiry summary</div>
         <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
-          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(bundle)}
+          <b style="color:#ffffff;">Asset bundle:</b> ${escapeHtml(safeBundle)}
         </div>
         <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
-          <b style="color:#ffffff;">Company:</b> ${escapeHtml(company)}
+          <b style="color:#ffffff;">Company:</b> ${escapeHtml(safeCompany)}
         </div>
         <div style="font-size:14px; color:#e5e7eb; margin:2px 0;">
           <b style="color:#ffffff;">Email:</b> ${escapeHtml(email)}
@@ -176,7 +186,7 @@ https://gnosisbase.com`;
 
       <div style="font-size:12px; color:#94a3b8;">
         Best regards,<br>
-        <b style="color:#e5e7eb;">The Gnosis Assets Team</b><br>
+        <b style="color:#e5e7eb;">The Gnosis Base Team</b><br>
         Identity Infrastructure for the AI Era.
       </div>
     </div>
@@ -189,9 +199,9 @@ https://gnosisbase.com`;
 
     try {
       autoInfo = await transporter.sendMail({
-        from: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        from: `"GNOSIS Base" <${process.env.SMTP_USER}>`,
         to: email,
-        replyTo: `"GNOSIS Assets" <${process.env.SMTP_USER}>`,
+        replyTo: `"GNOSIS Base" <${process.env.SMTP_USER}>`,
         subject,
         text,
         html,
