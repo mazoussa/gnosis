@@ -313,7 +313,7 @@ header.is-glass {
 }
 
 header.is-hidden {
-  transform: translateY(-110%);
+  transform: translateY(calc(-1 * var(--header-height))) !important;
   opacity: 0.15;
 }
 
@@ -5064,6 +5064,22 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   /* خفف مساحة أسفل الهيرو حتى لا "يدفع" القسم التالي للأعلى */
   .hero-wrapper{
     width: 100%;
+  }
+}
+/* Mobile: make gold frame full width */
+@media (max-width: 768px){
+
+  .identity-stack .container{
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .gold-frame{
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0; /* اختياري */
   }
 }
 
