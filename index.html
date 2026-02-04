@@ -313,9 +313,10 @@ header.is-glass {
 }
 
 header.is-hidden {
-  transform: translateY(calc(-1 * var(--header-height))) !important;
+  transform: translateY(calc(-1 * var(--header-height)));
   opacity: 0.15;
 }
+
 
 header.is-glass .brand-logo {
   height: 50px;
@@ -378,6 +379,12 @@ header .container {
   flex-direction: column;
   line-height: 1;
   align-items: flex-start;
+}
+@media (max-width: 768px){
+  header.is-hidden{
+    transform: translateY(calc(-1 * (var(--header-height) + env(safe-area-inset-top, 0px)))) !important;
+    opacity: 0.15;
+  }
 }
 
 /*GNOSIS*/
@@ -4662,7 +4669,7 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
   color: var(--muted);
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 10px; /* was 8px */
+  margin-bottom: 12px; /* was 8px */
 }
 
 .h1-main {
@@ -5066,20 +5073,26 @@ padding-top: calc(clamp(36px, 5vw, 64px) + 10px) !important;
     width: 100%;
   }
 }
-/* Mobile: make gold frame full width */
 @media (max-width: 768px){
 
-  .identity-stack .container{
+  /* 1) فك قيود الـ container حول قسم الـ portfolio */
+  .container:has(.portfolio-frame){
+    width: 100%;
     max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  .gold-frame{
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    border-radius: 0; /* اختياري */
+  /* 2) اجعل الإطار الذهبي يملأ الشاشة */
+  .portfolio-frame{
+    width: 98vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+
+    margin-top: 18px !important;
+    margin-bottom: 18px !important;
+
+    border-radius: 0 !important;   /* اختياري */
   }
 }
 
