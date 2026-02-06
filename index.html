@@ -617,91 +617,119 @@ nav a.active::after {
    Hero Signature (GNOSIS)
 ================================*/
 
-.hero-signature {
+.hero-signature{
   position: relative;
   background: transparent !important;
   z-index: 5;
-  padding: calc(var(--header-height) + 10px) 0 40px;
+  padding: 18px 0 44px;
   overflow: visible;
 }
 
-.hero-signature::before {
+@media (max-width: 640px){
+  .hero-signature{
+    padding: 12px 0 40px;
+  }
+}
+
+.hero-signature::before{
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(6, 7, 18, 0.15);
+  background: rgba(6, 7, 18, 0.12);
   backdrop-filter: blur(2px);
   z-index: -1;
   pointer-events: none;
 }
 
-.hero-bg-effects {
-
+.hero-bg-effects{
   background-color: #060712;
 }
 
-.hero-wrapper {
+.hero-wrapper{
   position: relative;
   z-index: 5;
   text-align: center;
   max-width: 900px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
-.hero-badge {
+.hero-badge{
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 32px;
+  margin: 0 0 26px;
 }
 
-.badge-line {
-  width: 30px;
+@media (max-width: 640px){
+  .hero-badge{
+    margin: 0 0 22px;
+  }
+}
+
+.badge-line{
+  width: 34px;
   height: 1px;
   background: var(--grad);
-  margin-bottom: 20px;
+  margin: 0;
 }
 
-.badge-txt {
+.badge-txt{
   font-size: 10px;
   letter-spacing: 3px;
   color: var(--gold1);
   text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 20px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.hero-h1 {
-  margin-bottom: 34px;
-  line-height: 0.95;
+.hero-h1{
+  margin: 0 0 22px;
+  line-height: 1.02;
   perspective: 1000px;
   transform-style: preserve-3d;
 }
 
-.h1-sub {
+@media (max-width: 640px){
+  .hero-h1{
+    margin: 0 0 18px;
+  }
+}
+
+.h1-sub{
   display: block;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--muted);
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
+  line-height: 1.25;
 }
 
-.h1-main {
+.h1-main{
   display: block;
-  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  font-size: clamp(3.0rem, 9vw, 7.3rem);
   font-weight: 800;
-  letter-spacing: -5px;
+  letter-spacing: -4px;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.72) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 12px;
+  margin: 0;
   white-space: nowrap;
+  line-height: .98;
 }
 
-.gnosis-text {
+@media (max-width: 420px){
+  .h1-main{
+    letter-spacing: -3px;
+    white-space: normal;
+  }
+}
+
+.gnosis-text{
   background: linear-gradient(90deg, #00e5ff 20%, #2979ff 40%, #8f00ff 80%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -711,129 +739,162 @@ nav a.active::after {
   letter-spacing: 2px;
 }
 
-.base-text {
+.base-text{
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff;
-  text-shadow: 0 0 30px rgba(0, 240, 240, 0.45);
+  text-shadow: 0 0 30px rgba(0, 240, 240, 0.42);
   letter-spacing: 2px;
 }
 
-.cyan-glow {
+.cyan-glow{
   color: var(--cyan);
-  text-shadow: 0 0 40px rgba(0, 240, 240, 0.35);
+  text-shadow: 0 0 40px rgba(0, 240, 240, 0.30);
 }
 
-.hero-desc {
+.hero-desc{
   max-width: 720px;
-  margin: 0 auto 48px;
-  font-size: 1.1rem;
+  margin: 0 auto 28px;
+  font-size: clamp(1.02rem, 1.35vw, 1.14rem);
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.85;
   font-weight: 300;
 }
 
-.white-txt {
+@media (max-width: 640px){
+  .hero-desc{
+    margin: 0 auto 24px;
+    line-height: 1.9;
+  }
+}
+
+.white-txt{
   color: #fff;
   font-weight: 600;
   font-family: var(--serif);
   font-style: italic;
-  letter-spacing: 1px;
+  letter-spacing: .6px;
 }
 
-.hero-btns {
+.hero-btns{
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
-  margin-bottom: 64px;
+  gap: 18px;
+  margin: 0 0 40px;
+  flex-wrap: wrap;
 }
 
-.btn-main {
+@media (max-width: 640px){
+  .hero-btns{
+    gap: 14px;
+    margin: 0 0 32px;
+  }
+}
+
+.btn-main{
   background: rgba(255, 255, 255, 0.05) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  padding: 16px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  padding: 16px 34px;
   border-radius: 12px;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 13px;
-  transition: all 0.3s ease;
-  display: flex;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   backdrop-filter: blur(15px);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 240, 240, 0.1);
+  box-shadow: 0 0 20px rgba(0, 240, 240, 0.10);
 }
 
-.btn-main::after {
+@media (max-width: 640px){
+  .btn-main{
+    width: min(340px, 92%);
+    padding: 16px 22px;
+  }
+}
+
+.btn-main::after{
   content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 240, 240, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 240, 0.20), transparent);
   transition: 0.6s;
 }
 
-.btn-main:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0, 240, 240, 0.25);
+.btn-main:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 240, 240, 0.22);
 }
 
-.btn-main:hover::after {
+.btn-main:hover::after{
   left: 100%;
 }
 
-.btn-link {
-  color: #fff;
-  font-weight: 700;
+.btn-link{
+  color: rgba(243,244,248,.92);
+  font-weight: 800;
   font-size: 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255,255,255,.18);
   padding-bottom: 4px;
-  transition: all 0.3s ease;
+  transition: color .2s ease, border-color .2s ease;
 }
 
-.btn-link:hover {
+.btn-link:hover{
   color: var(--cyan);
   border-color: var(--cyan);
 }
 
-.hero-specs {
+.hero-specs{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
-  padding-top: 36px;
+  padding-top: 28px;
   border-top: 1px solid var(--hairline);
+  gap: 10px;
 }
 
-.spec {
+@media (max-width: 760px){
+  .hero-specs{
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    padding-top: 22px;
+    gap: 14px;
+  }
+}
+
+.spec{
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
-.s-label {
-  font-size: 9px;
+.s-label{
+  font-size: 10px;
   color: var(--muted);
-  opacity: 0.5;
-  letter-spacing: 1.5px;
+  opacity: 0.55;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
 }
 
-.s-val {
+.s-val{
   font-size: 13px;
   color: #fff;
-  font-weight: 700;
-  padding-bottom: 9px;
+  font-weight: 800;
+  padding-bottom: 0;
 }
 
 .orb-1,
-.orb-2 {
+.orb-2{
   animation: sovereignPulse 10s infinite ease-in-out;
 }
 
@@ -845,77 +906,51 @@ nav a.active::after {
    Works with the rewritten HTML (collection-shell / core-card / ext-grid ...)
 ========================================================= */
 
-#collection.portfolio{
-  padding: clamp(54px, 6vw, 84px) 0 clamp(34px, 5vw, 56px);
-  border-top: 1px solid rgba(255,255,255,.05);
-  background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.10));
+/* =======================================================
+   THE IDENTITY STACK — Modern rebuild
+   Scoped to #collection
+======================================================= */
+
+#collection{
   position: relative;
-  z-index: 2;
-}
-
-#collection .container{
-  width: min(var(--container, 1240px), calc(100% - 40px));
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* Header */
-#collection .kicker{
-  font-size: 12px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  font-weight: 900;
-  color: rgba(0,240,240,.90);
-  margin-bottom: 10px;
-}
-
-#collection .h2{
-  font-family: var(--serif, "Playfair Display", serif);
-  font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.06;
-  font-size: clamp(2.1rem, 4.2vw, 3.6rem);
-}
-
-#collection .grad-text,
-#collection .accent,
-#collection .brand-gradient{
-  background: linear-gradient(90deg, #00e5ff 0%, #2979ff 45%, #8f00ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  padding: clamp(56px, 7vw, 92px) 0;
+  border-top: 1px solid rgba(255,255,255,.06);
 }
 
 #collection .sub{
   color: rgba(243,244,248,.78);
   font-size: clamp(1.0rem, 1.2vw, 1.1rem);
-  line-height: 1.7;
+  line-height: 1.75;
   max-width: 920px;
   margin: 12px auto 0;
   font-weight: 300;
 }
 
 #collection .strong{
-  color: #fff;
+  color:#fff;
   font-weight: 800;
 }
 
-/* Top rail */
-#collection .portfolio-frame{
+#collection .idstack-shell{
   margin-top: 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(16,18,30,.50);
+  box-shadow: 0 30px 90px rgba(0,0,0,.38);
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-#collection .portfolio-rail{
-  margin: 22px auto 18px;
+#collection .idstack-rail{
   padding: clamp(22px, 3vw, 34px);
-  border-radius: 28px;
-  border: 1px solid rgba(242,208,115,.26);
-  background: radial-gradient(circle at top, rgba(30,32,50,.88), rgba(10,12,24,.96));
-  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(circle at top, rgba(30,32,50,.88), rgba(10,12,24,.96));
   text-align: center;
 }
 
-#collection .portfolio-kicker{
+#collection .idstack-rail-kicker{
   font-size: 11px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -924,30 +959,26 @@ nav a.active::after {
   margin-bottom: 10px;
 }
 
-#collection .portfolio-title{
-  margin: 16px 0 10px;
-}
-
-#collection .portfolio-title .line{
+#collection .idstack-rail-title .line{
   font-family: var(--serif, "Playfair Display", serif);
   line-height: 1.15;
   letter-spacing: -0.5px;
 }
 
-#collection .portfolio-title .line.muted{
+#collection .idstack-rail-title .line.muted{
   font-size: clamp(1.35rem, 2.6vw, 2.1rem);
   color: rgba(243,244,248,.75);
   font-weight: 400;
 }
 
-#collection .portfolio-title .line.strong{
+#collection .idstack-rail-title .line.strong{
   margin-top: 8px;
   font-size: clamp(1.8rem, 3.6vw, 3.0rem);
   font-weight: 700;
   color: rgba(243,244,248,.96);
 }
 
-#collection .portfolio-sub{
+#collection .idstack-rail-sub{
   margin: 14px auto 0;
   max-width: 78ch;
   color: rgba(243,244,248,.76);
@@ -955,7 +986,7 @@ nav a.active::after {
   font-weight: 300;
 }
 
-#collection .portfolio-rule{
+#collection .idstack-rail-rule{
   margin-top: 16px;
   font-size: 12px;
   font-weight: 900;
@@ -965,44 +996,68 @@ nav a.active::after {
   opacity: .95;
 }
 
-/* Shell that contains core + extensions + CTA */
-#collection .collection-shell{
-  margin-top: 16px;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(16,18,30,.55);
-  box-shadow: 0 30px 90px rgba(0,0,0,.35);
-  overflow: hidden;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  text-align: left; /* داخل الشيل نخلي القراءة أفضل */
+/* Brand gradient matching header + hero feel */
+#collection{
+  --brand-grad: linear-gradient(90deg, rgba(0,229,255,1), rgba(41,121,255,1), rgba(143,0,255,1));
+  --ring-grad: linear-gradient(135deg, rgba(242,208,115,.35), rgba(0,240,240,.22), rgba(128,32,240,.28));
 }
 
-/* =========================
-   Core card
-========================= */
-#collection .core-card{
-  padding: clamp(26px, 4vw, 44px);
-  border-bottom: 1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(circle at 20% 15%, rgba(0,240,240,.09), transparent 55%),
-    radial-gradient(circle at 80% 70%, rgba(128,32,240,.08), transparent 60%),
-    rgba(10,12,24,.35);
-  text-align: center;
+#collection .brand-gradient{
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+#collection .functional-white{
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+}
+
+#collection .pair-sm{
+  color: rgba(255,255,255,.55);
+  font-family: var(--sans, "Outfit", sans-serif);
+  font-size: 0.42em;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* Cards */
+#collection .idstack-card{
   position: relative;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.02);
+  padding: clamp(22px, 3vw, 30px);
+}
+
+#collection .idstack-card::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  pointer-events:none;
+  background: radial-gradient(circle at 20% 0%, rgba(0,240,240,.08), transparent 55%),
+              radial-gradient(circle at 80% 0%, rgba(128,32,240,.08), transparent 55%);
+  opacity: .8;
+}
+
+#collection .idstack-core{
+  text-align: center;
+  padding: clamp(28px, 4vw, 44px);
+  background:
+    linear-gradient(135deg, rgba(0,240,240,.05), transparent 40%),
+    rgba(255,255,255,.02);
 }
 
 #collection .core-top{
-  display: grid;
-  gap: 18px;
-  justify-items: center;
-  margin-bottom: 18px;
+  display:grid;
+  gap: 16px;
+  justify-items:center;
 }
 
 #collection .core-pill{
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  align-items:center;
+  justify-content:center;
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 10px;
@@ -1015,19 +1070,19 @@ nav a.active::after {
 }
 
 #collection .core-brand{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
 #collection .core-icon{
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 16px;
-  display: grid;
-  place-items: center;
+  display:grid;
+  place-items:center;
   background: rgba(0,240,240,.12);
   border: 1px solid rgba(0,240,240,.25);
   box-shadow: 0 0 30px rgba(0,240,240,.18);
@@ -1036,28 +1091,15 @@ nav a.active::after {
 
 #collection .core-title{
   font-family: var(--serif, "Playfair Display", serif);
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-size: clamp(2.3rem, 6vw, 4rem);
   line-height: 1.05;
   letter-spacing: -1px;
   margin: 0;
-  display: flex;
+  display:flex;
   align-items: baseline;
-  justify-content: center;
+  justify-content:center;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-#collection .functional-white{
-  color: #fff !important;
-  -webkit-text-fill-color: #fff;
-}
-
-#collection .pair-sm{
-  color: rgba(255,255,255,.55);
-  font-family: var(--sans, "Outfit", sans-serif);
-  font-size: 0.42em;
-  letter-spacing: 1px;
-  font-weight: 700;
 }
 
 #collection .core-quote{
@@ -1065,22 +1107,22 @@ nav a.active::after {
   font-family: var(--serif, "Playfair Display", serif);
   font-style: italic;
   font-size: clamp(1.05rem, 1.4vw, 1.3rem);
-  margin: 10px 0 12px;
+  margin: 8px 0 10px;
 }
 
 #collection .core-desc{
   color: rgba(243,244,248,.76);
   line-height: 1.8;
-  max-width: 72ch;
-  margin: 0 auto 18px;
+  max-width: 78ch;
+  margin: 0 auto 6px;
   font-weight: 300;
   font-size: clamp(1.0rem, 1.1vw, 1.1rem);
 }
 
 #collection .core-verify{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   gap: 10px;
   font-weight: 900;
   color: rgba(242,208,115,.92);
@@ -1089,37 +1131,97 @@ nav a.active::after {
   border-bottom: 2px solid rgba(0,240,240,.75);
 }
 
-/* =========================
-   Extensions grid
-========================= */
-#collection .ext-grid{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  padding: 16px;
+/* Domains block with gradient text */
+#collection .domain-block{
+  width: min(860px, 100%);
+  margin: 18px auto 0;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.02);
 }
 
-#collection .ext-card{
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 18px;
-  background: rgba(16,18,30,.45);
-  box-shadow: 0 18px 60px rgba(0,0,0,.35);
-  padding: 18px 16px;
+#collection .domain-title{
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: rgba(243,244,248,.68);
+  margin-bottom: 10px;
+}
 
+#collection .domain-row{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+#collection .domain-chip{
+  text-decoration: none;
+  display:inline-flex;
+  align-items:center;
+  gap: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(10,12,24,.55);
+  transition: transform .18s ease, border-color .18s ease, filter .18s ease;
+}
+
+#collection .domain-chip:hover{
+  transform: translateY(-1px);
+  border-color: rgba(0,240,240,.28);
+  filter: brightness(1.06);
+}
+
+#collection .domain-grad{
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+#collection .domain-tld{
+  color: rgba(243,244,248,.90);
+  font-weight: 900;
+  margin-left: 2px;
+}
+
+#collection .domain-note{
+  margin-top: 10px;
+  color: rgba(243,244,248,.62);
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  font-weight: 300;
+}
+#collection .idstack-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,.01);
+}
+
+#collection .idstack-ext{
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 22px 18px 26px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.02);
   text-align: center;
-
-  transition: transform .22s ease, border-color .22s ease, filter .22s ease;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  overflow: hidden;
+  transition: border-color .18s ease;
 }
 
-#collection .ext-card:hover{
-  transform: translateY(-3px);
+#collection .idstack-ext:hover{
   border-color: rgba(0,240,240,.22);
-  filter: brightness(1.05);
 }
 
 #collection .ext-head{
@@ -1131,132 +1233,199 @@ nav a.active::after {
 }
 
 #collection .ext-ico{
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,.04);
   border: 1px solid rgba(255,255,255,.10);
-  color: rgba(243,244,248,.70);
+  background: rgba(255,255,255,.03);
+  box-shadow: 0 0 28px rgba(0,240,240,.10);
+  color: rgba(243,244,248,.82);
 }
 
 #collection .ext-h3{
+  margin: 0;
   font-family: var(--serif, "Playfair Display", serif);
   font-size: 1.55rem;
-  color: #fff;
-  margin: 0;
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.6px;
 }
 
 #collection .ext-quote{
-  color: rgba(243,244,248,.70);
+  margin: 6px 0 10px;
+  color: rgba(243,244,248,.68);
   font-style: italic;
-  font-size: .95rem;
-  margin-bottom: 10px;
-  opacity: .9;
+  font-size: .98rem;
 }
 
 #collection .ext-body{
-  color: rgba(243,244,248,.72);
-  font-size: .95rem;
-  line-height: 1.65;
-  margin-bottom: 14px;
-  max-width: 54ch;
+  margin: 0 auto 18px;
+  max-width: 44ch;
+  color: rgba(243,244,248,.62);
+  font-size: .98rem;
+  line-height: 1.7;
   font-weight: 300;
 }
 
-/* Badge */
 #collection .badge-ext{
   margin-top: auto;
   align-self: center;
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-
-  background: rgba(0,240,240,.08);
-  border: 1px solid rgba(0,240,240,.28);
-  color: rgba(0,240,240,.95);
-}
-
-/* =========================
-   CTA
-========================= */
-#collection .portfolio-cta{
-  margin-top: 4px;
-  padding: 0 16px 18px;
-  text-align: center;
-}
-
-#collection .portfolio-foot{
-  color: rgba(242,208,115,.85);
-  font-weight: 900;
-  font-size: 11px;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  opacity: .9;
-}
-
-#collection .portfolio-cta-btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 14px 22px;
+  padding: 7px 18px;
   border-radius: 999px;
+  background: rgba(8,10,18,.65);
+  border: 1px solid rgba(242,208,115,.55);
+  color: rgba(242,208,115,.95);
+  font-size: 10px;
   font-weight: 900;
-  letter-spacing: .4px;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  font-size: 12px;
-
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(243,244,248,.95);
-  transition: transform .2s ease, border-color .2s ease, filter .2s ease;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.02) inset,
+    0 4px 14px rgba(242,208,115,.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-#collection .portfolio-cta-btn:hover{
-  transform: translateY(-2px);
-  border-color: rgba(0,240,240,.26);
-  filter: brightness(1.06);
-}
-
-/* =========================
-   Responsive
-========================= */
 @media (max-width: 980px){
-  #collection .collection-shell{
-    border-radius: 24px;
-  }
-
-  #collection .ext-grid{
+  #collection .idstack-grid{
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 12px;
-    gap: 12px;
-  }
-
-  #collection .core-card{
-    padding: 24px;
   }
 }
 
-@media (max-width: 520px){
-  #collection .ext-grid{
+@media (max-width: 560px){
+  #collection .idstack-grid{
     grid-template-columns: 1fr;
   }
+}
 
-  #collection .core-title{
-    font-size: clamp(2.1rem, 9vw, 3.0rem);
-  }
 
-  #collection .pair-sm{
-    font-size: 0.50em;
+/* CTA */
+#collection .idstack-cta{
+  padding: 18px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 10px;
+  text-align:center;
+}
+
+#collection .idstack-foot{
+  color: rgba(243,244,248,.68);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .04em;
+  margin: 0;
+}
+
+#collection .idstack-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  text-decoration:none;
+  font-weight: 900;
+  color: rgba(243,244,248,.92);
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(135deg, rgba(242,208,115,.12), rgba(0,240,240,.08), rgba(128,32,240,.10));
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+  transition: transform .18s ease, filter .18s ease, border-color .18s ease;
+}
+
+#collection .idstack-btn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  border-color: rgba(0,240,240,.26);
+}
+/* =====================================================
+   Strategic Reinforcements — Soft Gold (Institutional)
+===================================================== */
+
+/* =====================================================
+   Strategic Extensions — Gold Outline Badge (Clean)
+===================================================== */
+
+#collection .badge-ext{
+  position: relative;
+  padding: 7px 18px;
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+
+  /* Dark subtle background */
+  background: rgba(8,10,18,.65);
+
+  /* Soft gold text */
+  color: rgba(242,208,115,.95);
+
+  /* Gold outline */
+  border: 1px solid rgba(242,208,115,.55);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.02) inset,
+    0 4px 14px rgba(242,208,115,.18);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition:
+    border-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease;
+
+}
+
+/* Minimal hover — luxury, not flashy */
+#collection .idstack-ext:hover .badge-ext{
+  border-color: rgba(242,208,115,.75);
+  color: rgba(255,220,140,1);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    0 6px 20px rgba(242,208,115,.28);
+  transform: translateY(-1px);
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce){
+  #collection .idstack-ext:hover .badge-ext{
+    transform: none;
   }
 }
 
+
+/* Responsive */
+@media (max-width: 980px){
+  #collection .idstack-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px){
+  #collection .idstack-shell{
+    border-radius: 22px;
+  }
+  #collection .idstack-grid{
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+  #collection .domain-row{
+    justify-content: stretch;
+  }
+  #collection .domain-chip{
+    width: 100%;
+    justify-content: center;
+  }
+}
 
 /*================================
    Dominance Section
@@ -1622,6 +1791,15 @@ nav a.active::after {
   letter-spacing: 1.6px;
   text-transform: uppercase;
   opacity: .85;
+}
+.si-hint{
+  display: none;
+}
+
+@media (max-width: 768px){
+  .si-hint{
+    display: block;
+  }
 }
 
 .si-controls {
@@ -3683,181 +3861,145 @@ dialog::backdrop {
 <!-- =====================================================
          Portfolio / Curated Domain Assets
          ===================================================== -->
-<!-- SECTION: Collection -->
 <section aria-label="Collection" class="portfolio" id="collection">
-<div class="container">
-<div class="kicker">THE IDENTITY STACK</div>
-<div class="h2">Curated <span class="grad-text">Excellence</span></div>
-<p class="sub">
+  <div class="container">
+    <div class="kicker">THE IDENTITY STACK</div>
+    <div class="h2">Curated <span class="grad-text">Excellence</span></div>
+    <p class="sub">
       Each asset is delivered as a locked pair: the primary <span class="strong">.com</span>
       and its <span class="strong">.ai</span> counterpart.<br/>
       One owner. One transfer. A clear decision path.
     </p>
-<div class="portfolio-frame">
-<div class="portfolio-rail">
-<div class="portfolio-kicker">Core Identity Acquisition</div>
-<div class="portfolio-title">
-<div class="line muted">The Identity Stack <span class="accent">Architecture</span>.</div>
-<div class="line strong">An <span>identity stack</span> with a single core.</div>
-</div>
-<div class="portfolio-sub">
-<strong>GnosisBase</strong> is the primary naming asset.<br/>
+
+    <div class="idstack-shell">
+      <div class="idstack-rail">
+        <div class="idstack-rail-kicker">Core Identity Acquisition</div>
+
+        <div class="idstack-rail-title">
+          <div class="line muted">The Identity Stack <span class="accent">Architecture</span>.</div>
+          <div class="line strong">An <span>identity stack</span> with a single core.</div>
+        </div>
+
+        <div class="idstack-rail-sub">
+          <strong>GnosisBase</strong> is the primary naming asset.<br/>
           Strategic reinforcements are available to prevent fragmentation and protect your namespace as the roadmap expands.
         </div>
-<div class="portfolio-rule">Acquisition paths: Core Asset, or Full Stack Buyout</div>
-</div>
-<div class="portfolio-frame portfolio-frame-shell">
-<article class="card flagship-card" style="width: 100%; padding: clamp(30px, 5vw, 50px); border-bottom: 1px solid var(--border); background: linear-gradient(135deg, rgba(0, 240, 240, 0.06), transparent); position: relative; text-align: center;"> <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 25px;">
-<div style="background: var(--cyan); color: #000; padding: 5px 15px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">
-            Primary Core Asset
+
+        <div class="idstack-rail-rule">Acquisition paths: Core Asset, or Full Stack Buyout</div>
+      </div>
+
+      <!-- Core (without any domain cards) -->
+      <article class="idstack-card idstack-core">
+        <div class="core-top">
+          <div class="core-pill">Primary Core Asset</div>
+
+          <div class="core-brand">
+            <div class="core-icon" aria-hidden="true">
+              <svg class="ico s32"><use href="#i-database"></use></svg>
+            </div>
+
+            <h3 class="core-title">
+              <span class="brand-gradient">Gnosis</span>
+              <span class="functional-white">Base</span>
+              <span class="pair-sm">.com + .ai</span>
+            </h3>
+          </div>
+
+          <div class="core-quote">"The Foundational Identity Layer."</div>
+
+          <p class="core-desc">
+            The definitive naming asset designed for long-horizon AI platforms and holding companies.
+            This dual-asset core establishes immediate authority and secures your institutional identity across the technical and commercial web.
+          </p>
+
+          <div class="core-verify">
+            Verified &amp; Ready for Secure Transfer
+            <svg class="ico s16"><use href="#i-check-circle"></use></svg>
+          </div>
         </div>
-<div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-<div style="background: var(--cyan); color: #000; width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; box-shadow: 0 0 30px rgba(0, 240, 240, 0.25);">
-<svg class="ico s32"><use href="#i-database"></use></svg>
-</div>
-<h3 class="flagship-h3" style="
-    font-size: clamp(2.6rem, 6vw, 4rem);
-    font-family: var(--serif);
-    margin: 0;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    flex-wrap: wrap;
-   ">
-<span class="brand-gradient">Gnosis</span>
-<span class="functional-white" style="margin-left: 12px;">Base</span>
-<span class="pair-sm" style="font-size: 0.35em; margin-left: 15px; letter-spacing: 1px;">.com + .ai</span>
-</h3>
-</div>
-</div>
-<div style="color: var(--cyan); font-style: italic; margin-bottom: 15px; font-family: var(--serif); font-size: 1.3rem; text-align: center;">
-        "The Foundational Identity Layer."
+      </article>
+
+      <!-- Extensions (without any domain cards) -->
+      <div class="idstack-grid" aria-label="Strategic extensions">
+
+        <article class="idstack-card idstack-ext">
+          <div class="ext-head">
+            <div class="ext-ico" aria-hidden="true">
+              <svg class="ico s24"><use href="#i-wave"></use></svg>
+            </div>
+
+            <h3 class="ext-h3">
+              <span class="brand-gradient">Gnosis</span>
+              <span class="functional-white">Flow</span>
+              <span class="pair-sm">.com + .ai</span>
+            </h3>
+          </div>
+
+          <div class="ext-quote">"Strategic Extension: Distribution."</div>
+          <p class="ext-body">
+            Strategic reinforcement for ecosystem expansion, distribution narrative, and product velocity.
+            Ideal for customer-facing surfaces, platform rails, and scalable adoption.
+          </p>
+
+          <div class="badge-ext">Strategic Reinforcements</div>
+        </article>
+
+        <article class="idstack-card idstack-ext">
+          <div class="ext-head">
+            <div class="ext-ico" aria-hidden="true">
+              <svg class="ico s24"><use href="#i-robot"></use></svg>
+            </div>
+
+            <h3 class="ext-h3">
+              <span class="brand-gradient">Gnosis</span>
+              <span class="functional-white">Agent</span>
+              <span class="pair-sm">.com + .ai</span>
+            </h3>
+          </div>
+
+          <div class="ext-quote">"Strategic Extension: Autonomous."</div>
+          <p class="ext-body">
+            Strategic reinforcement for agentic positioning and product-facing naming clarity.
+            Ideal for customer-facing entities and productizing autonomous AI capabilities.
+          </p>
+
+          <div class="badge-ext">Strategic Reinforcements</div>
+        </article>
+
+        <article class="idstack-card idstack-ext">
+          <div class="ext-head">
+            <div class="ext-ico" aria-hidden="true">
+              <svg class="ico s24"><use href="#i-shield-half"></use></svg>
+            </div>
+
+            <h3 class="ext-h3">
+              <span class="brand-gradient">Gnosis</span>
+              <span class="functional-white">Aegis</span>
+              <span class="pair-sm">.com + .ai</span>
+            </h3>
+          </div>
+
+          <div class="ext-quote">"Strategic Extension: Trust."</div>
+          <p class="ext-body">
+            Strategic reinforcement for security signaling, alignment, and governance positioning.
+            Critical for establishing high-trust category leadership.
+          </p>
+
+          <div class="badge-ext">Strategic Reinforcements</div>
+        </article>
+
+      </div>
+
+      <div class="idstack-cta">
+        <p class="idstack-foot">Acquisition paths: Core-only, or Core + Strategic Extensions</p>
+        <a class="idstack-btn" href="asset-stack.html">
+          View Strategic Stack <svg class="ico s16"><use href="#i-arrow-right"></use></svg>
+        </a>
+      </div>
     </div>
-<p style="color: var(--muted); line-height: 1.8; max-width: 800px; font-size: 1.1rem; margin: 0 auto 30px; text-align: center;">
-        The definitive naming asset designed for long-horizon AI platforms and holding companies. This dual-asset core establishes immediate authority and secures your institutional identity across the technical and commercial web.
-    </p>
-<div style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800; color: #f2d073; font-size: 0.95rem; border-bottom: 2px solid var(--cyan); padding-bottom: 5px; margin: 0 auto;">
-        Verified &amp; Ready for Secure Transfer
-    </div>
-</article>
-<div class="ext-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); border-top: 1px solid var(--border);">
-<article class="ext-card ext-card--r" style="padding: 45px 30px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); display: flex; flex-direction: column; align-items: center; text-align: center;">
-<div class="ext-head" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
-<div class="ext-ico" style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; color: var(--muted);">
-<svg class="ico s24"><use href="#i-wave"></use></svg>
-</div>
-<h3 class="ext-h3">
-<span class="brand-gradient">Gnosis</span> <span class="functional-white">Flow</span>
-<span class="pair-sm">.com + .ai</span>
-</h3>
-</div>
-<div class="ext-quote" style="color: var(--muted); font-style: italic; font-size: 0.95rem; margin-bottom: 15px;">"Strategic Extension: Orchestration."</div>
-<p class="ext-body" style="color: rgba(243,244,248,0.65); font-size: 0.95rem; line-height: 1.7; margin-bottom: 25px; max-width: 320px;">
-            Strategic reinforcement for orchestration, pipelines, and operational intelligence. Designed to expand brand dominance into infrastructure workflows.
-        </p>
-<div class="badge badge-ext" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); padding: 5px 15px; border-radius: 50px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Strategic Reinforcements</div>
-</article>
-<article class="ext-card ext-card--r" style="padding: 45px 30px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); display: flex; flex-direction: column; align-items: center; text-align: center;">
-<div class="ext-head" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
-<div class="ext-ico" style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; color: var(--muted);">
-<svg class="ico s24"><use href="#i-robot"></use></svg>
-</div>
-<h3 class="ext-h3">
-<span class="brand-gradient">Gnosis</span> <span class="functional-white">Agent</span>
-<span class="pair-sm">.com + .ai</span>
-</h3>
-</div>
-<div class="ext-quote" style="color: var(--muted); font-style: italic; font-size: 0.95rem; margin-bottom: 15px;">"Strategic Extension: Autonomous."</div>
-<p class="ext-body" style="color: rgba(243,244,248,0.65); font-size: 0.95rem; line-height: 1.7; margin-bottom: 25px; max-width: 320px;">
-            Strategic reinforcement for agentic positioning and product-facing naming clarity. Ideal for customer-facing entities and productizing autonomous AI capabilities.
-        </p>
-<div class="badge badge-ext" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); padding: 5px 15px; border-radius: 50px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Strategic Reinforcements</div>
-</article>
-<article class="ext-card" style="padding: 45px 30px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); display: flex; flex-direction: column; align-items: center; text-align: center;">
-<div class="ext-head" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
-<div class="ext-ico" style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; color: var(--muted);">
-<svg class="ico s24"><use href="#i-shield-half"></use></svg>
-</div>
-<h3 class="ext-h3">
-<span class="brand-gradient">Gnosis</span> <span class="functional-white">Aegis</span>
-<span class="pair-sm">.com + .ai</span>
-</h3>
-</div>
-<div class="ext-quote" style="color: var(--muted); font-style: italic; font-size: 0.95rem; margin-bottom: 15px;">"Strategic Extension: Trust."</div>
-<p class="ext-body" style="color: rgba(243,244,248,0.65); font-size: 0.95rem; line-height: 1.7; margin-bottom: 28px; max-width: 320px;">
-            Strategic reinforcement for security signaling, alignment, and governance positioning. Critical for establishing high-trust category leadership.
-        </p>
-<div class="badge badge-ext" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); padding: 5px 15px; border-radius: 50px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Strategic Reinforcements</div>
-</article>
-</div>
-<div class="portfolio-cta">
-<p class="portfolio-foot">Acquisition paths: Core-only, or Core + Strategic Extensions</p>
-<a class="portfolio-cta-btn" href="asset-stack.html" style="margin-top:12px;">
-  View Strategic Stack <svg class="ico s16"><use href="#i-arrow-right"></use></svg>
-</a>
-</div>
-</div>
-</div></div></section>
-
-
-<!-- =====================================================
-         Value & Dominance / Strategic Market Position
-         ===================================================== -->
-
-<!-- SECTION: Dominance -->
-<section aria-label="The Anatomy of Dominance" class="dominance grid-overlay" id="dominance">
-<div class="container">
-<div class="kicker">THE ANATOMY OF DOMINANCE</div>
-<div class="h2">Why <span class="grad-text">Gnosis Base</span></div>
-<div class="sub">The Sovereign Core of your AI Ecosystem.</div>
-<div class="dom-row dom-row-top reveal">
-<div class="dom-copy dominance-text">
-<h3 class="dom-h3">Why Gnosis Base — and why now</h3>
-<p class="dom-p">
-                        Acquiring the core establishes your presence. Reinforcing it with Flow, Agent, and Aegis prevents brand fragmentation and competitor encroachment.
-                        A unified namespace is the lowest-cost insurance for a multi-billion dollar roadmap.
-                    </p>
-<p class="dom-p">
-                        Gnosis curates dual-asset bundles that feel inevitable — pronounceable, memorable, and legally clean — engineered to remove friction before a product is ever explained.
-                    </p>
-<p class="dom-p dom-muted">
-                        This is not marketing polish.
-                        It is identity infrastructure — designed to outlast cycles, teams, and product pivots.
-                    </p>
-</div>
-<div aria-hidden="true" class="dom-media">
-<img alt="Gnosis assets mark" class="dom-img" src="gnosis-assets-mark.png"/>
-</div>
-</div>
-<div class="dom-row dom-row-bottom reveal">
-<div aria-hidden="true" class="dom-media">
-<img alt="Dual asset standard" class="dom-img" src="dual-asset-standard.png"/>
-<div class="dom-caption">Identity Infrastructure • Institutional-grade signal</div>
-</div>
-<div class="dom-cards">
-<div class="dom-lead-card">
-<strong>Gnosis Base</strong> is the sovereign core. Strategic extensions (Flow, Agent, Aegis) function as <strong>Strategic Defensive Moats</strong> —
-                        sealing the namespace across the most logical expansion paths.
-                    </div>
-<div class="dom-point">
-<div class="dom-point-title">Institutional Anchor</div>
-<div class="dom-point-body">Gnosis Base provides immediate recall and global trust.</div>
-</div>
-<div class="dom-point">
-<div class="dom-point-title">Defensive Perimeter</div>
-<div class="dom-point-body">Strategic extensions (Flow, Agent, Aegis) block competitors from occupying your namespace.</div>
-</div>
-<div class="dom-point">
-<div class="dom-point-title">Future Liquidity</div>
-<div class="dom-point-body">A unified stack increases exit multiples by securing all logical expansion paths.</div>
-</div>
-<div class="dom-alert">
-                        SOVEREIGN ACQUISITION — SECURE THE CORE BASE OR THE FULL STRATEGIC STACK TO ENSURE TOTAL NAMESPACE DOMINANCE.
-                    </div>
-</div>
-</div>
-</div>
+  </div>
 </section>
+
 <!-- =====================================================
          Strategic Intelligence / Market Insight
          ===================================================== -->
