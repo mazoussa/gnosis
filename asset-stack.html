@@ -103,6 +103,7 @@
     }
 
     .brand{
+      font-family: "Playfair Display", serif;
       display:flex;
       flex-direction:column;
       line-height:1.05;
@@ -111,7 +112,7 @@
     .brand-top{
       font-weight:900;
       letter-spacing:.5px;
-      text-transform:uppercase;
+      text-transform:none;
       font-size:18px;
       background:var(--grad);
       -webkit-background-clip:text;
@@ -120,7 +121,7 @@
     }
 
     .brand-sub{
-      margin-top:4px;
+      margin-top:2px;
       font-size:10px;
       letter-spacing:1.6px;
       text-transform:uppercase;
@@ -155,13 +156,18 @@
     }
 
     h1{
-      font-family:var(--serif);
       font-size:clamp(2.2rem,4.6vw,4.2rem);
       letter-spacing:-1.2px;
       line-height:1.05;
       margin:0 auto 12px;
       max-width:980px;
+      font-family: "Playfair Display", serif;
+
     }
+.base-white{
+  color: #fff;
+  font-weight: 700;
+}
 
     .grad{
       background:var(--grad);
@@ -426,8 +432,7 @@
       <div class="header-inner">
         <a class="brand" href="/" aria-label="Go to Gnosis Base home">
           <div class="brand-top">Gnosis <span style="color:#fff;font-weight:700">Base</span></div>
-          <div class="brand-sub">Sovereign AI Identity Infrastructure</div>
-        </a>
+                  </a>
 
         <nav class="nav" aria-label="Primary navigation">
           <a href="/#intelligence">Intelligence</a>
@@ -442,7 +447,13 @@
     <section class="hero">
       <div class="container">
         <div class="kicker">THE SOVEREIGN IDENTITY STACK</div>
-        <h1>The <span class="grad">Gnosis Base</span> Asset Stack</h1>
+        <h1>
+  The 
+  <span class="grad">Gnosis</span>
+  <span class="base-white">Base</span>
+  Asset Stack
+</h1>
+
         <p class="sub">
           A sovereign AI identity stack composed of a primary naming core and strategic extensions, designed for long-term control, trust, and expansion.
         </p>
