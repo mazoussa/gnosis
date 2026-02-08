@@ -566,111 +566,64 @@ nav a.active::after {
   transform: rotate(90deg);
 }
 
-/* ================================
-   Modern Mobile Navigation (Premium)
-================================ */
-
-/* Overlay */
-.mobile-nav{
+.mobile-nav {
+  display: block;
   position: fixed;
-  inset: calc(var(--header-height)) 0 0 0;
-  z-index: 999;
+  top: calc(var(--header-height));
+  left: 0;
+  right: 0;
+  z-index: 49;
   padding: 14px var(--gutter) 18px;
-
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
+  background: var(--header-glass);
+  border-bottom: 1px solid var(--border-2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   opacity: 0;
+  transform: translateY(-12px);
   pointer-events: none;
-  transition: opacity .22s ease;
+  transition: transform .22s ease, opacity .22s ease;
 }
 
-/* Panel */
-.mobile-nav .panel{
-  width: min(520px, 100%);
-  margin: 10px auto 0;
-
-  background: rgba(16,18,30,.78);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 22px;
+.mobile-nav .panel {
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 14px;
-  box-shadow: 0 30px 90px rgba(0,0,0,.55);
-
-  transform: translateY(-10px) scale(.98);
-  opacity: 0;
-  transition:
-    transform .24s cubic-bezier(.2,.8,.2,1),
-    opacity .18s ease;
-}
-
-/* Open state */
-.mobile-nav.show{
-  opacity: 1;
-  pointer-events: auto;
-}
-.mobile-nav.show .panel{
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-/* Nav layout */
-.mobile-nav nav{
+  box-shadow: var(--shadow-1);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-/* Links */
-.mobile-nav nav a{
-  display: block;
-  padding: 14px 14px;
-  border-radius: 16px;
-  font-weight: 800;
-  color: rgba(243,244,248,.78);
+.mobile-nav a {
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  color: var(--muted);
+  background: transparent;
   border: 1px solid transparent;
-
-  transform: translateY(6px);
-  opacity: 0;
-  transition:
-    transform .22s ease,
-    opacity .22s ease,
-    background .2s ease,
-    border-color .2s ease,
-    color .2s ease;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
 }
 
-/* Stagger animation */
-.mobile-nav.show nav a{
-  transform: translateY(0);
+.mobile-nav a:hover {
+  background: var(--surface-2);
+  border-color: rgba(0,240,240,.18);
+  color: var(--text);
+}
+
+.mobile-nav a.active {
+  color: var(--text);
+  border-color: rgba(0,240,240,.24);
+  background: rgba(0,240,240,.06);
+}
+
+.mobile-nav.show {
   opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
-
-.mobile-nav.show nav a:nth-child(1){ transition-delay: .04s; }
-.mobile-nav.show nav a:nth-child(2){ transition-delay: .07s; }
-.mobile-nav.show nav a:nth-child(3){ transition-delay: .10s; }
-.mobile-nav.show nav a:nth-child(4){ transition-delay: .13s; }
-.mobile-nav.show nav a:nth-child(5){ transition-delay: .16s; }
-.mobile-nav.show nav a:nth-child(6){ transition-delay: .19s; }
-
-/* Hover / Active */
-.mobile-nav nav a:hover{
-  background: rgba(255,255,255,.06);
-  border-color: rgba(0,240,240,.20);
-  color: rgba(243,244,248,.95);
-}
-
-.mobile-nav nav a.active{
-  background: rgba(0,240,240,.08);
-  border-color: rgba(0,240,240,.30);
-  color: #fff;
-}
-
-/* Prevent scroll when open */
-body.menu-open{
-  overflow: hidden;
-}
-
 
 /*================================
    Hero Signature (GNOSIS)
@@ -783,6 +736,7 @@ body.menu-open{
   white-space: nowrap;
   line-height: .98;
   font-family: "Playfair Display", serif;
+
 }
 
 @media (max-width: 420px){
@@ -930,16 +884,15 @@ body.menu-open{
   .hero-specs{
     grid-template-columns: 1fr;
     max-width: 520px;
-    padding-top: 22px;
-    gap: 14px;
+    padding-top: 28px;
+    gap: 24px; /* ← زِد التباعد هنا */
+  }
+
+  .spec{
+    padding: 14px 0; /* ← تنفّس عمودي */
   }
 }
 
-.spec{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
 
 .s-label{
   font-size: 10px;
@@ -3919,13 +3872,13 @@ dialog::backdrop {
 </div>
 </header>
 <div aria-label="Mobile navigation" class="mobile-nav" id="mobileNav">
-  <nav aria-label="Primary">
-  <a href="#home">Home</a>
+  <nav>
+   <a href="#home">Home</a>
   <a href="#intelligence">Intelligence</a>
   <a href="asset-stack.html">Stack</a>
   <a href="#security">Acquisition</a>
   <a href="#inquiry">Inquire</a>
-</nav>
+  </nav>
 </div>
 <main id="main-content">
 <!-- =====================================================
@@ -4004,7 +3957,7 @@ dialog::backdrop {
         </div>
 
         <div class="idstack-rail-sub">
-          <strong>GnosisBase</strong> is the primary naming asset.<br/>
+          <strong>Gnosis Base</strong> is the primary naming asset.<br/>
           Strategic reinforcements are available to prevent fragmentation and protect your namespace as the roadmap expands.
         </div>
 
@@ -4910,33 +4863,18 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
   const menuBtn = document.querySelector('.menu-btn');
   const mobileNav = document.querySelector('.mobile-nav');
-  const panel = document.querySelector('.mobile-nav .panel');
 
-  function toggleMenu(){
-    menuBtn.classList.toggle('is-open');
-    mobileNav.classList.toggle('show');
-    document.body.classList.toggle(
-      'menu-open',
-      mobileNav.classList.contains('show')
-    );
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('is-open');
+      mobileNav.classList.toggle('show');
+    });
   }
-
-  menuBtn.addEventListener('click', toggleMenu);
-
-  // Close when clicking outside the panel
-  mobileNav.addEventListener('click', (e) => {
-    if (panel && !panel.contains(e.target)) {
-      menuBtn.classList.remove('is-open');
-      mobileNav.classList.remove('show');
-      document.body.classList.remove('menu-open');
-    }
-  });
 </script>
 
 <button id="backToTop" aria-label="Back to top">
   ⌃
 </button>
-
 <script>
   const backToTop = document.getElementById('backToTop');
 
@@ -4955,7 +4893,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 </script>
-
 
 </body>
 </html>
