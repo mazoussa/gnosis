@@ -417,36 +417,49 @@ header .container {
   transition: transform 0.3s ease;
 }
 
-.brand-copy {
-  display: flex;
-  flex-direction: column;
+.brand-copy{
+  display: inline-block;
+  width: fit-content;
   line-height: 1;
-  align-items: flex-start;
 }
 
-.brand-name {
+
+.brand-name{
+  font-family: "Outfit", sans-serif;
   font-weight: 800;
   font-size: 21px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   transition: font-size .35s ease;
-  background: linear-gradient(90deg, #00e5ff 0%, #2979ff 45%, #8f00ff 100%);
+
+  background: linear-gradient(
+    90deg,
+    #00e5ff 0%,
+    #2979ff 45%,
+    #8f00ff 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.brand-name span {
+.brand-name span{
   background: none;
-  -webkit-text-fill-color: #ffffff;
-  color: #ffffff;
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  margin-left: 2px;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+
+  font: inherit;
 }
 
-.brand-tagline {
+
+.brand-tagline{
+  display: block;
+  width: 100%;
+  text-align: left;
+
   margin-top: 3px;
   font-weight: 600;
   font-size: 7.5px;
@@ -457,10 +470,9 @@ header .container {
   max-height: 20px;
   overflow: hidden;
   transition: all .35s ease;
-  display: inline-block;
-  width: 100%;
-  text-align: left;
 }
+
+
 
 /* Header Glass State */
 header.is-glass .brand-logo {
@@ -843,18 +855,18 @@ nav a.active::after {
 }
 
 .btn-link{
-  color: rgba(243,244,248,.92);
+  color: rgba(0,240,240,.85);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
   border-bottom: 1px solid rgba(255,255,255,.18);
   padding-bottom: 4px;
   transition: color .2s ease, border-color .2s ease;
 }
-
 .btn-link:hover{
-  color: var(--cyan);
-  border-color: var(--cyan);
+  color: rgba(0,240,240,1);
+  border-bottom-color: rgba(0,240,240,.6);
 }
+
 
 .hero-specs{
   display: grid;
@@ -2969,6 +2981,13 @@ dialog::backdrop {
     display: grid;
   }
 }
+@media (max-width: 860px) {
+  .mobile-nav nav {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
 
 @media (max-width: 768px) {
   header.is-glass .brand-logo {
@@ -3781,6 +3800,41 @@ dialog::backdrop {
     display: none;
   }
 }
+
+
+/*================================
+   backToTop
+================================*/
+#backToTop {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(16,18,30,.75);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#backToTop:hover {
+  transform: translateY(-2px);
+}
+
+#backToTop.show {
+  display: flex;
+}
+
 </style>
 </head>
 <body>
@@ -3801,12 +3855,11 @@ dialog::backdrop {
 </span>
 </a>
 <nav aria-label="Primary">
-<a href="#home">Home</a>
-<a href="#collection">Collection</a>
-<a href="#dominance">Dominance</a>
-<a href="#intelligence">Intelligence</a>
-<a href="#security">Acquisition</a>
-<a href="#inquiry">Inquire</a>
+  <a href="#home">Home</a>
+  <a href="#intelligence">Intelligence</a>
+  <a href="asset-stack.html">Stack</a>
+  <a href="#security">Acquisition</a>
+  <a href="#inquiry">Inquire</a>
 </nav>
 <div class="header-right">
 <button aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu" class="menu-btn" id="menuBtn" type="button">
@@ -3818,14 +3871,12 @@ dialog::backdrop {
 </div>
 </header>
 <div aria-label="Mobile navigation" class="mobile-nav" id="mobileNav">
-<div class="panel">
-<a href="#home">Home</a>
-<a href="#collection">Collection</a>
-<a href="#dominance">Dominance</a>
-<a href="#intelligence">Intelligence</a>
-<a href="#security">Acquisition</a>
-<a href="#inquiry">Inquire</a>
-</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#intelligence">Intelligence</a>
+    <a href="#strategic-stack">Stack</a> <a href="#security">Acquisition</a>
+    <a href="#inquiry">Inquire</a>
+  </nav>
 </div>
 <main id="main-content">
 <!-- =====================================================
@@ -3883,10 +3934,10 @@ dialog::backdrop {
 <!-- =====================================================
          Portfolio / Curated Domain Assets
          ===================================================== -->
-<section aria-label="Collection" class="portfolio" id="collection">
+<section aria-label="Strategic Stack Overview" class="portfolio" id="collection">
   <div class="container">
     <div class="kicker">THE IDENTITY STACK</div>
-    <div class="h2">Curated <span class="grad-text">Excellence</span></div>
+    <div class="h2">Strategic <span class="grad-text">Stack</span></div>
     <p class="sub">
       Each asset is delivered as a locked pair: the primary <span class="strong">.com</span>
       and its <span class="strong">.ai</span> counterpart.<br/>
@@ -3898,7 +3949,8 @@ dialog::backdrop {
         <div class="idstack-rail-kicker">Core Identity Acquisition</div>
 
         <div class="idstack-rail-title">
-          <div class="line muted">The Identity Stack <span class="accent">Architecture</span>.</div>
+          <div class="line muted">The Strategic Stack
+ <span class="accent">Architecture</span>.</div>
           <div class="line strong">An <span>identity stack</span> with a single core.</div>
         </div>
 
@@ -4345,12 +4397,10 @@ dialog::backdrop {
 <a href="mailto:invest@gnosisbase.com">invest@gnosisbase.com</a>
 </div>
 <div class="footer-links">
-<a href="#home">Home</a>
-<a href="#collection">Collection</a>
-<a href="#dominance">Value</a>
-<a href="#security">Security</a>
-<a href="#inquiry">Inquire</a>
-<a class="link-hover" data-open-privacy-modal="true" href="/privacy.html">Privacy</a>
+  <a href="#home">Home</a>
+  <a href="asset-stack.html">Stack</a>
+  <a href="#inquiry">Inquire</a>
+  <a class="link-hover" data-open-privacy-modal="true" href="/privacy.html">Privacy</a>
 </div>
 <div class="footer-disclosure">
 <p style="margin-bottom: 12px; opacity: 0.8;">
@@ -4597,7 +4647,6 @@ dialog::backdrop {
 })();
 </script>
 <script>
-// 1. كود الهيدر (Header) لضمان الشفافية والاختفاء عند التمرير
 (function(){
   const header = document.getElementById("siteHeader");
   if(!header) return;
@@ -4794,25 +4843,54 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileNav = document.getElementById("mobileNav");
 
   if (menuBtn && mobileNav) {
-    const toggle = () => {
-      const open = mobileNav.classList.toggle("show");
-      menuBtn.classList.toggle("is-open", open);
-      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    };
+    menuBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      const isOpen = mobileNav.classList.toggle("show");
+      this.classList.toggle("is-open", isOpen);
+      this.setAttribute("aria-expanded", isOpen);
+    });
 
-    menuBtn.addEventListener("click", toggle);
-
-    //
-    mobileNav.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", () => {
+    mobileNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
         mobileNav.classList.remove("show");
         menuBtn.classList.remove("is-open");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.setAttribute("aria-label", "Open menu");
       });
     });
   }
 </script>
+<script>
+  const menuBtn = document.querySelector('.menu-btn');
+  const mobileNav = document.querySelector('.mobile-nav');
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('is-open');
+      mobileNav.classList.toggle('show');
+    });
+  }
+</script>
+
+<button id="backToTop" aria-label="Back to top">
+  ⌃
+</button>
+<script>
+  const backToTop = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
+    }
+  });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
+
 </body>
 </html>
