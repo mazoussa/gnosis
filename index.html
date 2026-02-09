@@ -892,6 +892,49 @@ nav a.active::after {
     padding: 14px 0; /* ← تنفّس عمودي */
   }
 }
+/* =========================================
+   Hero Specs — Vertical separators (Desktop)
+   ========================================= */
+
+/* نخلي العناصر تتمدد بطول الصف */
+.hero-specs{
+  align-items: stretch;
+}
+
+.spec{
+  position: relative;
+  padding: 6px 18px; /* يعطي تنفّس ويخلّي الخط يبان أجمل */
+}
+
+/* خط رفيع "بين" العناصر (داخل مساحة الـ gap) */
+.hero-specs .spec:not(:first-child)::before{
+  content: "";
+  position: absolute;
+  left: -5px;          /* نصف gap تقريبًا (عندك gap:10px) */
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--hairline, rgba(255,255,255,.14));
+  opacity: .7;
+}
+
+/* =========================================
+   Mobile — لأنك تتحول لعمود واحد، نخليها خطوط أفقية بدل عمودية
+   ========================================= */
+@media (max-width: 760px){
+  .spec{
+    padding: 14px 10px; /* تباعد أجمل بالموبايل */
+  }
+
+  .hero-specs .spec:not(:first-child)::before{
+    left: 0;
+    right: 0;
+    top: -7px;          /* بين العناصر */
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+}
 
 
 .s-label{
@@ -3631,7 +3674,7 @@ dialog::backdrop {
 
 /*================================
    Safe Area & Mobile Header Fixes
-================================*/
+   ================================*/
 
 @media (max-width: 768px) {
   :root {
@@ -3639,27 +3682,20 @@ dialog::backdrop {
   }
 
   header {
-    top: 0 !important;
-    height: calc(var(--header-height) + var(--safe-top)) !important;
-    padding-top: var(--safe-top) !important;
-    transform: translateY(0) !important;
-    opacity: 1 !important;
+    top: 0; 
+    height: calc(var(--header-height) + var(--safe-top));
+    padding-top: var(--safe-top);
   }
 
+  
   header.is-glass {
-    height: calc(var(--header-height) + var(--safe-top)) !important;
+    height: calc(var(--header-height) + var(--safe-top));
   }
 
   body {
-    padding-top: calc(var(--header-height) + var(--safe-top)) !important;
-  }
-
-  header.is-hidden {
-    transform: translateY(0) !important;
-    opacity: 1 !important;
+    padding-top: calc(var(--header-height) + var(--safe-top));
   }
 }
-
 /*================================
    Additional Mobile Optimizations
 ================================*/
@@ -4667,6 +4703,7 @@ dialog::backdrop {
 })();
 
 </script>
+
 <script>
 (function(){
   const form = document.getElementById('inquiryForm');
