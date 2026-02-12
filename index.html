@@ -322,16 +322,37 @@ opacity: .8;
   transform: translateY(0);
 }
 
+
+
 .delay-1 { transition-delay: .16s; }
 .delay-2 { transition-delay: .32s; }
 .delay-3 { transition-delay: .48s; }
 
-.hero .reveal {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-}
 
+/* Optional extra delays (used in hero + staggered grids) */
+.delay-4 { transition-delay: .64s; }
+.delay-5 { transition-delay: .80s; }
+
+/* Directional reveals */
+.reveal-left { opacity: 0; transform: translateX(-42px); transition: all .85s cubic-bezier(.5,0,0,1); }
+.reveal-right{ opacity: 0; transform: translateX( 42px); transition: all .85s cubic-bezier(.5,0,0,1); }
+.reveal-zoom { opacity: 0; transform: translateY(18px) scale(.98); transition: all .85s cubic-bezier(.5,0,0,1); }
+
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-zoom.is-visible { opacity: 1; transform: none; }
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce){
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-zoom{
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 .grid-overlay {
   position: relative;
 }
@@ -913,6 +934,41 @@ nav a.active::after {
 .orb-2{
   animation: sovereignPulse 10s infinite ease-in-out;
 }
+
+
+/*================================
+   Hero — Entrance Motion (Hero Only)
+================================*/
+
+.hero-signature .hero-badge,
+.hero-signature .hero-h1,
+.hero-signature .hero-desc,
+.hero-signature .hero-btns,
+.hero-signature .hero-specs{
+  opacity: 0;
+  animation: heroFadeUp 1s cubic-bezier(.4,0,.2,1) forwards;
+  will-change: transform, opacity;
+}
+
+.hero-signature .hero-badge{ animation-delay: .20s; }
+.hero-signature .hero-h1{ animation-delay: .40s; }
+.hero-signature .hero-desc{ animation-delay: .60s; }
+.hero-signature .hero-btns{ animation-delay: .80s; }
+.hero-signature .hero-specs{ animation-delay: 1.00s; }
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce){
+  .hero-signature .hero-badge,
+  .hero-signature .hero-h1,
+  .hero-signature .hero-desc,
+  .hero-signature .hero-btns,
+  .hero-signature .hero-specs{
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 
 /*================================
    Portfolio Section
@@ -3782,6 +3838,18 @@ dialog::backdrop {
   }
 }
 
+
+@keyframes heroFadeUp{
+  from{
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /*================================
    Cleanup & Final Adjustments
 ================================*/
@@ -3886,7 +3954,7 @@ dialog::backdrop {
          ===================================================== -->
 
 <!-- SECTION: Home -->
-<section aria-label="Hero" class="hero-signature" id="home">
+<section aria-label="Hero" class="hero hero-signature" id="home">
 <div class="hero-bg-effects">
 <div class="glow-orb orb-1"></div>
 <div class="glow-orb orb-2"></div>
@@ -3936,7 +4004,7 @@ dialog::backdrop {
 <!-- =====================================================
          Portfolio / Curated Domain Assets
          ===================================================== -->
-<section aria-label="Strategic Stack Overview" class="portfolio" id="collection">
+<section aria-label="Strategic Stack Overview" class="portfolio reveal-zoom" id="collection">
   <div class="container">
     <div class="kicker">THE IDENTITY STACK</div>
     <div class="h2">Strategic <span class="grad-text">Stack</span></div>
@@ -3946,7 +4014,7 @@ dialog::backdrop {
       One owner. One transfer. A clear decision path.
     </p>
 
-    <div class="idstack-shell">
+    <div class="idstack-shell reveal-zoom" data-once="true">
       <div class="idstack-rail">
         <div class="idstack-rail-kicker">Core Identity Acquisition</div>
 
@@ -3996,7 +4064,7 @@ dialog::backdrop {
       </article>
 
       <!-- Extensions (without any domain cards) -->
-      <div class="idstack-grid" aria-label="Strategic extensions">
+      <div class="idstack-grid" aria-label="Strategic extensions" data-stagger="children">
 
         <article class="idstack-card idstack-ext">
           <div class="ext-head">
@@ -4081,13 +4149,13 @@ dialog::backdrop {
          ===================================================== -->
 
 <!-- SECTION: Strategic Intelligence -->
-<section aria-label="Strategic Intelligence" class="si-section" id="intelligence">
+<section aria-label="Strategic Intelligence" class="si-section reveal" id="intelligence">
 <div class="si-container">
 <div class="si-kicker">STRATEGIC INTELLIGENCE BY Gnosis Base</div>
 <h2 class="si-h2">Market <span class="si-grad">Intelligence</span></h2>
 <p class="si-sub">Editorial insight into the mechanics of identity, valuation, and trust in AI-native markets.</p>
-<div aria-label="Insights slider" class="si-grid" role="region">
-<article aria-labelledby="si-article-1-seo" class="si-card">
+<div aria-label="Insights slider" class="si-grid" role="region" data-stagger="children">
+<article aria-labelledby="si-article-1-seo" class="si-card reveal-left" data-once="true">
 <h2 class="sr-only" id="si-article-1-seo">
     Identity as Infrastructure for AI Valuation: Trust, Conversion Velocity, and Negotiation Leverage
   </h2>
@@ -4103,7 +4171,7 @@ dialog::backdrop {
     Read Full Report <span>→</span>
 </a>
 </article>
-<article aria-labelledby="si-article-2-seo" class="si-card">
+<article aria-labelledby="si-article-2-seo" class="si-card reveal-left" data-once="true">
 <h2 class="sr-only" id="si-article-2-seo">
     AI Identity Valuation: CAC, Deal Quality, and Premium Domain Impact
   </h2>
@@ -4119,7 +4187,7 @@ dialog::backdrop {
     Read Full Report <span>→</span>
 </a>
 </article>
-<article aria-labelledby="si-article-3-seo" class="si-card">
+<article aria-labelledby="si-article-3-seo" class="si-card reveal-left" data-once="true">
 <h2 class="sr-only" id="si-article-3-seo">
     Premium AI Domains: Strategy, Defensibility, and Long-Term Investment Value
   </h2>
@@ -4135,7 +4203,7 @@ dialog::backdrop {
     Read Full Analysis <span>→</span>
 </a>
 </article>
-<article aria-labelledby="si-article-4-seo" class="si-card">
+<article aria-labelledby="si-article-4-seo" class="si-card reveal-left" data-once="true">
 <h2 class="sr-only" id="si-article-4-seo">
     Premium Domains as Strategic Leverage in AI Markets
   </h2>
@@ -4171,12 +4239,12 @@ dialog::backdrop {
          ===================================================== -->
 
 <!-- SECTION: Security -->
-<section aria-label="Security" class="acq2 grid-overlay" id="security">
+<section aria-label="Security" class="acq2 grid-overlay reveal" id="security">
 <div class="container">
 <div class="kicker">ACQUISITION PROCESS</div>
 <div class="h2">Secure <span class="grad-text">Acquisition</span></div>
 <div class="sub">A professional, discreet, and verifiable process — from first contact to final transfer.</div>
-<div class="acq2-steps">
+<div class="acq2-steps" data-stagger="children">
 <div class="acq-card">
 <div class="acq-icon-circle"><svg class="ico s24"><use href="#i-file"></use></svg></div>
 <h4>Submit Mandate Request</h4>
@@ -4477,30 +4545,102 @@ dialog::backdrop {
 <symbol id="i-x" viewbox="0 0 24 24"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></symbol>
 </svg>
 <script>
+/*==============================================================================
+  Scroll Reveal (IntersectionObserver) — Gnosis Base
+  - Supports: .reveal, .reveal-left, .reveal-right, .reveal-zoom
+  - Skips hero (#home) so above-the-fold is instant
+  - Optional: data-once="true" to unobserve after first reveal
+  - Optional: data-stagger="children" to auto-stagger direct children
+==============================================================================*/
 (function(){
-  const els = Array.from(document.querySelectorAll('.reveal'));
-  if (!els.length) return;
+  const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-zoom';
+  const all = Array.from(document.querySelectorAll(SELECTOR));
+  if (!all.length) return;
 
-  function showAll(){ els.forEach(el=>el.classList.add('is-visible')); }
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!('IntersectionObserver' in window)) { showAll(); return; }
+  const hero = document.getElementById('home');
+  if (hero) {
+    hero.querySelectorAll(SELECTOR).forEach(el => el.classList.add('is-visible'));
+  }
+
+  
+
+  // Auto-direction for Strategic grids (left column reveals from left, right column from right)
+  function applyAutoDirections(){
+    const mid = window.innerWidth / 2;
+    const targets = document.querySelectorAll('.si-grid .si-card, .strategic-grid .strategic-card');
+    targets.forEach(el => {
+      const r = el.getBoundingClientRect();
+      const center = r.left + (r.width/2);
+      const shouldRight = center > mid;
+
+      // normalize: if it already has a directional class, we may flip it
+      if (shouldRight) {
+        el.classList.remove('reveal-left');
+        if (!el.classList.contains('reveal-right')) el.classList.add('reveal-right');
+      } else {
+        el.classList.remove('reveal-right');
+        if (!el.classList.contains('reveal-left')) el.classList.add('reveal-left');
+      }
+
+      // ensure it participates in reveal system
+      if (!el.classList.contains('reveal') && !el.classList.contains('reveal-left') && !el.classList.contains('reveal-right') && !el.classList.contains('reveal-zoom')) {
+        el.classList.add(shouldRight ? 'reveal-right' : 'reveal-left');
+      }
+    });
+  }
+
+  applyAutoDirections();
+  window.addEventListener('resize', () => {
+    clearTimeout(window.__gbDirT);
+    window.__gbDirT = setTimeout(applyAutoDirections, 120);
+  });
+
+if (reduceMotion || !('IntersectionObserver' in window)) {
+    all.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  function applyStagger(root){
+    const kids = Array.from(root.children).filter(Boolean);
+    kids.forEach((kid, i) => {
+      if (!/\bdelay-\d+\b/.test(kid.className)) {
+        const step = Math.min(i + 1, 5); // delay-1..delay-5
+        kid.classList.add('delay-' + step);
+      }
+      if (!kid.matches(SELECTOR)) kid.classList.add('reveal');
+    });
+  }
+
+  all.forEach(el => {
+    if (el.getAttribute('data-stagger') === 'children') applyStagger(el);
+  });
 
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add('is-visible');
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      if (entry.target.getAttribute('data-once') === 'true') {
+        observer.unobserve(entry.target);
+      }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
-  els.forEach(el=>observer.observe(el));
+  all.forEach(el => {
+    if (hero && hero.contains(el)) return;
+    observer.observe(el);
+  });
 
   window.addEventListener('load', ()=>{
     setTimeout(()=>{
-      const anyVisible = els.some(el=>el.classList.contains('is-visible'));
-      if(!anyVisible) showAll();
+      const anyVisible = all.some(el=>el.classList.contains('is-visible'));
+      if(!anyVisible) all.forEach(el=>el.classList.add('is-visible'));
     }, 900);
   });
 })();
 </script>
+
 <script>
 (function () {
   let canvas = document.getElementById("bg");
