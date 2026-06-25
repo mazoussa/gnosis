@@ -4625,8 +4625,7 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-
+}, { threshold: 0.02, rootMargin: '0px 0px 0px 0px' });
   all.forEach(el => {
     if (hero && hero.contains(el)) return;
     observer.observe(el);
