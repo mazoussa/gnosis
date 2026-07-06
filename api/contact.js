@@ -9,40 +9,42 @@ export default async function handler(req, res) {
     const data = req.body || {};
 
     // ----------------------------
-    // Anti-spam: Honeypot + Time trap
+    // Anti-spam: Honeypot (all 3 hidden fields) + Time trap
     // ----------------------------
-    const hp = typeof data.website === "string" ? data.website.trim() : "";
-    if (hp) {
+    const hp1 = typeof data.website === "string" ? data.website.trim() : "";
+    const hp2 = typeof data.full_name_confirm === "string" ? data.full_name_confirm.trim() : "";
+    const hp3 = typeof data.user_backup_email === "string" ? data.user_backup_email.trim() : "";
+
+    if (hp1 || hp2 || hp3) {
+      console.log("Spam Intercepted: honeypot field filled", { hp1, hp2, hp3 });
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
     const startTs = Number(data.formStartTs || 0);
-    if (startTs && Date.now() - startTs < 2500) {
+    if (startTs && Date.now() - startTs < 3500) {
+      console.log("Spam Intercepted: submitted too fast", Date.now() - startTs, "ms");
+      return res.status(200).json({ success: true, autoReplySent: false });
+    }
+    if (!startTs) {
+      // formStartTs missing entirely — almost certainly a bot posting directly to the endpoint
+      console.log("Spam Intercepted: missing formStartTs");
       return res.status(200).json({ success: true, autoReplySent: false });
     }
 
     // ----------------------------
-    // --- NEW: Specific Content Blocker (Roberttum / Google) ---
-    // هذا الكود يمنع البوت المحدد دون التأثير على العملاء الآخرين
+    // Disposable / throwaway email domains (common in spam)
     // ----------------------------
-    
-    // نتحقق من البيانات الخام القادمة من الفورم
-    const checkName = (data.Name || data.name || "").toLowerCase();
-    const checkCompany = (data.Company || data.company || "").toLowerCase();
-
-    // كلمات الحظر المحددة (Targeted Ban)
-    const blockedName = "roberttum";
-    const blockedCompany = "google";
-
-    if (
-      checkName.includes(blockedName) || 
-      checkCompany.includes(blockedCompany)
-    ) {
-      console.log(`Spam Intercepted: ${checkName} / ${checkCompany}`);
-      // نرسل نجاح وهمي (200 OK) ليظن البوت أنه نجح ويغادر
+    const rawEmailCheck = (data.email ?? data.Email ?? "").toString().trim().toLowerCase();
+    const emailDomain = rawEmailCheck.split("@")[1] || "";
+    const disposableDomains = [
+      "mailinator.com", "tempmail.com", "10minutemail.com", "guerrillamail.com",
+      "yopmail.com", "throwawaymail.com", "trashmail.com", "getnada.com",
+      "fakeinbox.com", "sharklasers.com"
+    ];
+    if (disposableDomains.includes(emailDomain)) {
+      console.log("Spam Intercepted: disposable email domain", emailDomain);
       return res.status(200).json({ success: true, autoReplySent: false });
     }
-    // ----------------------------
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
