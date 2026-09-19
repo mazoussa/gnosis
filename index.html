@@ -10,8 +10,8 @@
 </script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Gnosis Base | Sovereign AI Identity Infrastructure</title>
-<meta content="Gnosis Base provides sovereign AI identity infrastructure and premium domain assets designed for long-term brand dominance, institutional trust, and strategic leverage." name="description"/>
+<title>GnosisBase.com + .ai — Premium AI Domain Pair for Acquisition</title>
+<meta content="Acquire GnosisBase.com and GnosisBase.ai, a two-word name for AI infrastructure, knowledge systems and agent platforms. Escrow-supported transfer." name="description"/>
 <meta content="Gnosis Base" name="author"/>
 <meta content="index, follow, max-image-preview:large" name="robots"/>
 <meta content="#020204" name="theme-color"/>
@@ -20,18 +20,18 @@
 <!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="https://gnosisbase.com/" property="og:url"/>
-<meta content="Gnosis Base | Sovereign AI Identity Infrastructure" property="og:title"/>
-<meta content="Institutional-grade AI identity infrastructure and premium domain assets for founders, investors, and strategic builders." property="og:description"/>
+<meta content="GnosisBase.com + .ai — Premium AI Domain Pair for Acquisition" property="og:title"/>
+<meta content="A two-word .com + .ai name for AI infrastructure and knowledge platforms. Private acquisition with Escrow.com-supported transfer." property="og:description"/>
 <meta content="https://gnosisbase.com/og-image.jpg" property="og:image"/>
-<meta content="Gnosis Base – Sovereign AI Identity Infrastructure" property="og:image:alt"/>
+<meta content="GnosisBase.com + .ai — available for acquisition" property="og:image:alt"/>
 <meta content="Gnosis Base" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://gnosisbase.com/" name="twitter:url"/>
-<meta content="Gnosis Base | Sovereign AI Identity Infrastructure" name="twitter:title"/>
-<meta content="Premium AI identity infrastructure and strategic domain assets for the next generation of AI companies." name="twitter:description"/>
+<meta content="GnosisBase.com + .ai — Premium AI Domain Pair for Acquisition" name="twitter:title"/>
+<meta content="A two-word .com + .ai name for AI infrastructure and knowledge platforms. Private acquisition with Escrow.com-supported transfer." name="twitter:description"/>
 <meta content="https://gnosisbase.com/og-image.jpg" name="twitter:image"/>
-<meta content="Gnosis Base – Sovereign AI Identity Infrastructure" name="twitter:image:alt"/>
+<meta content="GnosisBase.com + .ai — available for acquisition" name="twitter:image:alt"/>
 <!-- Icons -->
 <link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -51,7 +51,7 @@
   "name": "Gnosis Base",
   "url": "https://gnosisbase.com/",
   "logo": "https://gnosisbase.com/logo.png",
-  "description": "Sovereign AI identity infrastructure and premium domain assets for institutional positioning and strategic leverage."
+  "description": "Gnosis Base is the name behind the GnosisBase.com and GnosisBase.ai domain pair, available for private acquisition."
 }
 </script>
 <!-- Vercel Web Analytics -->
@@ -3904,6 +3904,236 @@ dialog::backdrop {
   display: flex;
 }
 
+/*==============================================================================
+  Acquisition-page sections: "Why Gnosis Base" (#why) and "What's Included" (#included)
+  Appended block. Uses the tokens from :root; nothing above is modified.
+==============================================================================*/
+.why-section,
+.inc-section{
+  padding: clamp(56px, 7vw, 92px) 0;
+  border-top: 1px solid rgba(255,255,255,.05);
+  position: relative;
+  z-index: 2;
+}
+
+.why-grad{
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.why-meaning{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: clamp(16px, 4vw, 56px);
+  max-width: 920px;
+  margin: 48px auto 0;
+  text-align: center;
+}
+
+.why-word-name{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  letter-spacing: -1px;
+  line-height: 1;
+  color: #fff;
+}
+
+.why-word-def{
+  margin-top: 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  color: var(--gold1);
+}
+
+.why-word p{
+  margin: 8px auto 0;
+  max-width: 300px;
+  font-size: .98rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.why-plus{
+  padding-top: clamp(4px, 1vw, 10px);
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  color: rgba(255,255,255,.35);
+}
+
+.why-cols{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 6vw, 72px);
+  max-width: 1040px;
+  margin: clamp(48px, 6vw, 72px) auto 0;
+}
+
+.why-col h3,
+.inc-side h3{
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.why-facts{
+  list-style: none;
+}
+
+.why-facts li{
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 1.02rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.why-facts li:last-child,
+.why-uses > div:last-child{
+  border-bottom: 1px solid var(--hairline);
+}
+
+.why-facts strong{
+  color: #fff;
+  font-weight: 600;
+}
+
+.why-uses{
+  margin: 0;
+}
+
+.why-uses > div{
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.why-uses dt{
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--gold1);
+}
+
+.why-uses dd{
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.why-fine{
+  max-width: 1040px;
+  margin: 18px auto 0;
+  font-size: .82rem;
+  font-weight: 300;
+  color: var(--muted);
+  opacity: .75;
+}
+
+.inc-shell{
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  max-width: 1040px;
+  margin: 44px auto 0;
+  overflow: hidden;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-1);
+}
+
+.inc-list{
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  padding: clamp(24px, 4vw, 44px);
+  list-style: none;
+}
+
+.inc-list li{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.inc-list li .ico{
+  flex: none;
+  margin-top: 3px;
+  color: var(--cyan);
+}
+
+.inc-list strong{
+  font-weight: 600;
+  color: #fff;
+}
+
+.inc-side{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(24px, 4vw, 44px);
+  background: var(--surface-2);
+  border-left: 1px solid var(--hairline);
+}
+
+.inc-side p{
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.inc-side .inc-note{
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  font-size: .92rem;
+}
+
+.inc-side .btn-main{
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+@media (max-width: 860px){
+  .why-cols,
+  .inc-shell{
+    grid-template-columns: 1fr;
+  }
+  .inc-side{
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+  }
+}
+
+@media (max-width: 640px){
+  .why-meaning{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .why-plus{
+    padding-top: 0;
+  }
+  .why-uses > div{
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3963,44 +4193,96 @@ dialog::backdrop {
 <div class="hero-wrapper">
 <div class="hero-badge reveal">
 <span class="badge-line"></span>
-<span class="badge-txt">Sovereign Identity Anchor</span>
+<span class="badge-txt">Private Acquisition</span>
 <span class="badge-line"></span>
 </div>
 <h1 class="hero-h1">
-<span class="h1-sub">Primary AI Infrastructure</span>
+<span class="h1-sub">GnosisBase.com + .ai</span>
 <span class="h1-main">
 <span class="gnosis-text">GNOSIS</span>
 <span class="base-text">BASE</span>
 </span>
 </h1>
 <p class="hero-desc reveal delay-2">
-<span class="white-txt">The Sovereign Core of your AI Ecosystem.</span><br/>
-                The definitive naming anchor for institutional authority. Secure your market perimeter with the Sovereign Core.
+<span class="white-txt">A two-word name for AI infrastructure, knowledge systems and agent platforms.</span><br/>
+                Gnosis (Greek for knowledge) meets Base (foundation): a name for companies building the foundation layer of AI. Available as a matched .com + .ai pair.
             </p>
 <div class="hero-btns reveal delay-3">
 <a class="btn-main" href="#inquiry">
-                    Initiate Acquisition Mandate
+                    Make an Offer
                     <svg class="ico s14"><use href="#i-arrow-right"></use></svg>
 </a>
-<a class="btn-link" href="asset-stack.html">View Strategic Stack</a>
+<a class="btn-link" href="asset-stack.html">View the Stack</a>
 </div>
 <div class="hero-specs reveal delay-4">
 <div class="spec">
-<span class="s-label">CORE STATUS</span>
-<span class="s-val">Verified / Sovereign</span>
+<span class="s-label">DOMAINS</span>
+<span class="s-val">GnosisBase.com + .ai</span>
 </div>
 <div class="spec">
 <span class="s-label">AVAILABILITY</span>
-<span class="s-val">Private Acquisition</span>
+<span class="s-val">Private acquisition</span>
 </div>
 <div class="spec">
-<span class="s-label">PROTECTION</span>
-<span class="s-val">Multi-Layer Stack</span>
+<span class="s-label">SETTLEMENT</span>
+<span class="s-val">Escrow.com-supported</span>
 </div>
 </div>
 </div>
 </div>
 </section>
+<!-- =====================================================
+         Why Gnosis Base / The name
+         ===================================================== -->
+
+<!-- SECTION: Why -->
+<section aria-label="Why Gnosis Base" class="why-section" id="why">
+  <div class="container">
+    <div class="kicker">Why Gnosis Base</div>
+    <h2 class="h2">The foundation <span class="why-grad">for intelligence</span></h2>
+    <p class="sub">
+      Gnosis is Greek for knowledge. Base means foundation, core, infrastructure.
+      Together, the name points at the foundation layer of AI.
+    </p>
+
+    <div class="why-meaning reveal">
+      <div class="why-word">
+        <div class="why-word-name">Gnosis</div>
+        <div class="why-word-def">Greek for knowledge</div>
+        <p>Knowledge, intelligence, understanding.</p>
+      </div>
+      <div class="why-plus" aria-hidden="true">+</div>
+      <div class="why-word">
+        <div class="why-word-name">Base</div>
+        <div class="why-word-def">Foundation</div>
+        <p>Core, infrastructure, the layer to build on.</p>
+      </div>
+    </div>
+
+    <div class="why-cols reveal">
+      <div class="why-col">
+        <h3>The name at a glance</h3>
+        <ul class="why-facts">
+          <li>Two words, ten letters, easy to spell and remember.</li>
+          <li>Pronounced &ldquo;NOH-sis base&rdquo; (the G is silent).</li>
+          <li>Available as a matched <strong>.com + .ai</strong> pair.</li>
+          <li>Suited to AI infrastructure, knowledge systems, agents, developer platforms and enterprise software.</li>
+        </ul>
+      </div>
+      <div class="why-col">
+        <h3>Ways a buyer could position it</h3>
+        <dl class="why-uses">
+          <div><dt>AI infrastructure</dt><dd>Gnosis Base: foundational AI infrastructure</dd></div>
+          <div><dt>Knowledge systems</dt><dd>Gnosis Base: knowledge intelligence platform</dd></div>
+          <div><dt>Autonomous agents</dt><dd>Gnosis Base: foundation for agent systems</dd></div>
+          <div><dt>Developer platform</dt><dd>Gnosis Base: infrastructure layer for AI applications</dd></div>
+        </dl>
+      </div>
+    </div>
+    <p class="why-fine">Illustrative positioning only. It does not describe an existing product.</p>
+  </div>
+</section>
+
 <!-- =====================================================
          Portfolio / Curated Domain Assets
          ===================================================== -->
@@ -4057,7 +4339,7 @@ dialog::backdrop {
           </p>
 
           <div class="core-verify">
-            Verified &amp; Ready for Secure Transfer
+            Ownership verifiable on request
             <svg class="ico s16"><use href="#i-check-circle"></use></svg>
           </div>
         </div>
@@ -4138,6 +4420,40 @@ dialog::backdrop {
         <p class="idstack-foot">Acquisition paths: Core-only, or Core + Strategic Extensions</p>
         <a class="idstack-btn" href="asset-stack.html">
           View Strategic Stack <svg class="ico s16"><use href="#i-arrow-right"></use></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+         What's Included
+         ===================================================== -->
+
+<!-- SECTION: Included -->
+<!-- TODO (verify with the registrar first): add "GnosisBase.com registered since YEAR" and
+     "GnosisBase.ai registered until DATE" as two more list items below. -->
+<section aria-label="What's included" class="inc-section" id="included">
+  <div class="container">
+    <div class="kicker">What&rsquo;s included</div>
+    <h2 class="h2">What you <span class="why-grad">acquire</span></h2>
+    <p class="sub">A clear scope, a single transfer, and no ongoing obligations to the seller.</p>
+
+    <div class="inc-shell reveal">
+      <ul class="inc-list">
+        <li><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg><span><strong>GnosisBase.com</strong>, the primary domain</span></li>
+        <li><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg><span><strong>GnosisBase.ai</strong>, the matching .ai domain</span></li>
+        <li><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg><span>Transfer of both registrations to your registrar account</span></li>
+        <li><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg><span>Escrow.com-supported settlement</span></li>
+        <li><svg aria-hidden="true" class="ico s18"><use href="#i-check-circle"></use></svg><span>Proof of ownership on request (registrar records or live DNS verification)</span></li>
+      </ul>
+      <div class="inc-side">
+        <h3>Core or full stack</h3>
+        <p>GnosisBase can be acquired on its own. The extended namespace (Flow, Agent, Aegis) is available separately or together.</p>
+        <p class="inc-note">One-time purchase. No licensing and no recurring fees to the seller. The buyer takes over registry renewals.</p>
+        <a class="btn-main" href="#inquiry">
+          Make an Offer
+          <svg aria-hidden="true" class="ico s14"><use href="#i-arrow-right"></use></svg>
         </a>
       </div>
     </div>
