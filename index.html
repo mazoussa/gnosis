@@ -4150,7 +4150,7 @@ dialog::backdrop {
 <img alt="Gnosis Base Logo" class="brand-logo" height="50" src="logo.png" width="100"/>
 <span class="brand-copy">
 <span class="brand-name">Gnosis <span>Base</span></span>
-<span class="brand-tagline">IDENTITY INFRASTRUCTURE</span>
+<span class="brand-tagline">PREMIUM AI DOMAIN PAIR</span>
 </span>
 </a>
 <nav aria-label="Primary">
@@ -4563,8 +4563,8 @@ dialog::backdrop {
 <div class="acq2-steps" data-stagger="children">
 <div class="acq-card">
 <div class="acq-icon-circle"><svg class="ico s24"><use href="#i-file"></use></svg></div>
-<h4>Submit Mandate Request</h4>
-<p>Submit a confidential mandate request for the Strategic Mandate Intake to initiate review.</p>
+<h4>Submit an Offer</h4>
+<p>Send your offer or inquiry through the confidential form to start the review.</p>
 <div class="acq-badge"><svg class="ico s14"><use href="#i-lock"></use></svg> Confidential intake</div>
 </div>
 <div class="acq-card">
@@ -4619,16 +4619,16 @@ dialog::backdrop {
 <!-- SECTION: Inquiry -->
 <section aria-label="Inquiry" class="inquiry grid-overlay" id="inquiry">
 <div class="container">
-<div class="h2">Private Mandate</div>
+<div class="h2">Make an Offer</div>
 <div class="sub">Private inquiry. Direct response. All communications remain confidential.</div>
 <div class="mandate-shell reveal is-visible">
 <div class="mandate-inner">
 <div class="mandate-grid">
 <div class="mandate-copy">
-<h3>Request a mandate review</h3>
+<h3>Tell us about your interest</h3>
 <p>
-              Acquiring the Core Asset (Gnosis Base) establishes institutional presence.
-              Strategic reinforcements (Flow, Agent, Aegis) secure long-term expansion and prevent competitive encroachment.
+              Say which assets interest you and how you plan to use them.
+              Gnosis Base can be acquired on its own; Flow, Agent and Aegis are available separately or together.
             </p>
 <div class="mandate-bullets">
 <div class="mandate-bullet">
@@ -4641,13 +4641,13 @@ dialog::backdrop {
 </div>
 <div class="mandate-bullet">
 <strong>Settlement</strong>
-<span>Escrow-supported transfer. Verified ownership and clean close.</span>
+<span>Escrow-supported transfer. Ownership verifiable on request.</span>
 </div>
 </div>
 <div class="mandate-seal">
-<div class="mandate-seal-title">Institutional Mandate Only</div>
+<div class="mandate-seal-title">Serious inquiries only</div>
 <div class="mandate-seal-sub">
-                Confidential process · Verified ownership · Escrow-supported settlement
+                Confidential process · Ownership verifiable on request · Escrow-supported settlement
               </div>
 </div>
 <div class="mandate-footnote">
@@ -4695,7 +4695,7 @@ dialog::backdrop {
 </div>
 <div class="field field-full">
 <label for="message">Message</label>
-<textarea id="message" name="Message" placeholder="Timeline, questions, or specific requirements..." rows="4"></textarea>
+<textarea id="message" name="Message" placeholder="Your offer (USD), intended use, timeline or questions..." rows="4"></textarea>
 </div>
 </div>
 <div class="form-extras" style="margin-top:0; margin-bottom:16px; align-items:stretch;">
@@ -4705,7 +4705,7 @@ dialog::backdrop {
 </label>
 <label class="check" style="width:100%;">
 <input id="nda" name="NDA_Requested" type="checkbox" value="Yes"/>
-<span>NDA required prior to disclosure.</span>
+<span>Send me an NDA before we discuss terms.</span>
 </label>
 </div>
 <input name="_subject" type="hidden" value="New Inquiry from Gnosis Base"/>
@@ -4719,7 +4719,7 @@ dialog::backdrop {
 <input id="formStartTs" name="formStartTs" type="hidden" value=""/>
 <button aria-describedby="errorMsg" class="submit" id="submitBtn" type="submit">
 <span class="btn-label">
-<span class="btn-text">Confirm Mandate Request</span>
+<span class="btn-text">Send Offer</span>
 <span class="plane">
 <svg aria-hidden="true" class="ico s18"><use href="#i-plane"></use></svg>
 </span>
@@ -5312,17 +5312,6 @@ document.addEventListener("DOMContentLoaded", () => {
         mobileNav.classList.remove("show");
         menuBtn.classList.remove("is-open");
       });
-    });
-  }
-</script>
-<script>
-  const menuBtn = document.querySelector('.menu-btn');
-  const mobileNav = document.querySelector('.mobile-nav');
-
-  if (menuBtn && mobileNav) {
-    menuBtn.addEventListener('click', () => {
-      menuBtn.classList.toggle('is-open');
-      mobileNav.classList.toggle('show');
     });
   }
 </script>
